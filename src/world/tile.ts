@@ -1,0 +1,8 @@
+interface TileInterface {
+
+}
+
+
+export{
+  TileInterface,
+}

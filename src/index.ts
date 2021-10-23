@@ -2,9 +2,7 @@ import * as PIXI from 'pixi.js';
 
 const load = (app: PIXI.Application) => {
   return new Promise((resolve:any) => {
-    app.loader.add('assets/hello-world.png').load(() => {
-      resolve();
-    });
+    app.loader.add('assets/hello-world.png').load(() => {resolve();});//How to import images
   });
 };
 

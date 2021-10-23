@@ -1,0 +1,8 @@
+interface MapInterface {
+
+}
+
+
+export{
+  MapInterface,
+}
