@@ -17,10 +17,10 @@ const windowSize = (app: PIXI.Application) =>{
   });
 }
 
-let app = new PIXI.Application();  // Application itself
 
 
 const main = async () => {
+  let app = new PIXI.Application();  // Application itself
 
   // Displays application top left of window exactly
   document.body.style.margin = '0';
@@ -45,7 +45,3 @@ const main = async () => {
 };
 
 main();
-
-export{
-  app,
-}

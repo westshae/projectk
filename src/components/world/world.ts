@@ -36,7 +36,7 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
   let width = Math.sqrt(3) * size;
   let height = 2 * size;
 
-  let useOffset = false;
+  // let useOffset = false;
   world.grid.map((value, xindex)=>{
     value.map((value2, yindex)=>{
       console.log(value2);
@@ -63,7 +63,7 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
       // }
       
       container.addChild(hexagon);
-      useOffset = !useOffset;
+      // useOffset = !useOffset;
 
     })
 
