@@ -1,13 +1,16 @@
 import * as PIXI from 'pixi.js';
 
 const load = (app: PIXI.Application) => {
-  return new Promise((resolve:any) => {
-    app.loader.add('assets/hello-world.png').load(() => {resolve();});//How to import images
+  return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
+    app.loader
+    .add('assets/hexagonal.png')
+    .add("assets/hello-world.png")
+    .load(()=>{resolve();})
   });
 };
 
 const main = async () => {
-  // Actual app
+  // Application itself
   let app = new PIXI.Application();
 
   // Display application properly
@@ -21,7 +24,7 @@ const main = async () => {
   // Load assets
   await load(app);
   let sprite = new PIXI.Sprite(
-    app.loader.resources['assets/hello-world.png'].texture
+    app.loader.resources['assets/hexagonal.png'].texture
   );
   sprite.x = window.innerWidth / 2 - sprite.width / 2;
   sprite.y = window.innerHeight / 2 - sprite.height / 2;
