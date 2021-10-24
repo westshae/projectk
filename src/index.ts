@@ -5,8 +5,7 @@ import { MapInterface } from './interfaces/map';
 const load = (app: PIXI.Application) => {
   return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
     app.loader
-    .add('assets/hexagonal.png')
-    .add("assets/hello-world.png")
+    .add("assets/hex.png")
     .load(()=>{resolve();})
   });
 };
@@ -38,7 +37,7 @@ const main = async () => {
 
   // Load assets
   await load(app);
-  let hexagon = PIXI.Texture.from("assets/hexagonal.png");
+  let hexagon = PIXI.Texture.from("assets/hex.png");
 
   document.body.appendChild(app.view);
 
