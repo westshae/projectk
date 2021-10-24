@@ -9,60 +9,37 @@ const load = (app: PIXI.Application) => {
   });
 };
 
+const windowSize = (app: PIXI.Application) =>{
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+  window.addEventListener('resize', (e:UIEvent) => {
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+    // sprite.x = window.innerWidth / 2 - sprite.width / 2;
+    // sprite.y = window.innerHeight / 2 - sprite.height / 2;
+  });
+}
+
 const main = async () => {
   // Application itself
   let app = new PIXI.Application();
 
-  // Display application properly
+  // Displays application top left of window exactly
   document.body.style.margin = '0';
   app.renderer.view.style.position = 'absolute';
   app.renderer.view.style.display = 'block';
 
-  // View size = windows
-  app.renderer.resize(window.innerWidth, window.innerHeight);
+  // Actively changes application size to window size
+  windowSize(app);
 
   // Load assets
   await load(app);
-  let sprite = new PIXI.Sprite(
+  let hexagonal = new PIXI.Sprite(
     app.loader.resources['assets/hexagonal.png'].texture
   );
-  sprite.x = window.innerWidth / 2 - sprite.width / 2;
-  sprite.y = window.innerHeight / 2 - sprite.height / 2;
-  app.stage.addChild(sprite);
-
-  // Handle window resizing
-  window.addEventListener('resize', (e:UIEvent) => {
-    app.renderer.resize(window.innerWidth, window.innerHeight);
-    sprite.x = window.innerWidth / 2 - sprite.width / 2;
-    sprite.y = window.innerHeight / 2 - sprite.height / 2;
-  });
+  hexagonal.width = 100;
+  hexagonal.height = 100;
+  app.stage.addChild(hexagonal);  
 
   document.body.appendChild(app.view);
-
-  let context = {
-    velocity: { x: 1, y: 1 },
-    sprite,
-  };
-
-  app.ticker.add(update, context);
 };
-
-// Cannot be an arrow function. Arrow functions cannot have a 'this' parameter.
-function update(this: any, delta: number) {
-  if (
-    this.sprite.x <= 0 ||
-    this.sprite.x >= window.innerWidth - this.sprite.width
-  ) {
-    this.velocity.x = -this.velocity.x;
-  }
-  if (
-    this.sprite.y <= 0 ||
-    this.sprite.y >= window.innerHeight - this.sprite.height
-  ) {
-    this.velocity.y = -this.velocity.y;
-  }
-  this.sprite.x += this.velocity.x;
-  this.sprite.y += this.velocity.y;
-}
 
 main();
