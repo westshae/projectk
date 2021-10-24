@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+import { generateWorld, renderWorld } from './components/world/world';
+import { MapInterface } from './interfaces/map';
 
 const load = (app: PIXI.Application) => {
   return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
@@ -13,14 +15,14 @@ const windowSize = (app: PIXI.Application) =>{
   app.renderer.resize(window.innerWidth, window.innerHeight);
   window.addEventListener('resize', (e:UIEvent) => {
     app.renderer.resize(window.innerWidth, window.innerHeight);
-    // sprite.x = window.innerWidth / 2 - sprite.width / 2;
-    // sprite.y = window.innerHeight / 2 - sprite.height / 2;
   });
 }
 
+let app = new PIXI.Application();
+
+
 const main = async () => {
   // Application itself
-  let app = new PIXI.Application();
 
   // Displays application top left of window exactly
   document.body.style.margin = '0';
@@ -30,16 +32,22 @@ const main = async () => {
   // Actively changes application size to window size
   windowSize(app);
 
+  //Create container for view
+  const container = new PIXI.Container();
+  app.stage.addChild(container);
+
   // Load assets
   await load(app);
-  let hexagonal = new PIXI.Sprite(
-    app.loader.resources['assets/hexagonal.png'].texture
-  );
-  hexagonal.width = 100;
-  hexagonal.height = 100;
-  app.stage.addChild(hexagonal);  
+  let hexagon = PIXI.Texture.from("assets/hexagonal.png");
 
   document.body.appendChild(app.view);
+
+  let world:MapInterface = generateWorld(8,8);
+  renderWorld(world, hexagon, container);
 };
 
 main();
+
+export{
+  app,
+}
