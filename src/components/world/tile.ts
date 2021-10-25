@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { worldContainer } from "../..";
-import { hexagonTexture } from "../general/textures";
+import { hexagonTexture } from "../util/textures";
 
 
 class Tile{

@@ -1,4 +1,4 @@
-import { villagerTexture } from "../general/textures";
+import { villagerTexture } from "../util/textures";
 import { Sprite } from "pixi.js";
 import { worldContainer } from "../..";
 

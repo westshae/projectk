@@ -1,14 +1,17 @@
+import { Villager } from "../npc/villager";
 import { Tile } from "./tile";
 
 class World {
   grid:Array<Array<Tile>>;
   width:number;
   height:number;
+  villagers:Array<Villager>;
 
   constructor(width:number, height:number){
     this.width = width;
     this.height = height;
     this.grid = this.generateGrid();
+    this.villagers = [];
   }
 
   generateGrid(){
