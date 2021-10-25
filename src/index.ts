@@ -1,11 +1,13 @@
 import * as PIXI from 'pixi.js';
 import { generateWorld, renderWorld } from './components/world/world';
 import { MapInterface } from './interfaces/map';
+import { VillagerInterface } from './interfaces/villager';
 
 const load = (app: PIXI.Application) => {
   return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
     app.loader
     .add("assets/hex.png")
+    .add("assets/man.png")
     .load(()=>{resolve();})
   });
 };
@@ -40,8 +42,14 @@ const main = async () => {
 
   document.body.appendChild(app.view);
 
+  let villagerTexture = PIXI.Texture.from("assets/man.png");
+  // let villager:VillagerInterface = null;
+
+
   let world:MapInterface = generateWorld(20,20);
   renderWorld(world, hexagon, container);
+
+  
 };
 
 main();
