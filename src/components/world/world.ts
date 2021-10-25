@@ -27,6 +27,11 @@ const createTile = (x:number, y:number) =>{//Creates a tile at the specific coor
   return tile;
 }
 
+const setTile = (x:number, y:number, world:MapInterface) =>{
+  let tile:TileInterface = world.grid.at(x)?.at(y) ?? {hasVillager:false,x:100,y:100};
+  tile.hasVillager = true;
+}
+
 const generateWorld = (x:number, y:number) =>{//Creates a world including grid + data
   let world:MapInterface = {
     grid:generateGrid(x,y),
@@ -47,7 +52,7 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
 
   world.grid.map((value, xindex)=>{//For each tile
     value.map((tile, yindex)=>{
-      let hexagon:PIXI.Sprite = Sprite.from(hexagonTexture);
+      let hexagon:Sprite = Sprite.from(hexagonTexture);
 
       //Sets hexagon width/height
       hexagon.width = width;
@@ -67,11 +72,14 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
         hexagon.x = (tile.x * width);
         hexagon.y = (tile.y * height) + (height/4) - heightOffset;  
       }
+      
+
+      container.addChild(hexagon);//Adds to state
+
       if(tile.hasVillager){
         renderVillager(hexagon.x, hexagon.y, container);
       }
 
-      container.addChild(hexagon);//Adds to state
       useOffset = !useOffset;//Switches useOffset
     })
   })
@@ -79,5 +87,6 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
 
 export {
   generateWorld,
-  renderWorld
+  renderWorld,
+  setTile,
 }
