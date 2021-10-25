@@ -2,19 +2,20 @@ import { TileInterface } from "../../interfaces/tile";
 import { MapInterface } from "../../interfaces/map";
 import { Sprite } from "pixi.js";
 
-const generateGrid = (x:number, y:number) =>{
+const generateGrid = (x:number, y:number) =>{//Creates a grid of tiles, x wide, y high
   let grid:Array<Array<TileInterface>> = [];
-  for(let width:number = 0; width < x; width++){
+
+  for(let width:number = 0; width < x; width++){//For each required tile
     grid[width] = [];
     for(let height:number = 0; height < y; height++){
-      grid[width][height] = createTile(width, height);
+      grid[width][height] = createTile(width, height);//Set spot in grid to new tile
     }
   }
 
   return grid;
 }
 
-const createTile = (x:number, y:number) =>{
+const createTile = (x:number, y:number) =>{//Creates a tile at the specific coordinate
   let tile:TileInterface = {
     x:x,
     y:y,
@@ -22,7 +23,7 @@ const createTile = (x:number, y:number) =>{
   return tile;
 }
 
-const generateWorld = (x:number, y:number) =>{
+const generateWorld = (x:number, y:number) =>{//Creates a world including grid + data
   let world:MapInterface = {
     grid:generateGrid(x,y),
     width:x,
@@ -32,34 +33,37 @@ const generateWorld = (x:number, y:number) =>{
 }
 
 const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Container) =>{
-  let size = 50;
-  let width = Math.sqrt(3) * size;
-  let height = 2 * size;
+  let size = 50;//Size for calculating height/width
+  let width = Math.sqrt(3) * size;//Width between center of hexagon
+  let height = 2 * size;//Height between center of hexagon
 
-  let useOffset = false;
-  let heightOffset = 0;
-  world.grid.map((value, _)=>{
+  let useOffset = false;//Changes between true and false, every time a now row is made.
+  let heightOffset = 0;//Total change to affect the drawn height
+
+  world.grid.map((value, _)=>{//For each tile
     value.map((value2, yindex)=>{
-      console.log(heightOffset);
-
-      let hexagon:PIXI.Sprite = new Sprite(texture);
+      let hexagon:PIXI.Sprite = new Sprite(texture);//Make sprite from texture
+      //Sets hexagon width/height
       hexagon.width = width;
       hexagon.height = height;
-      if(useOffset){
+
+
+      if(useOffset){//If useOffset
+
         hexagon.x = (value2.x * width) + (width/2);
         hexagon.y = (value2.y * height) - heightOffset;
-        heightOffset += (height/2);
-        if(yindex == world.height-1){
+
+        heightOffset += (height/2);//increase offset by half height
+        if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
           heightOffset -= (height)*2;
         }
-      }else{
-        
+      }else{//If !useOffset
         hexagon.x = (value2.x * width);
         hexagon.y = (value2.y * height) + (height/4) - heightOffset;  
       }
-      
-      container.addChild(hexagon);
-      useOffset = !useOffset;
+
+      container.addChild(hexagon);//Adds to state
+      useOffset = !useOffset;//Switches useOffset
     })
   })
 }

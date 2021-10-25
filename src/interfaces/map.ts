@@ -1,9 +1,9 @@
 import { TileInterface } from "./tile";
 
 interface MapInterface {
-  grid:Array<Array<TileInterface>>,
-  width:number,
-  height:number,
+  grid:Array<Array<TileInterface>>,//world grid
+  width:number,//how many hexagons wide
+  height:number,//how many hexagons high
 }
 
 

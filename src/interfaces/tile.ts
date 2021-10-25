@@ -1,6 +1,6 @@
 interface TileInterface {
-  x:number,
-  y:number,
+  x:number,//X coord
+  y:number,//Y coord
 }
 
 
