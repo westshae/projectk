@@ -1,8 +1,3 @@
-import { TileInterface } from "../../interfaces/tile";
-import { MapInterface } from "../../interfaces/map";
-import { Sprite } from "pixi.js";
-import { hexagonTexture } from "../general/textures";
-import { worldContainer } from "../..";
 import { Tile } from "./tile";
 
 class World {
@@ -38,7 +33,6 @@ class World {
 
     this.grid.map((value, xindex)=>{//For each tile
       value.map((tile, yindex)=>{
-        // console.log(tile);
         tile.sprite.width = width;
         tile.sprite.height = height;
 
@@ -49,32 +43,16 @@ class World {
           heightOffset += (height/2);
 
           if(yindex == this.height -1){
-            heightOffset -= (tile.sprite.height/4) * this.height;
+            heightOffset -= (height/4) * this.height;
           }
         }
         
         else{
-          tile.sprite.x = (tile.x * tile.sprite.width);
-          tile.sprite.y = (tile.y * tile.sprite.height) + (tile.sprite.height/4) - heightOffset;
+          tile.sprite.x = (tile.x * width);
+          tile.sprite.y = (tile.y * height) + (height/4) - heightOffset;
         }
 
         useOffset = !useOffset;
-  
-  
-        // if(useOffset){//If useOffset
-  
-        //   tile.x = (tile.x * tile) + (width/2);
-        //   tile.y = (tile.y * height) - heightOffset;
-  
-        //   heightOffset += (height/2);//increase offset by half height
-        //   if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
-        //     heightOffset -= (height/4) * world.height
-        //   }
-        // }else{//If !useOffset
-        //   tile.x = (tile.x * width);
-        //   tile.y = (tile.y * height) + (height/4) - heightOffset;  
-        // }
-        // useOffset = !useOffset;//Switches useOffset
       })
     })
   }

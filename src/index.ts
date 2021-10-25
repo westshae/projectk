@@ -2,8 +2,6 @@ import * as PIXI from 'pixi.js';
 import { load } from './components/general/textures';
 import { Villager } from './components/npc/villager';
 import { World } from './components/world/world';
-// import { generateWorld, renderWorld, setTile } from './components/world/world';
-import { MapInterface } from './interfaces/map';
 
 
 const windowSize = (app: PIXI.Application) =>{
