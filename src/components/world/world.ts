@@ -40,9 +40,10 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
   let useOffset = false;//Changes between true and false, every time a now row is made.
   let heightOffset = 0;//Total change to affect the drawn height
 
-  world.grid.map((value, _)=>{//For each tile
+  world.grid.map((value, xindex)=>{//For each tile
     value.map((value2, yindex)=>{
       let hexagon:PIXI.Sprite = new Sprite(texture);//Make sprite from texture
+      
       //Sets hexagon width/height
       hexagon.width = width;
       hexagon.height = height;
@@ -55,12 +56,16 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
 
         heightOffset += (height/2);//increase offset by half height
         if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
-          // heightOffset -= (height)*2;
           heightOffset -= (height/4) * world.height
         }
       }else{//If !useOffset
         hexagon.x = (value2.x * width);
         hexagon.y = (value2.y * height) + (height/4) - heightOffset;  
+      }
+
+      if(xindex == 4 && yindex ==4){
+        hexagon.x = 0;
+        hexagon.y = 0;
       }
 
       container.addChild(hexagon);//Adds to state
