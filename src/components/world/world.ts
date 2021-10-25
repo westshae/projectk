@@ -14,6 +14,18 @@ class World {
     this.villagers = [];
   }
 
+  addVillager(){
+    let villager:Villager = new Villager(1, "Chur", 5, 5);
+    this.villagers.push(villager);
+  }
+
+  renderVillagers(){
+    for(let i = 0; i < this.villagers.length; i++){
+      let villager = this.villagers.at(i);
+      villager?.render();
+    }
+  }
+
   generateGrid(){
     let grid:Array<Array<Tile>> = [];
 

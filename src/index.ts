@@ -9,11 +9,11 @@ const worldContainer = new PIXI.Container();
 
 const main = async () => {
   init();
-  
+
   let world:World = new World(14,6);
   world.render();
-  let villager:Villager = new Villager(1, "Chur", 5, 5);
-  villager.render();
+  world.addVillager();
+  world.renderVillagers();
   
 };
 

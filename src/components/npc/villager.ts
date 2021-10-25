@@ -37,15 +37,14 @@ class Villager {
   }
 
   render(){
-    console.log(this.sprite);
-  let villagerSprite = this.sprite;
-  villagerSprite.width = Math.sqrt(3) * 50;
-  villagerSprite.height = 2 * 50;
-  
-  villagerSprite.x = this.x;
-  villagerSprite.y = this.y;
+    let villagerSprite = this.sprite;
+    villagerSprite.width = Math.sqrt(3) * 50;
+    villagerSprite.height = 2 * 50;
+    
+    villagerSprite.x = this.x;
+    villagerSprite.y = this.y;
 
-  worldContainer.addChild(villagerSprite);
+    worldContainer.addChild(villagerSprite);
   }
 }
 
