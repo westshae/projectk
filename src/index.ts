@@ -40,7 +40,7 @@ const main = async () => {
 
   document.body.appendChild(app.view);
 
-  let world:MapInterface = generateWorld(8,8);
+  let world:MapInterface = generateWorld(20,10);
   renderWorld(world, hexagon, container);
 };
 

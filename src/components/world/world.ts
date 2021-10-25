@@ -55,7 +55,8 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
 
         heightOffset += (height/2);//increase offset by half height
         if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
-          heightOffset -= (height)*2;
+          // heightOffset -= (height)*2;
+          heightOffset -= (height/4) * world.height
         }
       }else{//If !useOffset
         hexagon.x = (value2.x * width);
