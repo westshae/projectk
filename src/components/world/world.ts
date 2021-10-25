@@ -1,8 +1,9 @@
 import { TileInterface } from "../../interfaces/tile";
 import { MapInterface } from "../../interfaces/map";
 import { Sprite, Texture } from "pixi.js";
-import { renderVillager } from "../npc/villager";
+// import { renderVillager } from "../npc/villager";
 import { hexagonTexture } from "../general/textures";
+import { worldContainer } from "../..";
 // import { hexagonTexture } from "../general/textures";
 
 const generateGrid = (x:number, y:number) =>{//Creates a grid of tiles, x wide, y high
@@ -46,7 +47,7 @@ const highlight = (eventData:any) =>{
 }
 
 
-const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
+const renderWorld = (world:MapInterface) =>{
   
   let size = 50;//Size for calculating height/width
   let width = Math.sqrt(3) * size;//Width between center of hexagon
@@ -82,11 +83,11 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
       }
       
 
-      container.addChild(hexagon);//Adds to state
+      worldContainer.addChild(hexagon);//Adds to state
       
 
       if(tile.hasVillager){
-        renderVillager(hexagon.x, hexagon.y, container);
+        // renderVillager(hexagon.x, hexagon.y, container);
       }
 
       useOffset = !useOffset;//Switches useOffset

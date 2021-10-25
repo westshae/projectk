@@ -1,9 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { load } from './components/general/textures';
-import { createVillager } from './components/npc/villager';
+import { Villager } from './components/npc/villager';
 import { generateWorld, renderWorld, setTile } from './components/world/world';
 import { MapInterface } from './interfaces/map';
-import { VillagerInterface } from './interfaces/villager';
 
 
 const windowSize = (app: PIXI.Application) =>{
@@ -15,6 +14,8 @@ const windowSize = (app: PIXI.Application) =>{
 
 
 let app = new PIXI.Application();  // Application itself
+const worldContainer = new PIXI.Container();
+
 
 const main = async () => {
 
@@ -27,8 +28,7 @@ const main = async () => {
   windowSize(app);
 
   //Create container for view
-  const container = new PIXI.Container();
-  app.stage.addChild(container);
+  app.stage.addChild(worldContainer);
 
   // Load assets
   await load();
@@ -40,11 +40,13 @@ const main = async () => {
 
   let world:MapInterface = generateWorld(14,6);//Note, height must be even number
 
-  let villager:VillagerInterface = createVillager(1, "ree", 5, 5);
+  // let villager:VillagerInterface = createVillager(1, "ree", 5, 5);
+  let villager:Villager = new Villager(1, "Chur", 5, 5);
+  villager.render();
   setTile(5,5,world);
 
 
-  renderWorld(world, container);
+  renderWorld(world);
 
   
 };
@@ -53,4 +55,5 @@ main();
 
 export{
   app,
+  worldContainer
 }
