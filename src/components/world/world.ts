@@ -36,37 +36,31 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
   let width = Math.sqrt(3) * size;
   let height = 2 * size;
 
-  // let useOffset = false;
-  world.grid.map((value, xindex)=>{
+  let useOffset = false;
+  let heightOffset = 0;
+  world.grid.map((value, _)=>{
     value.map((value2, yindex)=>{
-      console.log(value2);
+      console.log(heightOffset);
+
       let hexagon:PIXI.Sprite = new Sprite(texture);
       hexagon.width = width;
       hexagon.height = height;
-      // if(xindex %= 2){
-      //   hexagon.x = (value2.x * width) - (width/2);
-      // }else{
-      //   hexagon.x = value2.x * width;
-      // }
-
-      // if(yindex %= 2){
-      //   hexagon.y = (value2.y * height) - (height/4);
-      // }else{
-      //   hexagon.y = (value2.y * height);
-      // }
-      // if(useOffset){
-      //   hexagon.x = value2.x * width;
-      //   hexagon.y = value2.y * height;
-      // }else{
-      //   hexagon.x = (value2.x * width);
-      //   hexagon.y = (value2.y * height) - (height/4);
-      // }
+      if(useOffset){
+        hexagon.x = (value2.x * width) + (width/2);
+        hexagon.y = (value2.y * height) - heightOffset;
+        heightOffset += (height/2);
+        if(yindex == world.height-1){
+          heightOffset -= (height)*2;
+        }
+      }else{
+        
+        hexagon.x = (value2.x * width);
+        hexagon.y = (value2.y * height) + (height/4) - heightOffset;  
+      }
       
       container.addChild(hexagon);
-      // useOffset = !useOffset;
-
+      useOffset = !useOffset;
     })
-
   })
 }
 
