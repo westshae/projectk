@@ -1,6 +1,9 @@
 import { TileInterface } from "../../interfaces/tile";
 import { MapInterface } from "../../interfaces/map";
-import { Sprite } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
+import { renderVillager } from "../npc/villager";
+import { hexagonTexture } from "../general/textures";
+// import { hexagonTexture } from "../general/textures";
 
 const generateGrid = (x:number, y:number) =>{//Creates a grid of tiles, x wide, y high
   let grid:Array<Array<TileInterface>> = [];
@@ -19,6 +22,7 @@ const createTile = (x:number, y:number) =>{//Creates a tile at the specific coor
   let tile:TileInterface = {
     x:x,
     y:y,
+    hasVillager:false,
   }
   return tile;
 }
@@ -32,7 +36,8 @@ const generateWorld = (x:number, y:number) =>{//Creates a world including grid +
   return world;
 }
 
-const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Container) =>{
+const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
+  
   let size = 50;//Size for calculating height/width
   let width = Math.sqrt(3) * size;//Width between center of hexagon
   let height = 2 * size;//Height between center of hexagon
@@ -41,9 +46,9 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
   let heightOffset = 0;//Total change to affect the drawn height
 
   world.grid.map((value, xindex)=>{//For each tile
-    value.map((value2, yindex)=>{
-      let hexagon:PIXI.Sprite = new Sprite(texture);//Make sprite from texture
-      
+    value.map((tile, yindex)=>{
+      let hexagon:PIXI.Sprite = Sprite.from(hexagonTexture);
+
       //Sets hexagon width/height
       hexagon.width = width;
       hexagon.height = height;
@@ -51,21 +56,19 @@ const renderWorld = (world:MapInterface, texture:PIXI.Texture, container:PIXI.Co
 
       if(useOffset){//If useOffset
 
-        hexagon.x = (value2.x * width) + (width/2);
-        hexagon.y = (value2.y * height) - heightOffset;
+        hexagon.x = (tile.x * width) + (width/2);
+        hexagon.y = (tile.y * height) - heightOffset;
 
         heightOffset += (height/2);//increase offset by half height
         if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
           heightOffset -= (height/4) * world.height
         }
       }else{//If !useOffset
-        hexagon.x = (value2.x * width);
-        hexagon.y = (value2.y * height) + (height/4) - heightOffset;  
+        hexagon.x = (tile.x * width);
+        hexagon.y = (tile.y * height) + (height/4) - heightOffset;  
       }
-
-      if(xindex == 4 && yindex ==4){
-        hexagon.x = 0;
-        hexagon.y = 0;
+      if(tile.hasVillager){
+        renderVillager(hexagon.x, hexagon.y, container);
       }
 
       container.addChild(hexagon);//Adds to state

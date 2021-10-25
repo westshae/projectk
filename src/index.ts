@@ -1,16 +1,9 @@
 import * as PIXI from 'pixi.js';
+import { load } from './components/general/textures';
 import { generateWorld, renderWorld } from './components/world/world';
 import { MapInterface } from './interfaces/map';
 import { VillagerInterface } from './interfaces/villager';
 
-const load = (app: PIXI.Application) => {
-  return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
-    app.loader
-    .add("assets/hex.png")
-    .add("assets/man.png")
-    .load(()=>{resolve();})
-  });
-};
 
 const windowSize = (app: PIXI.Application) =>{
   app.renderer.resize(window.innerWidth, window.innerHeight);
@@ -20,9 +13,9 @@ const windowSize = (app: PIXI.Application) =>{
 }
 
 
+let app = new PIXI.Application();  // Application itself
 
 const main = async () => {
-  let app = new PIXI.Application();  // Application itself
 
   // Displays application top left of window exactly
   document.body.style.margin = '0';
@@ -37,19 +30,23 @@ const main = async () => {
   app.stage.addChild(container);
 
   // Load assets
-  await load(app);
-  let hexagon = PIXI.Texture.from("assets/hex.png");
+  await load();
+  // let hexagon = PIXI.Texture.from("assets/hex.png");
 
   document.body.appendChild(app.view);
 
-  let villagerTexture = PIXI.Texture.from("assets/man.png");
+  // let villagerTexture = PIXI.Texture.from("assets/man.png");
   // let villager:VillagerInterface = null;
 
 
-  let world:MapInterface = generateWorld(20,20);
-  renderWorld(world, hexagon, container);
+  let world:MapInterface = generateWorld(10,10);
+  renderWorld(world, container);
 
   
 };
 
 main();
+
+export{
+  app,
+}
