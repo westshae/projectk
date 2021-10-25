@@ -41,6 +41,11 @@ const generateWorld = (x:number, y:number) =>{//Creates a world including grid +
   return world;
 }
 
+const highlight = (eventData:any) =>{
+  console.log(eventData);
+}
+
+
 const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
   
   let size = 50;//Size for calculating height/width
@@ -53,6 +58,9 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
   world.grid.map((value, xindex)=>{//For each tile
     value.map((tile, yindex)=>{
       let hexagon:Sprite = Sprite.from(hexagonTexture);
+      tile.sprite = hexagon;
+      hexagon.interactive = true;
+      hexagon.on("mousedown", highlight);
 
       //Sets hexagon width/height
       hexagon.width = width;
@@ -75,6 +83,7 @@ const renderWorld = (world:MapInterface, container:PIXI.Container) =>{
       
 
       container.addChild(hexagon);//Adds to state
+      
 
       if(tile.hasVillager){
         renderVillager(hexagon.x, hexagon.y, container);

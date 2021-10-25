@@ -38,7 +38,7 @@ const main = async () => {
 
 
 
-  let world:MapInterface = generateWorld(10,10);
+  let world:MapInterface = generateWorld(14,6);//Note, height must be even number
 
   let villager:VillagerInterface = createVillager(1, "ree", 5, 5);
   setTile(5,5,world);
