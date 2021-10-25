@@ -1,102 +1,85 @@
 import { TileInterface } from "../../interfaces/tile";
 import { MapInterface } from "../../interfaces/map";
-import { Sprite, Texture } from "pixi.js";
-// import { renderVillager } from "../npc/villager";
+import { Sprite } from "pixi.js";
 import { hexagonTexture } from "../general/textures";
 import { worldContainer } from "../..";
-// import { hexagonTexture } from "../general/textures";
+import { Tile } from "./tile";
 
-const generateGrid = (x:number, y:number) =>{//Creates a grid of tiles, x wide, y high
-  let grid:Array<Array<TileInterface>> = [];
+class World {
+  grid:Array<Array<Tile>>;
+  width:number;
+  height:number;
 
-  for(let width:number = 0; width < x; width++){//For each required tile
-    grid[width] = [];
-    for(let height:number = 0; height < y; height++){
-      grid[width][height] = createTile(width, height);//Set spot in grid to new tile
+  constructor(width:number, height:number){
+    this.width = width;
+    this.height = height;
+    this.grid = this.generateGrid();
+  }
+
+  generateGrid(){
+    let grid:Array<Array<Tile>> = [];
+
+    for(let width:number = 0; width < this.width; width++){//For each required tile
+      grid[width] = [];
+      for(let height:number = 0; height < this.height; height++){
+        grid[width][height] = new Tile(width, height);//Set spot in grid to new tile
+      }
     }
+    return grid;
   }
 
-  return grid;
-}
+  render(){
+    let useOffset = false;//Changes between true and false, every time a now row is made.
+    let heightOffset = 0;//Total change to affect the drawn height
 
-const createTile = (x:number, y:number) =>{//Creates a tile at the specific coordinate
-  let tile:TileInterface = {
-    x:x,
-    y:y,
-    hasVillager:false,
-  }
-  return tile;
-}
+    let size = 50;
+    let width = Math.sqrt(3) * size;
+    let height = 2 * size;
 
-const setTile = (x:number, y:number, world:MapInterface) =>{
-  let tile:TileInterface = world.grid.at(x)?.at(y) ?? {hasVillager:false,x:100,y:100};
-  tile.hasVillager = true;
-}
+    this.grid.map((value, xindex)=>{//For each tile
+      value.map((tile, yindex)=>{
+        // console.log(tile);
+        tile.sprite.width = width;
+        tile.sprite.height = height;
 
-const generateWorld = (x:number, y:number) =>{//Creates a world including grid + data
-  let world:MapInterface = {
-    grid:generateGrid(x,y),
-    width:x,
-    height:y,
-  }
-  return world;
-}
+        if(useOffset){
+          tile.sprite.x = (tile.x * width) + (width/2);
+          tile.sprite.y = (tile.y * height) - heightOffset;
 
-const highlight = (eventData:any) =>{
-  console.log(eventData);
-}
+          heightOffset += (height/2);
 
-
-const renderWorld = (world:MapInterface) =>{
-  
-  let size = 50;//Size for calculating height/width
-  let width = Math.sqrt(3) * size;//Width between center of hexagon
-  let height = 2 * size;//Height between center of hexagon
-
-  let useOffset = false;//Changes between true and false, every time a now row is made.
-  let heightOffset = 0;//Total change to affect the drawn height
-
-  world.grid.map((value, xindex)=>{//For each tile
-    value.map((tile, yindex)=>{
-      let hexagon:Sprite = Sprite.from(hexagonTexture);
-      tile.sprite = hexagon;
-      hexagon.interactive = true;
-      hexagon.on("mousedown", highlight);
-
-      //Sets hexagon width/height
-      hexagon.width = width;
-      hexagon.height = height;
-
-
-      if(useOffset){//If useOffset
-
-        hexagon.x = (tile.x * width) + (width/2);
-        hexagon.y = (tile.y * height) - heightOffset;
-
-        heightOffset += (height/2);//increase offset by half height
-        if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
-          heightOffset -= (height/4) * world.height
+          if(yindex == this.height -1){
+            heightOffset -= (tile.sprite.height/4) * this.height;
+          }
         }
-      }else{//If !useOffset
-        hexagon.x = (tile.x * width);
-        hexagon.y = (tile.y * height) + (height/4) - heightOffset;  
-      }
-      
+        
+        else{
+          tile.sprite.x = (tile.x * tile.sprite.width);
+          tile.sprite.y = (tile.y * tile.sprite.height) + (tile.sprite.height/4) - heightOffset;
+        }
 
-      worldContainer.addChild(hexagon);//Adds to state
-      
-
-      if(tile.hasVillager){
-        // renderVillager(hexagon.x, hexagon.y, container);
-      }
-
-      useOffset = !useOffset;//Switches useOffset
+        useOffset = !useOffset;
+  
+  
+        // if(useOffset){//If useOffset
+  
+        //   tile.x = (tile.x * tile) + (width/2);
+        //   tile.y = (tile.y * height) - heightOffset;
+  
+        //   heightOffset += (height/2);//increase offset by half height
+        //   if(yindex == world.height-1){//if Y index == world height, move offset by 2* height up
+        //     heightOffset -= (height/4) * world.height
+        //   }
+        // }else{//If !useOffset
+        //   tile.x = (tile.x * width);
+        //   tile.y = (tile.y * height) + (height/4) - heightOffset;  
+        // }
+        // useOffset = !useOffset;//Switches useOffset
+      })
     })
-  })
+  }
 }
 
 export {
-  generateWorld,
-  renderWorld,
-  setTile,
+  World,
 }

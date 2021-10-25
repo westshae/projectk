@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { load } from './components/general/textures';
 import { Villager } from './components/npc/villager';
-import { generateWorld, renderWorld, setTile } from './components/world/world';
+import { World } from './components/world/world';
+// import { generateWorld, renderWorld, setTile } from './components/world/world';
 import { MapInterface } from './interfaces/map';
 
 
@@ -38,15 +39,17 @@ const main = async () => {
 
 
 
-  let world:MapInterface = generateWorld(14,6);//Note, height must be even number
+  // let world:MapInterface = generateWorld(14,6);//Note, height must be even number
 
   // let villager:VillagerInterface = createVillager(1, "ree", 5, 5);
+  let world:World = new World(14,6);
+  world.render();
   let villager:Villager = new Villager(1, "Chur", 5, 5);
   villager.render();
-  setTile(5,5,world);
+  // setTile(5,5,world);
 
 
-  renderWorld(world);
+  // renderWorld(world);
 
   
 };
