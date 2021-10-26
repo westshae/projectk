@@ -15,7 +15,6 @@ class Tile{
   constructor(x:number, y:number){
     this.x = x;
     this.y = y;
-    console.log("REE: " + x + ":" + y);
     this.hasVillager = false;
     this.isHighlighted = false;
     this.sprite = Sprite.from(hexagonTexture);
