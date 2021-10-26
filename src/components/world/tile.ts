@@ -35,17 +35,17 @@ class Tile{
         this.villagers = [];
       }
       let villager:Villager = world.current;//Gets villager from world.current
+
       //Changes coords to new tile coords
       villager.x = this.x;
       villager.y = this.y;
+
       //Adds villager to tile
       this.hasVillager = true;
       this.villagers.push(villager);
 
       //Resets currently selected villager
       world.current = undefined;
-
-      villager.render(this.x,this.y);
     }
   }
 }
