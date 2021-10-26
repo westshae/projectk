@@ -20,7 +20,7 @@ class World {
     let tile:Tile | undefined = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       tile.hasVillager = true;
-      tile.villagers.push(villager);
+      tile.villager = villager;
     }
     this.villagers.push(villager);
   }
@@ -69,15 +69,14 @@ class World {
           tile.sprite.y = (tile.y * height) + (height/4) - heightOffset;
         }
 
-        //For each villager in the tile, render it
-        for(let i = 0; i < tile.villagers.length; i++){
-          let villager:Villager | undefined = tile.villagers.at(i);
+        //If tile has villager, render it
+        if(tile.hasVillager){
+          let villager:Villager | undefined = tile.villager;
           if(villager != undefined){
-            console.log("thisright");
             villager.render(tile.sprite.x, tile.sprite.y);
           }
         }
-
+        
         useOffset = !useOffset;
       })
     })

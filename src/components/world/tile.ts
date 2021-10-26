@@ -9,7 +9,7 @@ class Tile{
   y:number;
   hasVillager:boolean;
   sprite:Sprite;
-  villagers:Array<Villager>;
+  villager?:Villager;
   isHighlighted:boolean;
 
   constructor(x:number, y:number){
@@ -18,7 +18,6 @@ class Tile{
     console.log("REE: " + x + ":" + y);
     this.hasVillager = false;
     this.isHighlighted = false;
-    this.villagers = new Array<Villager>();
     this.sprite = Sprite.from(hexagonTexture);
 
     //Makes clicking with mouse send to handler
@@ -31,18 +30,15 @@ class Tile{
 
   handleClick(){//Handles click event
     if(world.current != undefined){//If there is currently a selected villager
-      if(this.villagers == undefined){//If villagers don't exist, create empty array
-        this.villagers = [];
-      }
       let villager:Villager = world.current;//Gets villager from world.current
 
-      //Changes coords to new tile coords
+      //Changes villager x/y coords
       villager.x = this.x;
       villager.y = this.y;
 
-      //Adds villager to tile
+      //Updates tile's villager
+      this.villager = villager;
       this.hasVillager = true;
-      this.villagers.push(villager);
 
       //Resets currently selected villager
       world.current = undefined;
