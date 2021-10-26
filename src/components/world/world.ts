@@ -68,6 +68,7 @@ class World {
         for(let i = 0; i < tile.villagers.length; i++){
           let villager:Villager | undefined = tile.villagers.at(i);
           if(villager != undefined){
+            console.log()
             villager.render(tile.sprite.x, tile.sprite.y);
           }
         }
