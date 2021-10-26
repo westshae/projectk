@@ -47,10 +47,12 @@ class World {
 
     this.grid.map((value, xindex)=>{//For each tile
       value.map((tile, yindex)=>{
+        //Sets width/height of sprite from calculations
         tile.sprite.width = width;
         tile.sprite.height = height;
 
-        if(useOffset){
+        if(useOffset){//If even line
+          //Math to get hexagons correct placement
           tile.sprite.x = (tile.x * width) + (width/2);
           tile.sprite.y = (tile.y * height) - heightOffset;
 
@@ -61,11 +63,13 @@ class World {
           }
         }
         
-        else{
+        else{//If odd line
+          //Math to get hexagons correct placement
           tile.sprite.x = (tile.x * width);
           tile.sprite.y = (tile.y * height) + (height/4) - heightOffset;
         }
 
+        //For each villager in the tile, render it
         for(let i = 0; i < tile.villagers.length; i++){
           let villager:Villager | undefined = tile.villagers.at(i);
           if(villager != undefined){

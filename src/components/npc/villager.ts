@@ -18,21 +18,22 @@ class Villager {
   }
 
   render(x:number, y:number){
+    //Calculates height/width of sprite
     this.sprite.width = Math.sqrt(3) * 50;
     this.sprite.height = 2 * 50;
     
     this.sprite.x = x;
     this.sprite.y = y;
 
+    //Make tile interactable
     this.sprite.interactive = true;
     this.sprite.on("pointerdown", this.handleClick);
 
-    worldContainer.addChild(this.sprite);
+    worldContainer.addChild(this.sprite);//Adds to world container
   }
 
-  handleClick(event:Event){
-    console.log(event);
-    world.current = this;
+  handleClick(){
+    world.current = this;//Sets currently selected villager to clicked villager
   }
 }
 
