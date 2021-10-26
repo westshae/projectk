@@ -1,47 +1,28 @@
 import * as PIXI from 'pixi.js';
-import { generateWorld, renderWorld } from './components/world/world';
-import { MapInterface } from './interfaces/map';
+import { init } from './components/util/init';
+import { World } from './components/world/world';
 
-const load = (app: PIXI.Application) => {
-  return new Promise((resolve:any) => {//To add additional loaded files, add another line of ".add("path)
-    app.loader
-    .add("assets/hex.png")
-    .load(()=>{resolve();})
-  });
-};
-
-const windowSize = (app: PIXI.Application) =>{
-  app.renderer.resize(window.innerWidth, window.innerHeight);
-  window.addEventListener('resize', (e:UIEvent) => {
-    app.renderer.resize(window.innerWidth, window.innerHeight);
-  });
-}
+const app = new PIXI.Application();  // Application itself
+const worldContainer = new PIXI.Container();
+const world:World = new World(14,6);
 
 
 
 const main = async () => {
-  let app = new PIXI.Application();  // Application itself
+  init();//Initiates screen/containers
 
-  // Displays application top left of window exactly
-  document.body.style.margin = '0';
-  app.renderer.view.style.position = 'absolute';
-  app.renderer.view.style.display = 'block';
+  //Adds villagers, with id 1/2, names bob/joe, at coords 4:4 and 3:3 then rendersthe world
+  world.addVillager(1, "Bob", 4, 4);
+  world.addVillager(2, "Joe", 3, 3);
+  world.render();
 
-  // Actively changes application size to window size
-  windowSize(app);
-
-  //Create container for view
-  const container = new PIXI.Container();
-  app.stage.addChild(container);
-
-  // Load assets
-  await load(app);
-  let hexagon = PIXI.Texture.from("assets/hex.png");
-
-  document.body.appendChild(app.view);
-
-  let world:MapInterface = generateWorld(20,10);
-  renderWorld(world, hexagon, container);
+  
 };
 
 main();
+
+export{
+  app,
+  worldContainer,
+  world,
+}
