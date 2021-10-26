@@ -14,16 +14,14 @@ class World {
     this.villagers = [];
   }
 
-  addVillager(){
-    let villager:Villager = new Villager(1, "Chur", 5, 5);
-    this.villagers.push(villager);
-  }
-
-  renderVillagers(){
-    for(let i = 0; i < this.villagers.length; i++){
-      let villager = this.villagers.at(i);
-      villager?.render();
+  addVillager(id:number, name:string, x:number, y:number){
+    let villager:Villager = new Villager(id, name, x, y);
+    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    if(tile !== undefined){
+      tile.hasVillager = true;
+      tile.villagers.push(villager);
     }
+    this.villagers.push(villager);
   }
 
   generateGrid(){
@@ -65,6 +63,13 @@ class World {
         else{
           tile.sprite.x = (tile.x * width);
           tile.sprite.y = (tile.y * height) + (height/4) - heightOffset;
+        }
+
+        for(let i = 0; i < tile.villagers.length; i++){
+          let villager:Villager | undefined = tile.villagers.at(i);
+          if(villager != undefined){
+            villager.render(tile.sprite.x, tile.sprite.y);
+          }
         }
 
         useOffset = !useOffset;

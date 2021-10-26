@@ -36,10 +36,13 @@ class Villager {
     this.sprite = Sprite.from(villagerTexture);
   }
 
-  render(){
+  render(x:number, y:number){
     let villagerSprite = this.sprite;
     villagerSprite.width = Math.sqrt(3) * 50;
     villagerSprite.height = 2 * 50;
+
+    this.x = x;
+    this.y = y;
     
     villagerSprite.x = this.x;
     villagerSprite.y = this.y;

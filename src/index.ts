@@ -11,9 +11,9 @@ const main = async () => {
   init();
 
   let world:World = new World(14,6);
+  world.addVillager(1, "Bob", 4, 4);
   world.render();
-  world.addVillager();
-  world.renderVillagers();
+
   
 };
 
