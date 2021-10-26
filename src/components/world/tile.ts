@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { worldContainer } from "../..";
+import { app, world, worldContainer } from "../..";
 import { Villager } from "../npc/villager";
 import { hexagonTexture } from "../util/textures";
 
@@ -15,9 +15,10 @@ class Tile{
   constructor(x:number, y:number){
     this.x = x;
     this.y = y;
+    console.log("REE: " + x + ":" + y);
     this.hasVillager = false;
     this.isHighlighted = false;
-    this.villagers = [];
+    this.villagers = new Array<Villager>();
     this.sprite = Sprite.from(hexagonTexture);
 
     this.sprite.interactive = true;
@@ -28,9 +29,22 @@ class Tile{
   }
 
   handleClick(event:any){
-    console.log(this.x + ":" + this.y);
-    this.isHighlighted = !this.isHighlighted;
-    console.log(this.isHighlighted);
+    if(world.current != undefined){
+      if(this.villagers == undefined){
+        this.villagers = [];
+      }
+      let villager:Villager = world.current;
+      villager.x = this.x;
+      villager.y = this.y;
+      this.hasVillager = true;
+      this.villagers.push(villager);
+      world.current = undefined;
+
+      villager.render(this.x,this.y);
+
+
+
+    }
   }
 }
 

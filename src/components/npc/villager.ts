@@ -1,50 +1,38 @@
 import { villagerTexture } from "../util/textures";
 import { Sprite } from "pixi.js";
-import { worldContainer } from "../..";
-
-// const createVillager = (id:number, name:string, x:number, y:number) =>{
-//   let villager = {
-    
-//   }
-
-//   return villager;
-// }
-
-// const renderVillager = (x:number, y:number, container:PIXI.Container) =>{
-  // let villagerSprite = 
-  // villagerSprite.width = Math.sqrt(3) * 50;
-  // villagerSprite.height = 2 * 50;
-  
-  // villagerSprite.x = x;
-  // villagerSprite.y = y;
-
-  // container.addChild(villagerSprite);
-// }
+import { world, worldContainer } from "../..";
 
 class Villager {
   id:number;
   name:string;
-  coordx:number;
-  coordy:number;
+  x:number;
+  y:number;
   sprite:Sprite;
 
   constructor(id:number, name:string, x:number, y:number){
     this.id = id;
     this.name = name;
-    this.coordx = x;
-    this.coordy = y;
+    this.x = x;
+    this.y = y;
     this.sprite = Sprite.from(villagerTexture);
   }
 
   render(x:number, y:number){
-    let villagerSprite = this.sprite;
-    villagerSprite.width = Math.sqrt(3) * 50;
-    villagerSprite.height = 2 * 50;
+    this.sprite.width = Math.sqrt(3) * 50;
+    this.sprite.height = 2 * 50;
     
-    villagerSprite.x = x;
-    villagerSprite.y = y;
+    this.sprite.x = x;
+    this.sprite.y = y;
 
-    worldContainer.addChild(villagerSprite);
+    this.sprite.interactive = true;
+    this.sprite.on("pointerdown", this.handleClick);
+
+    worldContainer.addChild(this.sprite);
+  }
+
+  handleClick(event:Event){
+    console.log(event);
+    world.current = this;
   }
 }
 

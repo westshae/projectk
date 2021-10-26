@@ -6,6 +6,7 @@ class World {
   width:number;
   height:number;
   villagers:Array<Villager>;
+  current?:Villager;
 
   constructor(width:number, height:number){
     this.width = width;

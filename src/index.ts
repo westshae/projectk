@@ -5,14 +5,14 @@ import { World } from './components/world/world';
 
 const app = new PIXI.Application();  // Application itself
 const worldContainer = new PIXI.Container();
+const world:World = new World(14,6);
+
 
 
 const main = async () => {
   init();
 
-  let world:World = new World(14,6);
   world.addVillager(1, "Bob", 4, 4);
-  world.render();
   world.addVillager(2, "Joe", 3, 3);
   world.render();
 
@@ -23,5 +23,6 @@ main();
 
 export{
   app,
-  worldContainer
+  worldContainer,
+  world,
 }
