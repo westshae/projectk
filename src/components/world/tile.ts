@@ -10,13 +10,16 @@ class Tile{
   hasVillager:boolean;
   sprite:Sprite;
   villagers:Array<Villager>;
+  isHighlighted:boolean;
 
   constructor(x:number, y:number){
     this.x = x;
     this.y = y;
     this.hasVillager = false;
+    this.isHighlighted = false;
     this.villagers = [];
     this.sprite = Sprite.from(hexagonTexture);
+
     this.sprite.interactive = true;
     this.sprite.on("mousedown", this.handleClick);
 
@@ -24,8 +27,10 @@ class Tile{
     worldContainer.addChild(this.sprite);
   }
 
-  handleClick(){
-
+  handleClick(event:any){
+    console.log(this.x + ":" + this.y);
+    this.isHighlighted = !this.isHighlighted;
+    console.log(this.isHighlighted);
   }
 }
 

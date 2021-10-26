@@ -13,9 +13,8 @@ const main = async () => {
   let world:World = new World(14,6);
   world.addVillager(1, "Bob", 4, 4);
   world.render();
-  app.ticker.FPS.toFixed(60);
-  app.ticker.add(()=>world.render());
   world.addVillager(2, "Joe", 3, 3);
+  world.render();
 
   
 };

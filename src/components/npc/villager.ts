@@ -24,15 +24,15 @@ import { worldContainer } from "../..";
 class Villager {
   id:number;
   name:string;
-  x:number;
-  y:number;
+  coordx:number;
+  coordy:number;
   sprite:Sprite;
 
   constructor(id:number, name:string, x:number, y:number){
     this.id = id;
     this.name = name;
-    this.x = x;
-    this.y = y;
+    this.coordx = x;
+    this.coordy = y;
     this.sprite = Sprite.from(villagerTexture);
   }
 
@@ -40,12 +40,9 @@ class Villager {
     let villagerSprite = this.sprite;
     villagerSprite.width = Math.sqrt(3) * 50;
     villagerSprite.height = 2 * 50;
-
-    this.x = x;
-    this.y = y;
     
-    villagerSprite.x = this.x;
-    villagerSprite.y = this.y;
+    villagerSprite.x = x;
+    villagerSprite.y = y;
 
     worldContainer.addChild(villagerSprite);
   }
