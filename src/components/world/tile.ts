@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { Villager } from "../npc/villager";
-import { hexagonTexture } from "../util/textures";
+import { dirtTileTexture } from "../util/textures";
 
 
 class Tile{
@@ -17,7 +17,7 @@ class Tile{
     this.y = y;
     this.hasVillager = false;
     this.isHighlighted = false;
-    this.sprite = Sprite.from(hexagonTexture);
+    this.sprite = Sprite.from(dirtTileTexture);
 
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;

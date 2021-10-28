@@ -19,10 +19,10 @@ class Villager {
 
   render(x:number, y:number){
     //Calculates height/width of sprite
-    this.sprite.width = Math.sqrt(3) * 50;
-    this.sprite.height = 2 * 50;
+    this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
+    this.sprite.height = (2 * 50) * 0.8;
     
-    this.sprite.x = x;
+    this.sprite.x = x + (this.sprite.width * 0.15);
     this.sprite.y = y;
 
     //Make tile interactable
