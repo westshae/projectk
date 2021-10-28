@@ -1,28 +1,24 @@
 import { app, world, worldContainer } from "../..";
 import { Viewport } from "pixi-viewport";
-import { dirtTileTexture, waterTexture } from "./textures";
-import { Sprite } from "pixi.js";
 
 const init = async() =>{
   windowSize();
   windowHTML();
   document.body.appendChild(app.view);
 
+  //Adds viewport to stage, then world to viewport
   app.stage.addChild(viewport);
-  viewport
-  .drag()
-  .pinch()
-  .wheel()
-  .decelerate();
-
   viewport.addChild(worldContainer);
+
+  //Settings for camera
+  viewport
+  .drag()//Drag mouse to move camera
+  .wheel()//Changes scroll wheel to zoom
 }
 
 const viewport = new Viewport({
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
-  worldWidth:1000,
-  worldHeight:1000,
 }) as any;
 
 const windowSize = () =>{

@@ -4,7 +4,7 @@ import { World } from './components/world/world';
 
 const app = new PIXI.Application();  // Application itself
 const worldContainer = new PIXI.Container();
-const world:World = new World(24);
+const world:World = new World(64);
 
 
 
