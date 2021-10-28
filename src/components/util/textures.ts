@@ -9,7 +9,7 @@ const mountainTexture = Texture.from("../assets/mountain.png");
 const oreTexture = Texture.from("../assets/ore.png");
 const sandTileTexture = Texture.from("../assets/sand_tile.png");
 const treeTexture = Texture.from("../assets/tree.png");
-const waterTexture = Texture.from("../assets/water.jpg");
+const waterTexture = Texture.from("../assets/water.png");
 
 
 export{

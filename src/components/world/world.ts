@@ -31,7 +31,7 @@ class World {
     for(let width:number = 0; width < this.size; width++){//For each required tile
       grid[width] = [];
       for(let height:number = 0; height < this.size; height++){
-        grid[width][height] = new Tile(width, height, noise.noise2D(width*24, height*24));//Set spot in grid to new tile
+        grid[width][height] = new Tile(width, height, noise.noise2D(width/8, height/8));//Set spot in grid to new tile
       }
     }
     return grid;
