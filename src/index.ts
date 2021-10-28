@@ -15,8 +15,6 @@ const main = async () => {
   world.addVillager(1, "Bob", 4, 4);
   world.addVillager(2, "Joe", 3, 3);
   world.render();
-
-  
 };
 
 main();
