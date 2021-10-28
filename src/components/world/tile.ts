@@ -34,9 +34,6 @@ class Tile{
     else{
       return Sprite.from(dirtTileTexture);
     }
-    // else{
-    //   return Sprite.from(mountainTexture);
-    // }
   }
 
   handleClick(){//Handles click event
