@@ -1,5 +1,6 @@
 import { Villager } from "../npc/villager";
 import { Tile } from "./tile";
+import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 
 class World {
   grid:Array<Array<Tile>>;
@@ -25,10 +26,13 @@ class World {
 
   generateGrid(){
     let grid:Array<Array<Tile>> = [];
+    const noise = new SimplexNoise(Math.random);
 
     for(let width:number = 0; width < this.size; width++){//For each required tile
       grid[width] = [];
       for(let height:number = 0; height < this.size; height++){
+        console.log(noise.noise2D(width*24, height*24));
+
         grid[width][height] = new Tile(width, height);//Set spot in grid to new tile
       }
     }
