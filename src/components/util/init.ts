@@ -1,14 +1,29 @@
-import { app, worldContainer } from "../..";
-
+import { app, world, worldContainer } from "../..";
+import { Viewport } from "pixi-viewport";
+import { dirtTileTexture, waterTexture } from "./textures";
+import { Sprite } from "pixi.js";
 
 const init = async() =>{
   windowSize();
   windowHTML();
-  app.stage.addChild(worldContainer);
   document.body.appendChild(app.view);
 
+  app.stage.addChild(viewport);
+  viewport
+  .drag()
+  .pinch()
+  .wheel()
+  .decelerate();
 
+  viewport.addChild(worldContainer);
 }
+
+const viewport = new Viewport({
+  screenWidth: window.innerWidth,
+  screenHeight: window.innerHeight,
+  worldWidth:1000,
+  worldHeight:1000,
+}) as any;
 
 const windowSize = () =>{
   app.renderer.resize(window.innerWidth, window.innerHeight);
