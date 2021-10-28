@@ -5,11 +5,14 @@ import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-n
 class World {
   grid:Array<Array<Tile>>;
   size:number;
+  screenSize:number;
   villagers:Array<Villager>;
   current?:Villager;
 
   constructor(size:number){
     this.size = size;
+    this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
+    // console.log(this.screenSize );
     this.grid = this.generateGrid();
     this.villagers = [];
   }
