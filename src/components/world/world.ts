@@ -1,16 +1,15 @@
 import { Villager } from "../npc/villager";
 import { Tile } from "./tile";
+import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 
 class World {
   grid:Array<Array<Tile>>;
-  width:number;
-  height:number;
+  size:number;
   villagers:Array<Villager>;
   current?:Villager;
 
-  constructor(width:number, height:number){
-    this.width = width;
-    this.height = height;
+  constructor(size:number){
+    this.size = size;
     this.grid = this.generateGrid();
     this.villagers = [];
   }
@@ -27,11 +26,13 @@ class World {
 
   generateGrid(){
     let grid:Array<Array<Tile>> = [];
+    const noise = new SimplexNoise(Math.random());//Generates noise map
+    //https://www.redblobgames.com/maps/terrain-from-noise/
 
-    for(let width:number = 0; width < this.width; width++){//For each required tile
+    for(let width:number = 0; width < this.size; width++){//For each required tile
       grid[width] = [];
-      for(let height:number = 0; height < this.height; height++){
-        grid[width][height] = new Tile(width, height);//Set spot in grid to new tile
+      for(let height:number = 0; height < this.size; height++){
+        grid[width][height] = new Tile(width, height, noise.noise2D(width/8, height/8));//Set spot in grid to new tile, with noise for biome
       }
     }
     return grid;
@@ -58,8 +59,8 @@ class World {
 
           heightOffset += (height/2);
 
-          if(yindex == this.height -1){
-            heightOffset -= (height/4) * this.height;
+          if(yindex == this.size -1){
+            heightOffset -= (height/4) * this.size;
           }
         }
         

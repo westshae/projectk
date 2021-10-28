@@ -1,6 +1,6 @@
 {
     "name": "PROJECTK",
-    "version": "0.0",
+    "version": "0.3",
     "description": "PROJECTK",
     "scripts": {
         "dev": "webpack-dev-server -d"
@@ -18,6 +18,7 @@
         "webpack-dev-server": "^3.10.3"
     },
     "dependencies": {
-        "pixi.js": "5.2.1"
+        "pixi.js": "5.2.1",
+        "simplex-noise": "^3.0.0"
     }
 }

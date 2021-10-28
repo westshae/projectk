@@ -4,7 +4,7 @@ import { World } from './components/world/world';
 
 const app = new PIXI.Application();  // Application itself
 const worldContainer = new PIXI.Container();
-const world:World = new World(14,6);
+const world:World = new World(24);
 
 
 
@@ -15,8 +15,6 @@ const main = async () => {
   world.addVillager(1, "Bob", 4, 4);
   world.addVillager(2, "Joe", 3, 3);
   world.render();
-
-  
 };
 
 main();
