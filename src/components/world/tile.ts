@@ -27,13 +27,16 @@ class Tile{
     worldContainer.addChild(this.sprite);
   }
 
-  handleSprite(noise:number){
+  handleSprite(noise:number){//Returns sprite based on noise value
     if(noise < 0){
       return Sprite.from(sandTileTexture);
     }
     else{
       return Sprite.from(dirtTileTexture);
     }
+    // else{
+    //   return Sprite.from(mountainTexture);
+    // }
   }
 
   handleClick(){//Handles click event
