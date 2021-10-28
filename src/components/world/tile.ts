@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { Villager } from "../npc/villager";
-import { dirtTileTexture } from "../util/textures";
+import { dirtTileTexture, grassTileTexture, mountainTexture, sandTileTexture, treeTexture } from "../util/textures";
 
 
 class Tile{
@@ -12,12 +12,12 @@ class Tile{
   villager?:Villager;
   isHighlighted:boolean;
 
-  constructor(x:number, y:number){
+  constructor(x:number, y:number, noise:number){
     this.x = x;
     this.y = y;
     this.hasVillager = false;
     this.isHighlighted = false;
-    this.sprite = Sprite.from(dirtTileTexture);
+    this.sprite = this.handleSprite(noise);
 
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
@@ -25,6 +25,15 @@ class Tile{
 
 
     worldContainer.addChild(this.sprite);
+  }
+
+  handleSprite(noise:number){
+    if(noise < 0.2){
+      return Sprite.from(dirtTileTexture);
+    }
+    else{
+      return Sprite.from(treeTexture);
+    }
   }
 
   handleClick(){//Handles click event
