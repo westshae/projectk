@@ -1,4 +1,5 @@
 import { Application, Container } from 'pixi.js';
+import { Resources } from './components/data/resources';
 import { villager } from './components/npc/npcTypes';
 import { init } from './components/util/init';
 import { World } from './components/world/world';
@@ -6,62 +7,9 @@ import { World } from './components/world/world';
 const app = new Application();  // Application itself
 const worldContainer = new Container();
 const world:World = new World(64);
+const resources:Resources = new Resources();
 
-class Resources {
-  lumber:number;
-  stone:number;
-  metal:number;
-  experience:number;
-  level:number;
-  
-  constructor(){
-    this.lumber = 0;
-    this.stone = 0;
-    this.metal = 0;
-    this.experience = 0;
-    this.level = 0;
-  }
 
-  increaseResource(resourceID:number, amount:number){
-    switch(resourceID){
-      case 0:
-        this.lumber += amount;
-        break;
-      case 1:
-        this.stone += amount;
-        break;
-      case 2:
-        this.metal += amount;
-        break;
-      case 3:
-        this.experience += amount;
-        break;
-      case 4:
-        this.level += amount;
-        break;
-    }
-  }
-
-  decreaseResource(resourceID:number, amount:number){
-    switch(resourceID){
-      case 0:
-        this.lumber -= amount;
-        break;
-      case 1:
-        this.stone -= amount;
-        break;
-      case 2:
-        this.metal -= amount;
-        break;
-      case 3:
-        this.experience -= amount;
-        break;
-      case 4:
-        this.level -= amount;
-        break;
-    }
-  }
-}
 
 const main = async () => {
   init();//Initiates screen/containers
@@ -78,5 +26,4 @@ export{
   app,
   worldContainer,
   world,
-  Resources,
 }
