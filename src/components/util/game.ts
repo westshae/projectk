@@ -24,6 +24,9 @@ class Game{
   }
 
   nextTurn(){
+    this.world.npcMap.forEach((npc, key)=>{
+      
+    })
     console.log("NEXT TURN");
   }
 

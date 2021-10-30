@@ -10,6 +10,7 @@ interface npcType {
   defense:number;
   type:number;
   sprite:Sprite;
+  movement:number;
 }
 class NPC {
   id:number;
@@ -19,6 +20,7 @@ class NPC {
   attack:number;
   defense:number;
   sprite:Sprite;
+  movement:number;
   x:number;
   y:number;
 
@@ -27,6 +29,7 @@ class NPC {
     this.health = type.health;
     this.defense = type.defense;
     this.type = type.type;
+    this.movement = type.movement;
     this.x = x;
     this.y = y;
     this.name = name;
@@ -56,6 +59,8 @@ class NPC {
   select(){
     game.world.current = this;//Sets currently selected villager to clicked villager
   }
+
+  
 
   handleSprite(){
     switch(this.type){

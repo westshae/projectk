@@ -8,6 +8,7 @@ let villager:npcType =  {
   defense: 4,
   type: 0,
   sprite: Sprite.from(villagerTexture),
+  movement: 5,
 }
 
 export{
