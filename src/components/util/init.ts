@@ -24,16 +24,6 @@ const init = async() =>{
   .wheel()//Changes scroll wheel to zoom
 }
 
-const initHUD = (hud:Container) =>{
-  app.stage.addChild(hud);
-
-    let topHud = new Graphics();
-    topHud.beginFill(0x434343);
-    topHud.drawRect(0,0,window.innerWidth, 50);
-
-    hud.addChild(topHud);
-}
-
 const viewport = new Viewport({
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,

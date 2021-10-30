@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Container, Graphics, Renderer } from "pixi.js";
 import { app } from "../..";
 
 
@@ -13,11 +13,23 @@ class HUD {
   init(){
     app.stage.addChild(this.container);
 
-    let topHud = new Graphics();
-    topHud.beginFill(0x434343);
-    topHud.drawRect(0,window.innerHeight - 50,window.innerWidth, window.innerHeight);
+    let bar = new Graphics();
+    this.draw(bar);
+    window.addEventListener('resize', ()=>{
+      this.draw(bar);
+    })
 
-    this.container.addChild(topHud);
+    this.container.addChild(bar);
+  }
+
+  draw(bar:Graphics){
+    let height = app.renderer.height/16;
+    let width = app.renderer.width;
+    bar.clear();
+    bar.beginFill(0x434343);
+    bar.drawRect(0,0,width, height);
+    bar.beginFill(0x900000);
+    bar.drawStar(height/2,height/2,5,height/2);
   }
 }
 
