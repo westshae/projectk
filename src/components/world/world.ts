@@ -1,30 +1,42 @@
 import { Villager } from "../npc/villager";
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
+import { NPC, npcType } from "../npc/npc";
 
 class World {
   grid:Array<Array<Tile>>;
   size:number;
   screenSize:number;
-  villagers:Array<Villager>;
-  current?:Villager;
+  // villagers:Array<Villager>;
+  npcMap:Map<number, NPC>;
+  current?:NPC;
 
   constructor(size:number){
     this.size = size;
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
-    this.villagers = [];
+    this.npcMap = new Map<number, NPC>();
+    // this.villagers = [];
   }
 
-  addVillager(id:number, name:string, x:number, y:number){
-    let villager:Villager = new Villager(id, name, x, y);
+  addNPC(x:number, y:number, type:npcType, name:string){
+    let npc:NPC = new NPC(x, y, type, name);
     let tile:Tile | undefined = this.grid.at(x)?.at(y);
     if(tile !== undefined){
-      tile.hasVillager = true;
-      tile.villager = villager;
+      tile.npc = npc;
     }
-    this.villagers.push(villager);
+    this.npcMap.set(npc.id, npc);
   }
+
+  // addVillager(id:number, name:string, x:number, y:number){
+  //   let villager:Villager = new Villager(id, name, x, y);
+  //   let tile:Tile | undefined = this.grid.at(x)?.at(y);
+  //   if(tile !== undefined){
+  //     tile.hasVillager = true;
+  //     tile.villager = villager;
+  //   }
+  //   this.villagers.push(villager);
+  // }
 
   generateGrid(){
     let grid:Array<Array<Tile>> = [];

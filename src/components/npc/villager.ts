@@ -17,24 +17,24 @@ class Villager {
     this.sprite = Sprite.from(villagerTexture);
   }
 
-  render(x:number, y:number){
-    //Calculates height/width of sprite
-    this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
-    this.sprite.height = (2 * 50) * 0.8;
+  // render(x:number, y:number){
+  //   //Calculates height/width of sprite
+  //   this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
+  //   this.sprite.height = (2 * 50) * 0.8;
     
-    this.sprite.x = x + (this.sprite.width * 0.15);
-    this.sprite.y = y;
+  //   this.sprite.x = x + (this.sprite.width * 0.15);
+  //   this.sprite.y = y;
 
-    //Make tile interactable
-    this.sprite.interactive = true;
-    this.sprite.on("pointerdown", this.handleClick);
+  //   //Make tile interactable
+  //   this.sprite.interactive = true;
+  //   this.sprite.on("pointerdown", this.handleClick);
 
-    worldContainer.addChild(this.sprite);//Adds to world container
-  }
+  //   worldContainer.addChild(this.sprite);//Adds to world container
+  // }
 
-  handleClick(){
-    world.current = this;//Sets currently selected villager to clicked villager
-  }
+  // handleClick(){
+  //   world.current = this;//Sets currently selected villager to clicked villager
+  // }
 }
 
 export{
