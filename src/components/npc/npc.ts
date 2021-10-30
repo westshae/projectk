@@ -1,15 +1,41 @@
+import { Sprite } from "pixi.js";
+import { missingTexture, villagerTexture } from "../util/textures";
 
-class NPC {
-  id:number;
-  type:number;//0 = Villager, 1 = Monster, 2 = Animal, 3 = Boss
+let recentID = 0;
+
+interface npcType {
   health:number;
   attack:number;
   defense:number;
+  type:number;
+}
+class NPC {
+  id:number;
+  type:number;
+  health:number;
+  attack:number;
+  defense:number;
+  sprite:Sprite;
 
-  constructor(npcID:number){
-    switch(npcID){
-      case 1:
-        
+  constructor(type:npcType){
+    this.attack = type.attack;
+    this.health = type.health;
+    this.defense = type.defense;
+    this.type = type.type;
+
+    //Increases ID number by 1, then sets
+    recentID++;
+    this.id = recentID;
+
+    this.sprite = this.handleSprite();
+  }
+
+  handleSprite(){
+    switch(this.type){
+      case 0:
+        return Sprite.from(villagerTexture);
+      default:
+        return Sprite.from(missingTexture);
     }
   }
 

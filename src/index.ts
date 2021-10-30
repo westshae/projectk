@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js';
+import { NPC } from './components/npc/npc';
 import { init } from './components/util/init';
 import { World } from './components/world/world';
 
 const app = new PIXI.Application();  // Application itself
 const worldContainer = new PIXI.Container();
 const world:World = new World(64);
+
 
 
 

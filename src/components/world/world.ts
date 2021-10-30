@@ -12,7 +12,6 @@ class World {
   constructor(size:number){
     this.size = size;
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
-    // console.log(this.screenSize );
     this.grid = this.generateGrid();
     this.villagers = [];
   }

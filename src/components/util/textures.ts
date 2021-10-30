@@ -10,6 +10,7 @@ const oreTexture = Texture.from("../assets/ore.png");
 const sandTileTexture = Texture.from("../assets/sand_tile.png");
 const treeTexture = Texture.from("../assets/tree.png");
 const waterTexture = Texture.from("../assets/water.png");
+const missingTexture = Texture.from("../assets/missing.png");
 
 
 export{
@@ -23,4 +24,5 @@ export{
   sandTileTexture,
   treeTexture,
   waterTexture,
+  missingTexture,
 }
