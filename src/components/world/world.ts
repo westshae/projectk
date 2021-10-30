@@ -85,10 +85,18 @@ class World {
         }
 
         //If tile has villager, render it
-        if(tile.hasVillager){
-          let villager:Villager | undefined = tile.villager;
-          if(villager != undefined){
-            villager.render(tile.sprite.x, tile.sprite.y);
+        // if(tile.hasVillager){
+        //   let villager:Villager | undefined = tile.villager;
+        //   if(villager != undefined){
+        //     villager.render(tile.sprite.x, tile.sprite.y);
+        //   }
+        // }
+
+        //If tile has npc, render it
+        if(tile.npc !== undefined){
+          let npc:NPC | undefined = tile.npc;
+          if(npc !== undefined){
+            npc.render(tile.sprite.x, tile.sprite.y);
           }
         }
         

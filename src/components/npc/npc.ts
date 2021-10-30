@@ -9,6 +9,7 @@ interface npcType {
   attack:number;
   defense:number;
   type:number;
+  sprite:Sprite;
 }
 class NPC {
   id:number;
