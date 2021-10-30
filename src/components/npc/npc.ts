@@ -11,17 +11,23 @@ interface npcType {
 }
 class NPC {
   id:number;
+  name:string;
   type:number;
   health:number;
   attack:number;
   defense:number;
   sprite:Sprite;
+  x:number;
+  y:number;
 
-  constructor(type:npcType){
+  constructor(x:number, y:number, type:npcType, name:string){
     this.attack = type.attack;
     this.health = type.health;
     this.defense = type.defense;
     this.type = type.type;
+    this.x = x;
+    this.y = y;
+    this.name = name;
 
     //Increases ID number by 1, then sets
     recentID++;
