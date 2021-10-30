@@ -7,6 +7,42 @@ const app = new Application();  // Application itself
 const worldContainer = new Container();
 const world:World = new World(64);
 
+class Resources {
+  lumber:number;
+  stone:number;
+  metal:number;
+  experience:number;
+  level:number;
+  
+  constructor(){
+    this.lumber = 0;
+    this.stone = 0;
+    this.metal = 0;
+    this.experience = 0;
+    this.level = 0;
+  }
+
+  increaseResource(resourceID:number, increaseAmount:number){
+    switch(resourceID){
+      case 0:
+        this.lumber += increaseAmount;
+        break;
+      case 1:
+        this.stone += increaseAmount;
+        break;
+      case 2:
+        this.metal += increaseAmount;
+        break;
+      case 3:
+        this.experience += increaseAmount;
+        break;
+      case 4:
+        this.level += increaseAmount;
+        break;
+    }
+  }
+}
+
 const main = async () => {
   init();//Initiates screen/containers
 
@@ -22,4 +58,5 @@ export{
   app,
   worldContainer,
   world,
+  Resources,
 }

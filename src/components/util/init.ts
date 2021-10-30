@@ -1,7 +1,6 @@
 import { app, worldContainer } from "../..";
 import { Viewport } from "pixi-viewport";
 import { HUD } from "../hud/hud";
-import { Container, Graphics } from "pixi.js";
 
 const init = async() =>{
   windowSize();
