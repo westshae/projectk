@@ -1,5 +1,5 @@
 import { Container, Graphics, Renderer } from "pixi.js";
-import { app } from "../..";
+import { game } from "../..";
 
 
 class HUD {
@@ -15,7 +15,7 @@ class HUD {
   }
 
   init(){//Added HUD to stage, added event for resizing, draws HUD
-    app.stage.addChild(this.container);
+    game.app.stage.addChild(this.container);
 
     //Draws, then adds event for detecting resize
     this.draw();
@@ -30,8 +30,8 @@ class HUD {
 
   draw(){//Draws all HUD elements
     //Sets width and height of HUD
-    let width = app.renderer.width;
-    let height = app.renderer.height/16;
+    let width = game.app.renderer.width;
+    let height = game.app.renderer.height/16;
 
     //Draws elements
     this.drawButton(height);

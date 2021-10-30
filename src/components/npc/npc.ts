@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { world } from "../..";
+import { game, worldContainer } from "../..";
 import { missingTexture, villagerTexture } from "../util/textures";
 
 let recentID = 0;
@@ -50,11 +50,11 @@ class NPC {
     this.sprite.interactive = true;
     this.sprite.on("pointerdown", this.select);
 
-    world.container.addChild(this.sprite);//Adds to world container
+    worldContainer.addChild(this.sprite);//Adds to world container
   }
 
   select(){
-    world.current = this;//Sets currently selected villager to clicked villager
+    game.world.current = this;//Sets currently selected villager to clicked villager
   }
 
   handleSprite(){

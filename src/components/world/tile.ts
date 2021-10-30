@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js";
-import { world } from "../..";
+import { game, worldContainer } from "../..";
 import { NPC } from "../npc/npc";
-import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
+import { dirtTexture, sandTexture } from "../util/textures";
 
 
 class Tile{
@@ -20,9 +20,9 @@ class Tile{
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
     this.sprite.on("mousedown", this.handleClick);
+    console.log("test");
 
-
-    world.container.addChild(this.sprite);
+    worldContainer.addChild(this.sprite);
   }
 
   handleSprite(noise:number){//Returns sprite based on noise value
@@ -35,8 +35,8 @@ class Tile{
   }
 
   handleClick(){
-    if(world.current !== undefined){
-      let npc:NPC = world.current;//Gets currently selected NPC
+    if(game.world.current !== undefined){
+      let npc:NPC = game.world.current;//Gets currently selected NPC
 
       //Sets npc's new coords
       npc.x = this.x;
@@ -44,7 +44,7 @@ class Tile{
 
       this.npc = npc;//Sets current tile's npc to this npc
       
-      world.current = undefined;//Resets selected npc;
+      game.world.current = undefined;//Resets selected npc;
     }
   }
 }

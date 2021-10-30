@@ -1,16 +1,15 @@
 import { Viewport } from "pixi-viewport";
-import { app, world } from "../..";
+import { game, worldContainer } from "../..";
 
 const displayInit = () =>{
   windowSize();//Adds events to resize application on resize
   windowHTML();//Makes display stick to top-left corner
-  document.body.appendChild(app.view);//Adds view of app to website
-  app.renderer.backgroundColor = 0x572529;  //Changes background colour
-
+  document.body.appendChild(game.app.view);//Adds view of app to website
+  game.app.renderer.backgroundColor = 0x572529;  //Changes background colour
 
   //Adds viewport to stage, then world to viewport
-  app.stage.addChild(viewport);
-  viewport.addChild(world.container);
+  game.app.stage.addChild(viewport);
+  viewport.addChild(worldContainer);
 
   //Settings for camera
   viewport
@@ -25,16 +24,16 @@ const viewport = new Viewport({
 }) as any;
 
 const windowSize = () =>{
-  app.renderer.resize(window.innerWidth, window.innerHeight);
+  game.app.renderer.resize(window.innerWidth, window.innerHeight);
   window.addEventListener('resize', (e:UIEvent) => {
-    app.renderer.resize(window.innerWidth, window.innerHeight);
+    game.app.renderer.resize(window.innerWidth, window.innerHeight);
   });
 }
 
 const windowHTML = () =>{
   document.body.style.margin = '0';
-  app.renderer.view.style.position = 'absolute';
-  app.renderer.view.style.display = 'block';
+  game.app.renderer.view.style.position = 'absolute';
+  game.app.renderer.view.style.display = 'block';
 }
 
 export{
