@@ -1,12 +1,14 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
+import { Building, buildingType } from "../building/building";
 
 class World {
   grid:Array<Array<Tile>>;
   size:number;
   screenSize:number;
   npcMap:Map<number, NPC>;
+  buildMap:Map<number,Building>;
   current?:NPC;
 
   constructor(size:number){
@@ -14,6 +16,7 @@ class World {
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
+    this.buildMap = new Map<number, Building>();
   }
 
   addNPC(x:number, y:number, type:npcType, name:string){
@@ -23,6 +26,15 @@ class World {
       tile.npc = npc;
     }
     this.npcMap.set(npc.id, npc);
+  }
+
+  addBuilding(x:number, y:number, type:buildingType){
+    let build:Building = new Building(x, y, type);
+    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    if(tile !== undefined){
+      tile.building = build;
+    }
+    this.buildMap.set(build.id, build);
   }
 
   generateGrid(){

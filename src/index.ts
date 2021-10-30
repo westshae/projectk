@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { NPC } from './components/npc/npc';
 import { villager } from './components/npc/npcTypes';
+import { townCenter } from "./components/building/buildingTypes";
 import { init } from './components/util/init';
 import { World } from './components/world/world';
 
@@ -17,6 +18,7 @@ const main = async () => {
   //Adds villagers, with id 1/2, names bob/joe, at coords 4:4 and 3:3 then rendersthe world
   world.addNPC(3, 3, villager, "Bob");
   world.addNPC(4, 4, villager, "Joe");
+  world.addBuilding(5, 5, townCenter);
   world.render();
 };
 
