@@ -1,21 +1,19 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
-import { Villager } from "../npc/villager";
-import { dirtTileTexture, grassTileTexture, mountainTexture, sandTileTexture, treeTexture, waterTexture } from "../util/textures";
+import { NPC } from "../npc/npc";
+import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
 
 
 class Tile{
   x:number;
   y:number;
-  hasVillager:boolean;
   sprite:Sprite;
-  villager?:Villager;
+  npc?:NPC;
   isHighlighted:boolean;
 
   constructor(x:number, y:number, noise:number){
     this.x = x;
     this.y = y;
-    this.hasVillager = false;
     this.isHighlighted = false;
     this.sprite = this.handleSprite(noise);
 
@@ -29,27 +27,24 @@ class Tile{
 
   handleSprite(noise:number){//Returns sprite based on noise value
     if(noise < 0){
-      return Sprite.from(sandTileTexture);
+      return Sprite.from(sandTexture);
     }
     else{
-      return Sprite.from(dirtTileTexture);
+      return Sprite.from(dirtTexture);
     }
   }
 
-  handleClick(){//Handles click event
-    if(world.current != undefined){//If there is currently a selected villager
-      let villager:Villager = world.current;//Gets villager from world.current
+  handleClick(){
+    if(world.current !== undefined){
+      let npc:NPC = world.current;//Gets currently selected NPC
 
-      //Changes villager x/y coords
-      villager.x = this.x;
-      villager.y = this.y;
+      //Sets npc's new coords
+      npc.x = this.x;
+      npc.y = this.y;
 
-      //Updates tile's villager
-      this.villager = villager;
-      this.hasVillager = true;
-
-      //Resets currently selected villager
-      world.current = undefined;
+      this.npc = npc;//Sets current tile's npc to this npc
+      
+      world.current = undefined;//Resets selected npc;
     }
   }
 }

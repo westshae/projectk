@@ -1,26 +1,28 @@
 import { Texture } from "pixi.js";
 
-const dirtTileTexture = Texture.from("../assets/dirt_tile.png");
-const villagerTexture = Texture.from("../assets/man.png");
-const animalsTexture = Texture.from("../assets/animals.png");
-const fruitTexture = Texture.from("../assets/fruit.png");
-const grassTileTexture = Texture.from("../assets/grass_tile.png");
-const mountainTexture = Texture.from("../assets/mountain.png");
-const oreTexture = Texture.from("../assets/ore.png");
-const sandTileTexture = Texture.from("../assets/sand_tile.png");
-const treeTexture = Texture.from("../assets/tree.png");
-const waterTexture = Texture.from("../assets/water.png");
+const dirtTexture = Texture.from("../assets/tile/dirt.png");
+const villagerTexture = Texture.from("../assets/npc/man.png");
+const animalsTexture = Texture.from("../assets/npc/animals.png");
+const fruitTexture = Texture.from("../assets/resources/fruit.png");
+const grassTexture = Texture.from("../assets/tile/grass.png");
+const mountainTexture = Texture.from("../assets/tile/mountain.png");
+const oreTexture = Texture.from("../assets/resources/ore.png");
+const sandTexture = Texture.from("../assets/tile/sand.png");
+const treeTexture = Texture.from("../assets/resources/tree.png");
+const waterTexture = Texture.from("../assets/tile/water.png");
+const missingTexture = Texture.from("../assets/util/missing.png");
 
 
 export{
   villagerTexture,
-  dirtTileTexture,
+  dirtTexture,
   animalsTexture,
   fruitTexture,
-  grassTileTexture,
+  grassTexture,
   mountainTexture,
   oreTexture,
-  sandTileTexture,
+  sandTexture,
   treeTexture,
   waterTexture,
+  missingTexture,
 }
