@@ -12,5 +12,4 @@ let villager:npcType =  {
 
 export{
   villager,
-
 }

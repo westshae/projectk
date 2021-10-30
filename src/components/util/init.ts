@@ -1,5 +1,6 @@
 import { app, worldContainer } from "../..";
 import { Viewport } from "pixi-viewport";
+import { HUD } from "../hud/hud";
 
 const init = async() =>{
   windowSize();
@@ -9,6 +10,10 @@ const init = async() =>{
   //Adds viewport to stage, then world to viewport
   app.stage.addChild(viewport);
   viewport.addChild(worldContainer);
+
+  //Init HUD
+  let hud:HUD = new HUD();
+  hud.init();
 
   //Settings for camera
   viewport
