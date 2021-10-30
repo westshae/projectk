@@ -37,22 +37,26 @@ class HUD {
     this.drawButton(height);
     this.drawBar(width, height);
 
-    this.container.removeChildren();
   }
 
   drawBar(width:number, height:number){//Draws bar of HUD
+    this.bar = new Graphics();
+
     this.bar.beginFill(0x434343);
     this.bar.drawRect(0,0,width, height);
   }
 
   drawButton(height:number){//Draws next turn button of HUD
+    this.button = new Graphics();
+    
     //Draws button
     this.button.beginFill(0x900000);
     this.button.drawStar(height/2,height/2,5,height/2);
 
     //Turns button into button
     this.button.interactive = true;
-    this.button.on("mousedown", () => alert("Next turn!"));
+    this.button.on("pointerdown", () => game.nextTurn());
+
   }
 }
 

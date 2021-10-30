@@ -13,18 +13,18 @@ class Game{
     this.app = new Application();
     this.world = new World(worldSize);//BREAKING HERE
     this.resources = new Resources();
-
   }
 
   init(){
-
-
     displayInit();//Initiates display
-
     
     //Init HUD
     const hud = new HUD();
     hud.init();
+  }
+
+  nextTurn(){
+    console.log("NEXT TURN");
   }
 
 
