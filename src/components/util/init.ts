@@ -15,8 +15,8 @@ const init = async() =>{
   viewport.addChild(worldContainer);
 
   //Init HUD
-  const hud = new Container();
-  initHUD(hud);
+  const hud = new HUD();
+  hud.init();
 
   //Settings for camera
   viewport

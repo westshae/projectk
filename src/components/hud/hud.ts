@@ -13,11 +13,11 @@ class HUD {
   init(){
     app.stage.addChild(this.container);
 
-    // let topHud = new Graphics();
-    // topHud.beginFill(0x434343);
-    // topHud.drawRect(0,0,window.innerWidth, 50);
+    let topHud = new Graphics();
+    topHud.beginFill(0x434343);
+    topHud.drawRect(0,0,window.innerWidth, 50);
 
-    this.container.addChild()
+    this.container.addChild(topHud);
   }
 }
 
