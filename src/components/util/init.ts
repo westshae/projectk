@@ -1,5 +1,3 @@
-import { app, worldContainer } from "../..";
-import { Viewport } from "pixi-viewport";
 import { HUD } from "../hud/hud";
 import { displayInit } from "./display";
 

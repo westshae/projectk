@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { world, worldContainer } from "../..";
+import { world } from "../..";
 import { missingTexture, villagerTexture } from "../util/textures";
 
 let recentID = 0;
@@ -50,7 +50,7 @@ class NPC {
     this.sprite.interactive = true;
     this.sprite.on("pointerdown", this.select);
 
-    worldContainer.addChild(this.sprite);//Adds to world container
+    world.container.addChild(this.sprite);//Adds to world container
   }
 
   select(){

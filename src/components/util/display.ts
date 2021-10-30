@@ -1,5 +1,5 @@
 import { Viewport } from "pixi-viewport";
-import { app, worldContainer } from "../..";
+import { app, world } from "../..";
 
 const displayInit = () =>{
   windowSize();//Adds events to resize application on resize
@@ -10,7 +10,7 @@ const displayInit = () =>{
 
   //Adds viewport to stage, then world to viewport
   app.stage.addChild(viewport);
-  viewport.addChild(worldContainer);
+  viewport.addChild(world.container);
 
   //Settings for camera
   viewport

@@ -5,11 +5,8 @@ import { init } from './components/util/init';
 import { World } from './components/world/world';
 
 const app = new Application();  // Application itself
-const worldContainer = new Container();
 const world:World = new World(64);
 const resources:Resources = new Resources();
-
-
 
 const main = async () => {
   init();//Initiates screen/containers
@@ -24,6 +21,5 @@ main();
 
 export{
   app,
-  worldContainer,
   world,
 }

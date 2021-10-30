@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { world, worldContainer } from "../..";
+import { world } from "../..";
 import { NPC } from "../npc/npc";
 import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
 
@@ -22,7 +22,7 @@ class Tile{
     this.sprite.on("mousedown", this.handleClick);
 
 
-    worldContainer.addChild(this.sprite);
+    world.container.addChild(this.sprite);
   }
 
   handleSprite(noise:number){//Returns sprite based on noise value

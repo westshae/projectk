@@ -1,8 +1,10 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
+import { Container } from "pixi.js";
 
 class World {
+  container:Container;
   grid:Array<Array<Tile>>;
   size:number;
   screenSize:number;
@@ -14,6 +16,7 @@ class World {
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
+    this.container = new Container();
   }
 
   addNPC(x:number, y:number, type:npcType, name:string){
