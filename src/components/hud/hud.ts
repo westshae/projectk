@@ -15,7 +15,7 @@ class HUD {
 
     let topHud = new Graphics();
     topHud.beginFill(0x434343);
-    topHud.drawRect(0,0,window.innerWidth, 50);
+    topHud.drawRect(0,window.innerHeight - 50,window.innerWidth, window.innerHeight);
 
     this.container.addChild(topHud);
   }
