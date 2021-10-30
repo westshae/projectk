@@ -1,4 +1,4 @@
-import { app, world, worldContainer } from "../..";
+import { app, worldContainer } from "../..";
 import { Viewport } from "pixi-viewport";
 
 const init = async() =>{
