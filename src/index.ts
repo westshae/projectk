@@ -22,22 +22,42 @@ class Resources {
     this.level = 0;
   }
 
-  increaseResource(resourceID:number, increaseAmount:number){
+  increaseResource(resourceID:number, amount:number){
     switch(resourceID){
       case 0:
-        this.lumber += increaseAmount;
+        this.lumber += amount;
         break;
       case 1:
-        this.stone += increaseAmount;
+        this.stone += amount;
         break;
       case 2:
-        this.metal += increaseAmount;
+        this.metal += amount;
         break;
       case 3:
-        this.experience += increaseAmount;
+        this.experience += amount;
         break;
       case 4:
-        this.level += increaseAmount;
+        this.level += amount;
+        break;
+    }
+  }
+
+  decreaseResource(resourceID:number, amount:number){
+    switch(resourceID){
+      case 0:
+        this.lumber -= amount;
+        break;
+      case 1:
+        this.stone -= amount;
+        break;
+      case 2:
+        this.metal -= amount;
+        break;
+      case 3:
+        this.experience -= amount;
+        break;
+      case 4:
+        this.level -= amount;
         break;
     }
   }
