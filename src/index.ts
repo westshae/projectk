@@ -2,7 +2,7 @@ import { Container } from 'pixi.js';
 import { villager } from './components/npc/npcTypes';
 import { Game } from './components/util/game';
 
-const worldContainer = new Container();
+// const worldContainer = new Container();
 const game = new Game(64);
 
 const main = async () => {
@@ -19,5 +19,4 @@ main();
 
 export{
   game,
-  worldContainer
 }

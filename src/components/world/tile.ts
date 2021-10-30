@@ -1,5 +1,5 @@
-import { Sprite } from "pixi.js";
-import { game, worldContainer } from "../..";
+import { Container, Sprite } from "pixi.js";
+import { game } from "../..";
 import { NPC } from "../npc/npc";
 import { dirtTexture, sandTexture } from "../util/textures";
 
@@ -11,7 +11,7 @@ class Tile{
   npc?:NPC;
   isHighlighted:boolean;
 
-  constructor(x:number, y:number, noise:number){
+  constructor(x:number, y:number, noise:number, container:Container){
     this.x = x;
     this.y = y;
     this.isHighlighted = false;
@@ -20,9 +20,8 @@ class Tile{
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
     this.sprite.on("mousedown", this.handleClick);
-    console.log("test");
 
-    worldContainer.addChild(this.sprite);
+    container.addChild(this.sprite);
   }
 
   handleSprite(noise:number){//Returns sprite based on noise value
