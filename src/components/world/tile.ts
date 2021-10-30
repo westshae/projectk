@@ -2,7 +2,7 @@ import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { NPC } from "../npc/npc";
 import { Villager } from "../npc/villager";
-import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, waterTexture } from "../util/textures";
+import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
 
 
 class Tile{
@@ -39,25 +39,18 @@ class Tile{
   }
 
   handleClick(){
-    
+    if(world.current !== undefined){
+      let npc:NPC = world.current;//Gets currently selected NPC
+
+      //Sets npc's new coords
+      npc.x = this.x;
+      npc.y = this.y;
+
+      this.npc = npc;//Sets current tile's npc to this npc
+      
+      world.current = undefined;//Resets selected npc;
+    }
   }
-
-  // handleClick(){//Handles click event
-  //   if(world.current != undefined){//If there is currently a selected villager
-  //     let villager:Villager = world.current;//Gets villager from world.current
-
-  //     //Changes villager x/y coords
-  //     villager.x = this.x;
-  //     villager.y = this.y;
-
-  //     //Updates tile's villager
-  //     this.villager = villager;
-  //     this.hasVillager = true;
-
-  //     //Resets currently selected villager
-  //     world.current = undefined;
-  //   }
-  // }
 }
 
 export{
