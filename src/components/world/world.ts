@@ -1,4 +1,3 @@
-import { Villager } from "../npc/villager";
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
@@ -7,7 +6,6 @@ class World {
   grid:Array<Array<Tile>>;
   size:number;
   screenSize:number;
-  // villagers:Array<Villager>;
   npcMap:Map<number, NPC>;
   current?:NPC;
 
@@ -16,7 +14,6 @@ class World {
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
-    // this.villagers = [];
   }
 
   addNPC(x:number, y:number, type:npcType, name:string){
@@ -27,16 +24,6 @@ class World {
     }
     this.npcMap.set(npc.id, npc);
   }
-
-  // addVillager(id:number, name:string, x:number, y:number){
-  //   let villager:Villager = new Villager(id, name, x, y);
-  //   let tile:Tile | undefined = this.grid.at(x)?.at(y);
-  //   if(tile !== undefined){
-  //     tile.hasVillager = true;
-  //     tile.villager = villager;
-  //   }
-  //   this.villagers.push(villager);
-  // }
 
   generateGrid(){
     let grid:Array<Array<Tile>> = [];
@@ -83,14 +70,6 @@ class World {
           tile.sprite.x = (tile.x * width);
           tile.sprite.y = (tile.y * height) + (height/4) - heightOffset;
         }
-
-        //If tile has villager, render it
-        // if(tile.hasVillager){
-        //   let villager:Villager | undefined = tile.villager;
-        //   if(villager != undefined){
-        //     villager.render(tile.sprite.x, tile.sprite.y);
-        //   }
-        // }
 
         //If tile has npc, render it
         if(tile.npc !== undefined){

@@ -1,23 +1,19 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { NPC } from "../npc/npc";
-import { Villager } from "../npc/villager";
 import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
 
 
 class Tile{
   x:number;
   y:number;
-  // hasVillager:boolean;
   sprite:Sprite;
-  // villager?:Villager;
   npc?:NPC;
   isHighlighted:boolean;
 
   constructor(x:number, y:number, noise:number){
     this.x = x;
     this.y = y;
-    // this.hasVillager = false;
     this.isHighlighted = false;
     this.sprite = this.handleSprite(noise);
 
