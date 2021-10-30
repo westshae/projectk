@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { Villager } from "../npc/villager";
-import { dirtTileTexture, grassTileTexture, mountainTexture, sandTileTexture, treeTexture, waterTexture } from "../util/textures";
+import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, waterTexture } from "../util/textures";
 
 
 class Tile{
@@ -29,10 +29,10 @@ class Tile{
 
   handleSprite(noise:number){//Returns sprite based on noise value
     if(noise < 0){
-      return Sprite.from(sandTileTexture);
+      return Sprite.from(sandTexture);
     }
     else{
-      return Sprite.from(dirtTileTexture);
+      return Sprite.from(dirtTexture);
     }
   }
 
