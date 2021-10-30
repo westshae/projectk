@@ -1,24 +1,37 @@
 import { app, worldContainer } from "../..";
 import { Viewport } from "pixi-viewport";
 import { HUD } from "../hud/hud";
+import { Container, Graphics } from "pixi.js";
 
 const init = async() =>{
   windowSize();
   windowHTML();
   document.body.appendChild(app.view);
 
+  app.renderer.backgroundColor = 0x572529;
+
   //Adds viewport to stage, then world to viewport
   app.stage.addChild(viewport);
   viewport.addChild(worldContainer);
 
   //Init HUD
-  let hud:HUD = new HUD();
-  hud.init();
+  const hud = new Container();
+  initHUD(hud);
 
   //Settings for camera
   viewport
   .drag()//Drag mouse to move camera
   .wheel()//Changes scroll wheel to zoom
+}
+
+const initHUD = (hud:Container) =>{
+  app.stage.addChild(hud);
+
+    let topHud = new Graphics();
+    topHud.beginFill(0x434343);
+    topHud.drawRect(0,0,window.innerWidth, 50);
+
+    hud.addChild(topHud);
 }
 
 const viewport = new Viewport({
