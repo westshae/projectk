@@ -13,6 +13,7 @@ class Tile{
   building?:Building;
   isHighlighted:boolean;
 
+
   constructor(x:number, y:number, noise:number){
     this.x = x;
     this.y = y;

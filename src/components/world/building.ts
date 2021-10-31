@@ -11,7 +11,7 @@ interface buildingType {
     sprite:Sprite;
   }
 
-class building {
+class Building {
 id:number;
 type:number;
   health:number;
@@ -65,6 +65,6 @@ type:number;
 }
 
 export{
-  building,
+  Building,
   buildingType
 }

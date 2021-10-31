@@ -1,14 +1,23 @@
 import { Sprite } from "pixi.js"
-import { villagerTexture } from "../util/textures"
+import { houseTexture } from "../util/textures"
+import { mineTexture } from "../util/textures"
 import { buildingType } from "./building"
 
-let house:buildingType =  {
+let townCenter:buildingType =  {
   health: 20,
   defense: 0,
   type: 0,
-  sprite: Sprite.from(villagerTexture),
+  sprite: Sprite.from(houseTexture),
+}
+
+let mine:buildingType = {
+    health: 10,
+    defense: 0,
+    type: 2,
+    sprite: Sprite.from(mineTexture),
 }
 
 export{
-  house,
+  townCenter, 
+  mine,
 }

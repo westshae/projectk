@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { NPC } from './components/npc/npc';
 import { villager } from './components/npc/npcTypes';
-import { townCenter } from "./components/building/buildingTypes";
+import { townCenter } from "./components/world/buildingTypes";
 import { init } from './components/util/init';
 import { World } from './components/world/world';
 

@@ -1,7 +1,7 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
-import { Building, buildingType } from "../building/building";
+import { Building, buildingType } from "./building";
 
 class World {
   grid:Array<Array<Tile>>;
