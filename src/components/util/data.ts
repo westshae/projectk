@@ -1,9 +1,10 @@
-class Resources {
+class Data {
   lumber:number;
   stone:number;
   metal:number;
   experience:number;
   level:number;
+  turn:number;
   
   constructor(){
     this.lumber = 0;
@@ -11,6 +12,7 @@ class Resources {
     this.metal = 0;
     this.experience = 0;
     this.level = 0;
+    this.turn = 0;
   }
 
   increaseResource(resourceID:number, amount:number){
@@ -55,5 +57,5 @@ class Resources {
 }
 
 export{
-  Resources,
+  Data,
 }

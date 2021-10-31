@@ -1,5 +1,5 @@
 import { Application, Container } from "pixi.js";
-import { Resources } from "../data/resources";
+import { Data } from "../data/data";
 import { HUD } from "../hud/hud";
 import { World } from "../world/world";
 import { displayInit } from "./display";
@@ -7,12 +7,12 @@ import { displayInit } from "./display";
 class Game{
   app:Application;
   world:World;
-  resources:Resources;
+  data:Data;
 
   constructor(worldSize:number){
     this.app = new Application();
     this.world = new World(worldSize);//BREAKING HERE
-    this.resources = new Resources();
+    this.data = new Data();
   }
 
   init(){
@@ -24,8 +24,8 @@ class Game{
   }
 
   nextTurn(){
-    
-    console.log(this.world.npcMap);
+    this.data.turn++;
+
     this.world.npcMap.forEach((npc, key)=>{
       if(key !== undefined){
         console.log(npc);
