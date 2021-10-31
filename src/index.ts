@@ -15,7 +15,7 @@ const world:World = new World(64);
 const main = async () => {
   init();//Initiates screen/containers
 
-  //Adds villagers, with id 1/2, names bob/joe, at coords 4:4 and 3:3 then rendersthe world
+  //Adds villagers, names bob/joe, at coords 4:4 and 3:3 then rendersthe world
   world.addNPC(3, 3, villager, "Bob");
   world.addNPC(4, 4, villager, "Joe");
   world.addBuilding(5, 5, townCenter);

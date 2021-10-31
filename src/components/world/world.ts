@@ -21,7 +21,7 @@ class World {
 
   addNPC(x:number, y:number, type:npcType, name:string){
     let npc:NPC = new NPC(x, y, type, name);
-    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       tile.npc = npc;
     }
@@ -30,7 +30,7 @@ class World {
 
   addBuilding(x:number, y:number, type:buildingType){
     let build:Building = new Building(x, y, type);
-    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       tile.building = build;
     }

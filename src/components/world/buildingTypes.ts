@@ -19,6 +19,22 @@ let mine:buildingType = {
     sprite: Sprite.from(mineTexture),
 }
 
+let farm:buildingType = {
+  health: 10,
+  defense: 0,
+  type: 2,
+  buildTurns: 5,
+  sprite: Sprite.from(mineTexture),
+}
+
+let sentryTower:buildingType = {
+  health: 10,
+  defense: 0,
+  type: 2,
+  buildTurns: 5,
+  sprite: Sprite.from(mineTexture),
+}
+
 
 
 
