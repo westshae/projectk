@@ -38,6 +38,8 @@ class World {
       tile.building = build;
     }
     this.buildMap.set(build.id, build);
+  }
+
   setCurrent(npc:NPC){
     this.current = npc;
   }
