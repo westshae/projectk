@@ -1,4 +1,4 @@
-import { Container, Graphics, Renderer } from "pixi.js";
+import { Container, Graphics, Text } from "pixi.js";
 import { game } from "../..";
 
 
@@ -6,12 +6,13 @@ class HUD {
   container:Container;
   bar:Graphics;
   button:Graphics;
+  information:Container;
 
   constructor(){
     this.container = new Container();
     this.bar = new Graphics();
     this.button = new Graphics();
-    this.init();
+    this.information = new Container();
   }
 
   init(){//Added HUD to stage, added event for resizing, draws HUD
@@ -26,6 +27,7 @@ class HUD {
     //Adds HUD element to container
     this.container.addChild(this.bar);
     this.container.addChild(this.button);
+    this.container.addChild(this.information);
   }
 
   draw(){//Draws all HUD elements
@@ -36,7 +38,28 @@ class HUD {
     //Draws elements
     this.drawButton(height);
     this.drawBar(width, height);
+    this.drawInformation();
+  }
 
+  drawInformation(){
+    this.information = new Container();
+    this.information.x = 100;
+    this.information.y = 10;
+    let text = new Text(      
+      this.makeText("level",game.data.level) + 
+      this.makeText("exp",game.data.experience) +
+      this.makeText("turn",game.data.turn) +
+      this.makeText("lumber",game.data.lumber) +
+      this.makeText("stone",game.data.stone) +
+      this.makeText("metal",game.data.metal) 
+    )
+    this.information.addChild(text);
+  }
+
+
+  makeText(text:string, data:number){
+    let value = text + ":" + data + "         ";
+    return value;
   }
 
   drawBar(width:number, height:number){//Draws bar of HUD

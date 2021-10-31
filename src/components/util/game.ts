@@ -1,5 +1,5 @@
 import { Application, Container } from "pixi.js";
-import { Data } from "../data/data";
+import { Data } from "./data";
 import { HUD } from "../hud/hud";
 import { World } from "../world/world";
 import { displayInit } from "./display";
@@ -8,19 +8,18 @@ class Game{
   app:Application;
   world:World;
   data:Data;
+  hud:HUD;
 
   constructor(worldSize:number){
     this.app = new Application();
-    this.world = new World(worldSize);//BREAKING HERE
+    this.world = new World(worldSize);
     this.data = new Data();
+    this.hud = new HUD();
   }
 
   init(){
     displayInit();//Initiates display
-    
-    //Init HUD
-    const hud = new HUD();
-    hud.init();
+    this.hud.init();
   }
 
   nextTurn(){
@@ -28,7 +27,6 @@ class Game{
 
     this.world.npcMap.forEach((npc, key)=>{
       if(key !== undefined){
-        console.log(npc);
 
         npc.handleNextTurn();
         this.world.npcMap.set(npc.id, npc);
@@ -39,10 +37,9 @@ class Game{
         }
       }
     })
-    console.log("END NEXTTURN");
+
+    
   }
-
-
 }
 
 export{

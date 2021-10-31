@@ -33,6 +33,7 @@ class Data {
         this.level += amount;
         break;
     }
+    // hud.drawInformation();
   }
 
   decreaseResource(resourceID:number, amount:number){
