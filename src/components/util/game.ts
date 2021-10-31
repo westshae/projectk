@@ -23,7 +23,7 @@ class Game{
   }
 
   nextTurn(){
-    this.data.turn++;
+    this.data.increaseResource(5, 1);//Increases turn count by 1
 
     this.world.npcMap.forEach((npc, key)=>{
       if(key !== undefined){
@@ -38,7 +38,6 @@ class Game{
       }
     })
 
-    
   }
 }
 

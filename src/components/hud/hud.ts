@@ -6,13 +6,13 @@ class HUD {
   container:Container;
   bar:Graphics;
   button:Graphics;
-  information:Container;
+  information:Text;
 
   constructor(){
     this.container = new Container();
     this.bar = new Graphics();
     this.button = new Graphics();
-    this.information = new Container();
+    this.information = new Text("");
   }
 
   init(){//Added HUD to stage, added event for resizing, draws HUD
@@ -42,10 +42,7 @@ class HUD {
   }
 
   drawInformation(){
-    this.information = new Container();
-    this.information.x = 100;
-    this.information.y = 10;
-    let text = new Text(      
+    let text = (
       this.makeText("level",game.data.level) + 
       this.makeText("exp",game.data.experience) +
       this.makeText("turn",game.data.turn) +
@@ -53,7 +50,10 @@ class HUD {
       this.makeText("stone",game.data.stone) +
       this.makeText("metal",game.data.metal) 
     )
-    this.information.addChild(text);
+
+    this.information.text = text;
+    this.information.x = 100;
+    this.information.y = 10;
   }
 
 

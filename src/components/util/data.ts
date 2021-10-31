@@ -1,3 +1,5 @@
+import { game } from "../..";
+
 class Data {
   lumber:number;
   stone:number;
@@ -32,8 +34,11 @@ class Data {
       case 4:
         this.level += amount;
         break;
+      case 5:
+        this.turn += amount;
+        break;
     }
-    // hud.drawInformation();
+    game.hud.drawInformation();
   }
 
   decreaseResource(resourceID:number, amount:number){
@@ -54,6 +59,8 @@ class Data {
         this.level -= amount;
         break;
     }
+    game.hud.drawInformation();
+
   }
 }
 
