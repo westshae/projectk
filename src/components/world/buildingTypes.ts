@@ -7,6 +7,7 @@ let townCenter:buildingType =  {
   health: 20,
   defense: 0,
   type: 0,
+  buildTurns: 2,
   sprite: Sprite.from(houseTexture),
 }
 
@@ -14,8 +15,13 @@ let mine:buildingType = {
     health: 10,
     defense: 0,
     type: 2,
+    buildTurns: 5,
     sprite: Sprite.from(mineTexture),
 }
+
+
+
+
 
 export{
   townCenter, 

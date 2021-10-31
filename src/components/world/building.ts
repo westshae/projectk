@@ -8,6 +8,7 @@ interface buildingType {
     health:number;
     defense:number;
     type:number;
+    buildTurns:number;
     sprite:Sprite;
   }
 
@@ -16,6 +17,7 @@ id:number;
 type:number;
   health:number;
   defense:number;
+  buildTurns:number;
   sprite:Sprite;
   x:number;
   y:number;
@@ -24,6 +26,7 @@ type:number;
     this.health = type.health;
     this.defense = type.defense;
     this.type = type.type;
+    this.buildTurns = type.buildTurns;
     this.x = x;
     this.y = y;
 

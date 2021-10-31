@@ -89,6 +89,13 @@ class World {
           if(npc !== undefined){
             npc.render(tile.sprite.x, tile.sprite.y);
           }
+        } 
+        //If tile has building, render it       
+        if(tile.building !== undefined){
+          let build:Building | undefined = tile.building;
+          if(build !== undefined){
+            build.render(tile.sprite.x, tile.sprite.y);
+          }
         }
         
         useOffset = !useOffset;
