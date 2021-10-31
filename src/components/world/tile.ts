@@ -1,6 +1,7 @@
 import { Sprite } from "pixi.js";
 import { world, worldContainer } from "../..";
 import { NPC } from "../npc/npc";
+import { Building } from "./building";
 import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
 
 
@@ -9,6 +10,7 @@ class Tile{
   y:number;
   sprite:Sprite;
   npc?:NPC;
+  building?:Building;
   isHighlighted:boolean;
 
   constructor(x:number, y:number, noise:number){
