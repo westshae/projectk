@@ -59,9 +59,9 @@ class resource {
         return Sprite.from(treeTexture);
       case 1:
         return Sprite.from(oreTexture);
+       case 2: 
+        return Sprite.from(fruitTexture);
       default:
-    case 2: 
-    return Sprite.from(fruitTexture);
         return Sprite.from(missingTexture);
     }
   }
