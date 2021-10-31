@@ -1,6 +1,6 @@
 import { Application, Container } from "pixi.js";
 import { Data } from "./data";
-import { HUD } from "../hud/hud";
+import { HUD } from "./hud";
 import { World } from "../world/world";
 import { displayInit } from "./display";
 
