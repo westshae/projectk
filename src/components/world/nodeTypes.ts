@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js"
 import { houseTexture } from "../util/textures"
 import { mineTexture } from "../util/textures"
-import { resourceType } from "./resource"
+import { resourceType } from "./node"
 
 let tree:resourceType =  {
   processingTime: 2,

@@ -2,7 +2,7 @@ import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
 import { Building, buildingType } from "./building";
-import { resource, resourceType } from "./resource";
+import { resource, resourceType } from "./node";
 import { Container } from "pixi.js";
 
 class World {
@@ -12,7 +12,6 @@ class World {
   screenSize:number;
   npcMap:Map<number, NPC>;
   buildMap:Map<number,Building>;
-  resourceMap:Map<number, resource>;
   current?:NPC;
 
   constructor(size:number){
@@ -22,7 +21,6 @@ class World {
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
-    this.resourceMap = new Map<number, resource>();
   }
 
   addNPC(x:number, y:number, type:npcType, name:string){
@@ -49,7 +47,6 @@ class World {
     if(tile !== undefined){
       tile.resource = res;
     }
-    this.resourceMap.set(res.id, res);
   }
 
   setCurrent(npc:NPC){

@@ -3,7 +3,7 @@ import { game } from "../..";
 import { NPC } from "../npc/npc";
 import { Building } from "./building";
 import { dirtTexture, sandTexture } from "../util/textures";
-import { resource } from "./resource";
+import { resource } from "./node";
 
 
 class Tile{

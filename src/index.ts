@@ -1,7 +1,7 @@
 import { villager } from './components/npc/npcTypes';
 import { Game } from './components/util/game';
 import { townCenter } from './components/world/buildingTypes';
-import { tree } from './components/world/resourceTypes';
+import { tree } from './components/world/nodeTypes';
 
 const game = new Game(64);
 
