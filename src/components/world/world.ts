@@ -2,7 +2,6 @@ import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
 import { Container } from "pixi.js";
-import { game } from "../..";
 
 class World {
   container:Container;
@@ -27,6 +26,10 @@ class World {
       tile.npc = npc;
     }
     this.npcMap.set(npc.id, npc);
+  }
+
+  setCurrent(npc:NPC){
+    this.current = npc;
   }
 
   generateGrid(){

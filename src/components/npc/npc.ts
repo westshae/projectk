@@ -15,7 +15,8 @@ interface npcType {
 class NPC {
   id:number;
   name:string;
-  type:number;
+  type:npcType;
+  typeID:number;
   health:number;
   attack:number;
   defense:number;
@@ -28,7 +29,8 @@ class NPC {
     this.attack = type.attack;
     this.health = type.health;
     this.defense = type.defense;
-    this.type = type.type;
+    this.typeID = type.type;
+    this.type = type;
     this.movement = type.movement;
     this.x = x;
     this.y = y;
@@ -51,19 +53,16 @@ class NPC {
 
     //Make tile interactable
     this.sprite.interactive = true;
-    this.sprite.on("pointerdown", this.select);
+    this.sprite.on("pointerdown", () => game.world.setCurrent(this));
 
     game.world.container.addChild(this.sprite);//Adds to world container
   }
-
-  select(){
-    game.world.current = this;//Sets currently selected villager to clicked villager
+  handleNextTurn(){
+    this.movement = this.type.movement;
   }
 
-  
-
   handleSprite(){
-    switch(this.type){
+    switch(this.typeID){
       case 0:
         return Sprite.from(villagerTexture);
       default:

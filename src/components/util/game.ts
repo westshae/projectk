@@ -24,10 +24,22 @@ class Game{
   }
 
   nextTurn(){
+    
+    console.log(this.world.npcMap);
     this.world.npcMap.forEach((npc, key)=>{
-      
+      if(key !== undefined){
+        console.log(npc);
+
+        npc.handleNextTurn();
+        this.world.npcMap.set(npc.id, npc);
+
+        let tile = this.world.grid.at(npc.x)?.at(npc.y);
+        if(tile !== undefined){
+          tile.npc = npc;
+        }
+      }
     })
-    console.log("NEXT TURN");
+    console.log("END NEXTTURN");
   }
 
 
