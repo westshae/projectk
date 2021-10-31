@@ -1,6 +1,7 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
+import { Building, buildingType } from "./building";
 import { Container } from "pixi.js";
 
 class World {
@@ -9,6 +10,7 @@ class World {
   size:number;
   screenSize:number;
   npcMap:Map<number, NPC>;
+  buildMap:Map<number,Building>;
   current?:NPC;
 
   constructor(size:number){
@@ -17,17 +19,25 @@ class World {
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
+    this.buildMap = new Map<number, Building>();
   }
 
   addNPC(x:number, y:number, type:npcType, name:string){
     let npc:NPC = new NPC(x, y, type, name);
-    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       tile.npc = npc;
     }
     this.npcMap.set(npc.id, npc);
   }
 
+  addBuilding(x:number, y:number, type:buildingType){
+    let build:Building = new Building(x, y, type);
+    let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
+    if(tile !== undefined){
+      tile.building = build;
+    }
+    this.buildMap.set(build.id, build);
   setCurrent(npc:NPC){
     this.current = npc;
   }
@@ -82,6 +92,13 @@ class World {
           let npc:NPC | undefined = tile.npc;
           if(npc !== undefined){
             npc.render(tile.sprite.x, tile.sprite.y);
+          }
+        } 
+        //If tile has building, render it       
+        if(tile.building !== undefined){
+          let build:Building | undefined = tile.building;
+          if(build !== undefined){
+            build.render(tile.sprite.x, tile.sprite.y);
           }
         }
         

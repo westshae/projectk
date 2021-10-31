@@ -1,6 +1,7 @@
 import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
 import { NPC } from "../npc/npc";
+import { Building } from "./building";
 import { dirtTexture, sandTexture } from "../util/textures";
 
 
@@ -9,7 +10,9 @@ class Tile{
   y:number;
   sprite:Sprite;
   npc?:NPC;
+  building?:Building;
   isHighlighted:boolean;
+
 
   constructor(x:number, y:number, noise:number, container:Container){
     this.x = x;
