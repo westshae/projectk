@@ -1,7 +1,7 @@
-import { Sprite } from "pixi.js";
-import { world, worldContainer } from "../..";
+import { Container, Sprite } from "pixi.js";
+import { game } from "../..";
 import { NPC } from "../npc/npc";
-import { dirtTexture, grassTexture, mountainTexture, sandTexture, treeTexture, villagerTexture, waterTexture } from "../util/textures";
+import { dirtTexture, sandTexture } from "../util/textures";
 
 
 class Tile{
@@ -11,7 +11,7 @@ class Tile{
   npc?:NPC;
   isHighlighted:boolean;
 
-  constructor(x:number, y:number, noise:number){
+  constructor(x:number, y:number, noise:number, container:Container){
     this.x = x;
     this.y = y;
     this.isHighlighted = false;
@@ -21,8 +21,7 @@ class Tile{
     this.sprite.interactive = true;
     this.sprite.on("mousedown", this.handleClick);
 
-
-    worldContainer.addChild(this.sprite);
+    container.addChild(this.sprite);
   }
 
   handleSprite(noise:number){//Returns sprite based on noise value
@@ -35,16 +34,22 @@ class Tile{
   }
 
   handleClick(){
-    if(world.current !== undefined){
-      let npc:NPC = world.current;//Gets currently selected NPC
+    if(game.world.current !== undefined){
+      let npc:NPC = game.world.current;//Gets currently selected NPC
+      if(npc !== undefined){
+        if(npc.movement == 0){return;}
 
-      //Sets npc's new coords
-      npc.x = this.x;
-      npc.y = this.y;
-
-      this.npc = npc;//Sets current tile's npc to this npc
-      
-      world.current = undefined;//Resets selected npc;
+        //Sets npc's new coords
+        npc.sprite.x = this.x;
+        npc.sprite.y = this.y;
+  
+        //Limited movement
+        npc.movement = 0;
+        
+        this.npc = npc;
+        
+        game.world.current = undefined;//Resets selected npc;
+      }
     }
   }
 }
