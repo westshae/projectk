@@ -2,8 +2,10 @@ import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
 import { Building, buildingType } from "./building";
+import { Container } from "pixi.js";
 
 class World {
+  container:Container;
   grid:Array<Array<Tile>>;
   size:number;
   screenSize:number;
@@ -12,6 +14,7 @@ class World {
   current?:NPC;
 
   constructor(size:number){
+    this.container = new Container();
     this.size = size;
     this.screenSize = ((Math.sqrt(3) * 50) * size) * 5;
     this.grid = this.generateGrid();
@@ -35,17 +38,18 @@ class World {
       tile.building = build;
     }
     this.buildMap.set(build.id, build);
+  setCurrent(npc:NPC){
+    this.current = npc;
   }
 
   generateGrid(){
     let grid:Array<Array<Tile>> = [];
     const noise = new SimplexNoise(Math.random());//Generates noise map
     //https://www.redblobgames.com/maps/terrain-from-noise/
-
     for(let width:number = 0; width < this.size; width++){//For each required tile
       grid[width] = [];
       for(let height:number = 0; height < this.size; height++){
-        grid[width][height] = new Tile(width, height, noise.noise2D(width/8, height/8));//Set spot in grid to new tile, with noise for biome
+        grid[width][height] = new Tile(width, height, noise.noise2D(width/8, height/8), this.container);//Set spot in grid to new tile, with noise for biome
       }
     }
     return grid;
