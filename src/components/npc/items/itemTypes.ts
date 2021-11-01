@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { missingTexture } from "../util/textures";
+import { missingTexture } from "../../util/textures";
 import { itemTypes } from "./items";
 
 const sword:itemTypes =  {

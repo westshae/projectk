@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js"
-import { houseTexture } from "../util/textures"
-import { mineTexture } from "../util/textures"
+import { houseTexture } from "../../util/textures"
+import { mineTexture } from "../../util/textures"
 import { buildingType } from "./building"
 
 let townCenter:buildingType =  {

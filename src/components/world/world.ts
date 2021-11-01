@@ -1,8 +1,8 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
-import { NPC, npcType } from "../npc/npc";
-import { Building, buildingType } from "./building";
-import { Node, nodeType } from "./node";
+import { NPC, npcType } from "../npc/npc/npc"
+import { Building, buildingType } from "./building/building";
+import { Node, nodeType } from "./node/node";
 import { Container } from "pixi.js";
 
 class World {

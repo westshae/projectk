@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
-import { game } from "../..";
-import { missingTexture, villagerTexture } from "../util/textures";
+import { game } from "../../..";
+import { missingTexture, villagerTexture } from "../../util/textures";
 
 let recentID = 0;
 

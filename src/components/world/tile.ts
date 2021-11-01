@@ -1,9 +1,9 @@
 import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
-import { NPC } from "../npc/npc";
-import { Building } from "./building";
+import { NPC } from "../npc/npc/npc";
+import { Building } from "./building/building";
 import { dirtTexture, sandTexture } from "../util/textures";
-import { Node } from "./node";
+import { Node } from "./node/node";
 
 
 class Tile{
