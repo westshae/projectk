@@ -2,7 +2,7 @@ import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
 import { NPC, npcType } from "../npc/npc";
 import { Building, buildingType } from "./building";
-import { resource, resourceType } from "./node";
+import { Node, nodeType } from "./node";
 import { Container } from "pixi.js";
 
 class World {
@@ -41,8 +41,8 @@ class World {
     this.buildMap.set(build.id, build);
   }
 
-  addNode(x:number, y:number, type:resourceType){
-    let res:resource = new resource(x, y, type);
+  addNode(x:number, y:number, type:nodeType){
+    let res:Node = new Node(x, y, type);
     let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       tile.resource = res;
@@ -113,7 +113,7 @@ class World {
           }
         }
         if(tile.resource !== undefined){
-          let res:resource | undefined = tile.resource;
+          let res:Node | undefined = tile.resource;
           if(res !== undefined){
             res.render(tile.sprite.x, tile.sprite.y);
           }

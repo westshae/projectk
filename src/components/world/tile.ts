@@ -3,7 +3,7 @@ import { game } from "../..";
 import { NPC } from "../npc/npc";
 import { Building } from "./building";
 import { dirtTexture, sandTexture } from "../util/textures";
-import { resource } from "./node";
+import { Node } from "./node";
 
 
 class Tile{
@@ -12,7 +12,7 @@ class Tile{
   sprite:Sprite;
   npc?:NPC;
   building?:Building;
-  resource?:resource;
+  resource?:Node;
   isHighlighted:boolean;
 
 

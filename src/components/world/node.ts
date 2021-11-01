@@ -4,14 +4,14 @@ import { missingTexture, treeTexture, oreTexture, fruitTexture } from "../util/t
 
 let recentID = 0;
 
-interface resourceType {
+interface nodeType {
   processingTime:number;
   defense: number;
   type: number;
   sprite: Sprite;
 }
 
-class resource {
+class Node {
   id: number;
   type: number;
   processingTime:number;
@@ -20,7 +20,7 @@ class resource {
   x: number;
   y: number;
 
-  constructor(x: number, y: number, type: resourceType) {
+  constructor(x: number, y: number, type: nodeType) {
     this.processingTime = type.processingTime;
     this.defense = type.defense;
     this.type = type.type;
@@ -69,6 +69,6 @@ class resource {
 }
 
 export {
-  resource, 
-  resourceType,
+  Node, 
+  nodeType,
 }
