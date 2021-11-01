@@ -41,7 +41,7 @@ class World {
     this.buildMap.set(build.id, build);
   }
 
-  addResource(x:number, y:number, type:resourceType){
+  addNode(x:number, y:number, type:resourceType){
     let res:resource = new resource(x, y, type);
     let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
