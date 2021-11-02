@@ -4,7 +4,12 @@ interface itemTypes{
   id:number;
   name:string;
   sprite:Sprite;
-  // buffList:Array<Object>;
+  buffList:Array<buffInterface>;
+}
+
+interface buffInterface{
+  statID:number;
+  amount:number;
 }
 
 let recentID = 0;
