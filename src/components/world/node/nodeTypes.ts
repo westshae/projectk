@@ -1,23 +1,23 @@
 import { Sprite } from "pixi.js"
 import { houseTexture } from "../../util/textures"
 import { mineTexture } from "../../util/textures"
-import { nodeType } from "./node"
+import { nodeInterface } from "./node"
 
-const tree:nodeType =  {
+const tree:nodeInterface =  {
   processingTime: 2,
   defense: 0,
   type: 0,
   sprite: Sprite.from(houseTexture),
 }
 
-const ore:nodeType = {
+const ore:nodeInterface = {
     processingTime: 2,
     defense: 0,
     type: 1,
     sprite: Sprite.from(mineTexture),
 }
 
-const fruit:nodeType = {
+const fruit:nodeInterface = {
   processingTime: 3,
   defense: 0,
   type: 2,

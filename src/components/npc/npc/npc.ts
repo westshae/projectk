@@ -5,7 +5,7 @@ import { missingTexture, villagerTexture } from "../../util/textures";
 
 let recentID = 0;
 
-interface npcType {
+interface npcInterface {
   health:number;
   attack:number;
   defense:number;
@@ -17,7 +17,7 @@ interface npcType {
 class NPC {
   id:number;
   name:string;
-  type:npcType;
+  type:npcInterface;
   typeID:number;
   health:number;
   attack:number;
@@ -27,7 +27,7 @@ class NPC {
   x:number;
   y:number;
 
-  constructor(x:number, y:number, type:npcType, name:string){
+  constructor(x:number, y:number, type:npcInterface, name:string){
     this.attack = type.attack;
     this.health = type.health;
     this.defense = type.defense;
@@ -76,5 +76,5 @@ class NPC {
 
 export{
   NPC,
-  npcType
+  npcInterface
 }

@@ -1,9 +1,9 @@
 import { Sprite } from "pixi.js"
 import { houseTexture } from "../../util/textures"
 import { mineTexture } from "../../util/textures"
-import { buildingType } from "./building"
+import { buildingInterface } from "./building"
 
-let townCenter:buildingType =  {
+let townCenter:buildingInterface =  {
   health: 20,
   defense: 0,
   type: 0,
@@ -11,7 +11,7 @@ let townCenter:buildingType =  {
   sprite: Sprite.from(houseTexture),
 }
 
-let mine:buildingType = {
+let mine:buildingInterface = {
     health: 10,
     defense: 0,
     type: 2,
@@ -19,7 +19,7 @@ let mine:buildingType = {
     sprite: Sprite.from(mineTexture),
 }
 
-let farm:buildingType = {
+let farm:buildingInterface = {
   health: 10,
   defense: 0,
   type: 2,
@@ -27,7 +27,7 @@ let farm:buildingType = {
   sprite: Sprite.from(mineTexture),
 }
 
-let sentryTower:buildingType = {
+let sentryTower:buildingInterface = {
   health: 10,
   defense: 0,
   type: 2,

@@ -4,7 +4,7 @@ import { missingTexture, treeTexture, oreTexture, fruitTexture } from "../../uti
 
 let recentID = 0;
 
-interface nodeType {
+interface nodeInterface {
   processingTime:number;
   defense: number;
   type: number;
@@ -20,7 +20,7 @@ class Node {
   x: number;
   y: number;
 
-  constructor(x: number, y: number, type: nodeType) {
+  constructor(x: number, y: number, type: nodeInterface) {
     this.processingTime = type.processingTime;
     this.defense = type.defense;
     this.type = type.type;
@@ -70,5 +70,5 @@ class Node {
 
 export {
   Node, 
-  nodeType,
+  nodeInterface,
 }

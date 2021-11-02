@@ -1,8 +1,8 @@
 import { Sprite } from "pixi.js";
 import { missingTexture } from "../util/textures";
-import { itemTypes } from "./items";
+import { itemInterface } from "./items";
 
-const sword:itemTypes =  {
+const sword:itemInterface =  {
   id:0,
   name:"Sword",
   sprite:Sprite.from(missingTexture),

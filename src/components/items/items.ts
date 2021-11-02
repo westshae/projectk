@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 
-interface itemTypes{
+interface itemInterface{
   id:number;
   name:string;
   sprite:Sprite;
@@ -25,6 +25,6 @@ class Items{
 }
 
 export {
-  itemTypes,
+  itemInterface,
   Items
 }

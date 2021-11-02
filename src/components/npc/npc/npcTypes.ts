@@ -1,8 +1,8 @@
 import { Sprite } from "pixi.js"
 import { villagerTexture } from "../../util/textures"
-import { npcType } from "./npc"
+import { npcInterface } from "./npc"
 
-let villager:npcType =  {
+let villager:npcInterface =  {
   health: 10,
   attack: 5,
   defense: 4,

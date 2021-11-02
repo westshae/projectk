@@ -1,8 +1,8 @@
 import { Tile } from "./tile";
 import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
-import { NPC, npcType } from "../npc/npc/npc"
-import { Building, buildingType } from "./building/building";
-import { Node, nodeType } from "./node/node";
+import { NPC, npcInterface } from "../npc/npc/npc"
+import { Building, buildingInterface } from "./building/building";
+import { Node, nodeInterface } from "./node/node";
 import { Container } from "pixi.js";
 
 class World {
@@ -23,7 +23,7 @@ class World {
     this.buildMap = new Map<number, Building>();
   }
 
-  addNPC(x:number, y:number, type:npcType, name:string){
+  addNPC(x:number, y:number, type:npcInterface, name:string){
     let npc:NPC = new NPC(x, y, type, name);
     let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
@@ -32,7 +32,7 @@ class World {
     this.npcMap.set(npc.id, npc);
   }
 
-  addBuilding(x:number, y:number, type:buildingType){
+  addBuilding(x:number, y:number, type:buildingInterface){
     let build:Building = new Building(x, y, type);
     let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
@@ -41,7 +41,7 @@ class World {
     this.buildMap.set(build.id, build);
   }
 
-  addNode(x:number, y:number, type:nodeType){
+  addNode(x:number, y:number, type:nodeInterface){
     let res:Node = new Node(x, y, type);
     let tile:(Tile | undefined) = this.grid.at(x)?.at(y);
     if(tile !== undefined){
