@@ -1,5 +1,6 @@
 import { Sprite } from "pixi.js";
 import { game } from "../../..";
+import { Items } from "../../items/items";
 import { missingTexture, villagerTexture } from "../../util/textures";
 
 let recentID = 0;
@@ -11,6 +12,7 @@ interface npcType {
   type:number;
   sprite:Sprite;
   movement:number;
+  items?:Array<Items>;
 }
 class NPC {
   id:number;
