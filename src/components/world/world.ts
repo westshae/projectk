@@ -12,7 +12,7 @@ class World {
   screenSize:number;
   npcMap:Map<number, NPC>;
   buildMap:Map<number,Building>;
-  current?:NPC;
+  currentTile?:Tile;
 
   constructor(size:number){
     this.container = new Container();
@@ -49,8 +49,8 @@ class World {
     }
   }
 
-  setCurrent(npc:NPC){
-    this.current = npc;
+  setCurrent(tile:Tile){
+    this.currentTile = tile;
   }
 
   generateGrid(){
