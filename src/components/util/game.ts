@@ -1,4 +1,4 @@
-import { Application, Container } from "pixi.js";
+import { Application } from "pixi.js";
 import { Data } from "./data";
 import { HUD } from "./hud";
 import { World } from "../world/world";

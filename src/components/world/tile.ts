@@ -1,9 +1,9 @@
 import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
-import { NPC } from "../npc/npc";
-import { Building } from "./building";
+import { NPC } from "../npc/npc/npc";
+import { Building } from "./building/building";
 import { dirtTexture, sandTexture } from "../util/textures";
-import { resource } from "./node";
+import { Node } from "./node/node";
 
 
 class Tile{
@@ -12,7 +12,7 @@ class Tile{
   sprite:Sprite;
   npc?:NPC;
   building?:Building;
-  resource?:resource;
+  resource?:Node;
   isHighlighted:boolean;
 
 

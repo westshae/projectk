@@ -1,10 +1,10 @@
 import { Sprite } from "pixi.js";
-import { game } from "../..";
-import { missingTexture, houseTexture, mineTexture } from "../util/textures";
+import { game } from "../../..";
+import { missingTexture, houseTexture, mineTexture } from "../../util/textures";
 
 let recentID = 0;
 
-interface buildingType {
+interface buildingInterface {
   health: number;
   defense: number;
   type: number;
@@ -22,7 +22,7 @@ class Building {
   x: number;
   y: number;
 
-  constructor(x: number, y: number, type: buildingType) {
+  constructor(x: number, y: number, type: buildingInterface) {
     this.health = type.health;
     this.defense = type.defense;
     this.type = type.type;
@@ -71,5 +71,5 @@ class Building {
 
 export {
   Building,
-  buildingType
+  buildingInterface
 }
