@@ -34,5 +34,6 @@ class Items{
 
 export {
   itemInterface,
+  buffInterface,
   Items
 }

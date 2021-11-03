@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { game } from "../../..";
-import { itemInterface, Items } from "../../items/items";
+import { buffInterface, itemInterface, Items } from "../../items/items";
 import { missingTexture, villagerTexture } from "../../util/textures";
 
 let recentID = 0;
@@ -49,9 +49,19 @@ class NPC {
     this.sprite = this.handleSprite();
   }
 
+  doBuff(buff:buffInterface, how:boolean){//how == true, add
+    switch (buff.statID){
+      case 0:
+        this.health += buff.amount + (how ? 1 : -1);
+    }
+  }
+
   addItem(item:itemInterface){
     if(this.itemList !== undefined){
       this.itemList.push(item);
+      item.buffList.forEach((value, index)=>{
+        this.doBuff(value, true);
+      })
     }
   }
 
@@ -61,6 +71,9 @@ class NPC {
         this.itemList.forEach((value, index)=>{
           if(value == item){
             this.itemList.splice(index, 1);
+            item.buffList.forEach((value, index)=>{
+              this.doBuff(value, false);
+            })
           }
         })
       }
