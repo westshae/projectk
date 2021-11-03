@@ -14,7 +14,8 @@ const main = async () => {
   game.world.addNPC(4, 4, villager, "Joe");
   game.world.addBuilding(5, 5, townCenter);
   game.world.npcMap.get(1)?.addItem(sword);
-  console.log(game.world.npcMap.get(1));
+  game.world.npcMap.get(1)?.removeItem(sword);
+
   game.world.addNode(6, 6, tree);
   game.world.render();
 };

@@ -52,7 +52,7 @@ class NPC {
   doBuff(buff:buffInterface, how:boolean){//how == true, add
     switch (buff.statID){
       case 0:
-        this.health += buff.amount + (how ? 1 : -1);
+        this.health += buff.amount * (how ? 1 : -1);
     }
   }
 
