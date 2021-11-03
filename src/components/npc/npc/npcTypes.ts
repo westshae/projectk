@@ -6,7 +6,7 @@ let villager:npcInterface =  {
   health: 10,
   attack: 5,
   defense: 4,
-  type: 0,
+  id: 0,
   sprite: Sprite.from(villagerTexture),
   movement: 5,
 }
