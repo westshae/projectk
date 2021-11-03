@@ -49,8 +49,11 @@ class World {
     }
   }
 
-  setCurrent(tile:Tile){
-    this.currentTile = tile;
+  setCurrent(x:number, y:number){
+    let tile:Tile | undefined = this.grid.at(x)?.at(y);
+    if(tile !== undefined){
+      this.currentTile = tile;
+    }
   }
 
   generateGrid(){

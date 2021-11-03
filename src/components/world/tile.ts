@@ -24,7 +24,7 @@ class Tile{
 
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
-    this.sprite.on("mousedown", this.handleClick);
+    this.sprite.on("mousedown", () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
   }
@@ -36,11 +36,6 @@ class Tile{
     else{
       return Sprite.from(dirtTexture);
     }
-  }
-
-  handleClick(){
-    game.world.setCurrent(this);
-    console.log(game.world.currentTile?.x + ":" + game.world.currentTile?.y);
   }
 }
 
