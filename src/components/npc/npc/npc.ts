@@ -17,7 +17,7 @@ interface npcInterface {
 class NPC {
   id:number;
   name:string;
-  type:npcInterface;
+  defaultValues:npcInterface;
   typeID:number;
   health:number;
   attack:number;
@@ -27,16 +27,20 @@ class NPC {
   x:number;
   y:number;
 
-  constructor(x:number, y:number, type:npcInterface, name:string){
-    this.attack = type.attack;
-    this.health = type.health;
-    this.defense = type.defense;
-    this.typeID = type.type;
-    this.type = type;
-    this.movement = type.movement;
+  itemList:Array<Items>;
+
+  constructor(x:number, y:number, defaultValues:npcInterface, name:string){
+    this.attack = defaultValues.attack;
+    this.health = defaultValues.health;
+    this.defense = defaultValues.defense;
+    this.typeID = defaultValues.type;
+    this.defaultValues = defaultValues;
+    this.movement = defaultValues.movement;
     this.x = x;
     this.y = y;
     this.name = name;
+    this.itemList = [];
+
 
     //Increases ID number by 1, then sets
     recentID++;
@@ -60,7 +64,7 @@ class NPC {
     game.world.container.addChild(this.sprite);//Adds to world container
   }
   handleNextTurn(){
-    this.movement = this.type.movement;
+    this.movement = this.defaultValues.movement;
   }
 
   handleSprite(){
