@@ -10,3 +10,7 @@ const sword:itemInterface =  {
     {statID:0, amount:10}
   ]
 }
+
+export{
+  sword,
+}

@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { game } from "../../..";
-import { Items } from "../../items/items";
+import { itemInterface, Items } from "../../items/items";
 import { missingTexture, villagerTexture } from "../../util/textures";
 
 let recentID = 0;
@@ -27,7 +27,7 @@ class NPC {
   x:number;
   y:number;
 
-  itemList:Array<Items>;
+  itemList:Array<itemInterface>;
 
   constructor(x:number, y:number, defaultValues:npcInterface, name:string){
     this.attack = defaultValues.attack;
@@ -47,6 +47,24 @@ class NPC {
     this.id = recentID;
 
     this.sprite = this.handleSprite();
+  }
+
+  addItem(item:itemInterface){
+    if(this.itemList !== undefined){
+      this.itemList.push(item);
+    }
+  }
+
+  removeItem(item:itemInterface){
+    if(this.itemList !== undefined){
+      if(this.itemList.includes(item)){
+        this.itemList.forEach((value, index)=>{
+          if(value == item){
+            this.itemList.splice(index, 1);
+          }
+        })
+      }
+    }
   }
 
   render(x:number, y:number){

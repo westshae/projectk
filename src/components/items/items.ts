@@ -22,6 +22,14 @@ class Items{
     recentID++;
     this.id = recentID;
   }
+
+  addBuff(){
+    console.log("test");
+  }
+
+  removeBuff(){
+    console.log("test");
+  }
 }
 
 export {
