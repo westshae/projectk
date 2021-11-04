@@ -105,7 +105,9 @@ class World {
 
   handleAction(){
     if(this.currentTile?.npc !== undefined){
-      game.hud.toggleActionVisible();
+      game.hud.toggleActionVisible(true);
+    }else{
+      game.hud.toggleActionVisible(false);
     }
   }
 

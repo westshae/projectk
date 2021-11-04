@@ -119,8 +119,8 @@ class HUD {
     }
   }
 
-  toggleActionVisible(){
-    this.action.visible = true;
+  toggleActionVisible(visibility:boolean){
+    this.action.visible = visibility;
   }
 }
 
