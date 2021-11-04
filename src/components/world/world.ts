@@ -83,26 +83,26 @@ class World {
       this.handleAction();
     }
     
-    else{//If an interaction has been selected, do interaction      
-      switch(this.currentInteraction){
-        case 0:
-          let tile:Tile | undefined = this.grid.at(x)?.at(y);
-          if(tile !== undefined){
-            this.handleMovement(tile);
-          }
-          break;
-        
-        case 1:
-          this.handleAttack();
-          break;
+    else{//If an interaction has been selected, do interaction 
+      let tile:Tile | undefined = this.grid.at(x)?.at(y);
+      if(tile !== undefined){
+        switch(this.currentInteraction){
+          case 0:
+              this.handleMovement(tile);
+            break;
+          
+          case 1:
+            this.handleAttack(tile);
+            break;
 
-        case 2:
-          this.handleBuild();
-          break;
-        
-        case 3:
-          this.handleInteraction();
-          break;
+          case 2:
+            this.handleBuild(tile);
+            break;
+          
+          case 3:
+            this.handleInteraction(tile);
+            break;
+        }
       }
     }
   }
@@ -138,15 +138,22 @@ class World {
     this.resetAction();
   }
 
-  handleAttack(){
+  handleAttack(tile:Tile){
     console.log('attack');
+
+    let tileInit:Tile | undefined = game.world.currentTile;
+    if(tileInit?.npc !== undefined){
+      let villager:NPC | undefined = tileInit.npc
+      let enemy:NPC | undefined = tile.npc;
+    }
+
   }
 
-  handleInteraction(){
+  handleInteraction(tile:Tile){
     console.log("interaction");
   }
 
-  handleBuild(){
+  handleBuild(tile:Tile){
     console.log("build");
   }
 
