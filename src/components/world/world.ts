@@ -29,15 +29,16 @@ class World {
 
   }
 
-  createSelector(){
+  createSelector(){//Changes values for selector
     let size = 50;
     let width = Math.sqrt(3) * size;
     let height = 2 * size;
 
+    //Changes size
     this.selector.width = width;
     this.selector.height = height;
 
-    this.selector.visible = false;
+    this.selector.visible = false;//Make invisible until selected tile
 
 
     this.container.addChild(this.selector);//Adds to world container
@@ -69,7 +70,7 @@ class World {
     }
   }
 
-  setCurrent(x:number, y:number){
+  setCurrent(x:number, y:number){//Sets selected tile
     let tile:Tile | undefined = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       this.currentTile = tile;
