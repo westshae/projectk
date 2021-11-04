@@ -1,11 +1,16 @@
-import { Sprite } from "pixi.js";
-import { game } from "../../..";
-import { missingTexture, treeTexture, oreTexture, fruitTexture } from "../../util/textures";
+import { Sprite } from 'pixi.js';
+import { game } from '../../..';
+import {
+  missingTexture,
+  treeTexture,
+  oreTexture,
+  fruitTexture,
+} from '../../util/textures';
 
 let recentID = 0;
 
 interface nodeInterface {
-  processingTime:number;
+  processingTime: number;
   defense: number;
   type: number;
   sprite: Sprite;
@@ -14,7 +19,7 @@ interface nodeInterface {
 class Node {
   id: number;
   type: number;
-  processingTime:number;
+  processingTime: number;
   defense: number;
   sprite: Sprite;
   x: number;
@@ -36,17 +41,17 @@ class Node {
 
   render(x: number, y: number) {
     //Calculates height/width of sprite
-    this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
-    this.sprite.height = (2 * 50) * 0.8;
+    this.sprite.width = Math.sqrt(3) * 50 * 0.8;
+    this.sprite.height = 2 * 50 * 0.8;
 
-    this.sprite.x = x + (this.sprite.width * 0.15);
+    this.sprite.x = x + this.sprite.width * 0.15;
     this.sprite.y = y;
 
     //Make tile interactable
     this.sprite.interactive = true;
     //this.sprite.on("pointerdown", this.select);
 
-    game.world.container.addChild(this.sprite);//Adds to world container
+    game.world.container.addChild(this.sprite); //Adds to world container
   }
 
   select() {
@@ -59,16 +64,12 @@ class Node {
         return Sprite.from(treeTexture);
       case 1:
         return Sprite.from(oreTexture);
-       case 2: 
+      case 2:
         return Sprite.from(fruitTexture);
       default:
         return Sprite.from(missingTexture);
     }
   }
-
 }
 
-export {
-  Node, 
-  nodeInterface,
-}
+export { Node, nodeInterface };
