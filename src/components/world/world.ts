@@ -3,7 +3,8 @@ import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-n
 import { NPC, npcInterface } from "../npc/npc/npc"
 import { Building, buildingInterface } from "./building/building";
 import { Node, nodeInterface } from "./node/node";
-import { Container } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
+import { waterTexture } from "../util/textures";
 
 class World {
   container:Container;
@@ -13,6 +14,7 @@ class World {
   npcMap:Map<number, NPC>;
   buildMap:Map<number,Building>;
   currentTile?:Tile;
+  selector:Sprite;
 
   constructor(size:number){
     this.container = new Container();
@@ -21,6 +23,24 @@ class World {
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
+
+    this.selector = Sprite.from(waterTexture);
+    this.createSelector();
+
+  }
+
+  createSelector(){
+    let size = 50;
+    let width = Math.sqrt(3) * size;
+    let height = 2 * size;
+
+    this.selector.width = width;
+    this.selector.height = height;
+
+    this.selector.visible = false;
+
+
+    this.container.addChild(this.selector);//Adds to world container
   }
 
   addNPC(x:number, y:number, type:npcInterface, name:string){
@@ -53,7 +73,11 @@ class World {
     let tile:Tile | undefined = this.grid.at(x)?.at(y);
     if(tile !== undefined){
       this.currentTile = tile;
+      this.selector.x = tile.sprite.x;
+      this.selector.y = tile.sprite.y;
+      this.selector.visible = true;
     }
+
   }
 
   generateGrid(){
