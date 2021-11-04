@@ -122,14 +122,15 @@ class World {
 
   handleMovement(tile:Tile){
     console.log("movement");
+    if(tile.npc !== undefined){return;}
+    
     let tileInit:Tile | undefined = game.world.currentTile;
     if(tileInit !== undefined){
       let npc:NPC | undefined= tileInit.npc;
       if(npc !== undefined){
         npc.x = tile.x;
         npc.y = tile.y;
-        npc.sprite.x = tile.sprite.x;
-        npc.sprite.y = tile.sprite.y;
+        npc.render(tile.sprite.x, tile.sprite.y);
         tile.npc = npc;
         tileInit.npc = undefined;
       }
