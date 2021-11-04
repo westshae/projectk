@@ -13,6 +13,7 @@ const waterTexture = Texture.from("../assets/tile/water.png");
 const houseTexture = Texture.from("../assets/buildings/house.png");
 const mineTexture = Texture.from("../assets/buildings/mine.png");
 const missingTexture = Texture.from("../assets/util/missing.png");
+const selectorTexture = Texture.from("../assets/util/selector.png");
 
 
 export{
@@ -29,4 +30,5 @@ export{
   houseTexture,
   mineTexture,
   missingTexture,
+  selectorTexture,
 }

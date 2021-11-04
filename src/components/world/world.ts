@@ -4,7 +4,7 @@ import { NPC, npcInterface } from "../npc/npc/npc"
 import { Building, buildingInterface } from "./building/building";
 import { Node, nodeInterface } from "./node/node";
 import { Container, Sprite } from "pixi.js";
-import { waterTexture } from "../util/textures";
+import { selectorTexture, waterTexture } from "../util/textures";
 
 class World {
   container:Container;
@@ -24,7 +24,7 @@ class World {
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
 
-    this.selector = Sprite.from(waterTexture);
+    this.selector = Sprite.from(selectorTexture);
     this.createSelector();
 
   }
