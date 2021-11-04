@@ -128,6 +128,10 @@ class World {
         console.log(npc.sprite.x + ":" + npc.sprite.y);
       }
     }
+    this.currentTile = undefined;
+    this.selector.visible = false;
+    game.hud.toggleActionVisible(false);
+    this.currentInteraction = undefined;
   }
 
   handleAttack(){
