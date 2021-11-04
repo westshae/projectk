@@ -81,11 +81,13 @@ class World {
         this.selector.visible = true;
       }
       this.handleAction();
-    }else{//If an interaction has been selected, do interaction
-      console.log(this.currentInteraction);
+    }else{//If an interaction has been selected, do interaction      
       switch(this.currentInteraction){
         case 0:
-          this.handleMovement();
+          let tile:Tile | undefined = this.grid.at(x)?.at(y);
+          if(tile !== undefined){
+            this.handleMovement(tile);
+          }
           break;
         
         case 1:
@@ -111,23 +113,21 @@ class World {
     }
   }
 
-  handleMovement(){
+  handleMovement(tile:Tile){
     console.log("movement")
-      // if(game.world.currentTile != undefined){//If there is currently a selected villager
-      //   let villager:Villager = world.current;//Gets villager from world.current
-  
-      //   //Changes villager x/y coords
-      //   villager.x = this.x;
-      //   villager.y = this.y;
-  
-      //   //Updates tile's villager
-      //   this.villager = villager;
-      //   this.hasVillager = true;
-  
-      //   //Resets currently selected villager
-      //   world.current = undefined;
-      // }
-    
+    let tileDestination:Tile | undefined = game.world.currentTile;
+    if(tileDestination !== undefined){
+      let npc:NPC | undefined= tileDestination.npc;
+      console.log(npc);
+      if(npc !== undefined){
+        npc.x = tile.x;
+        npc.y = tile.y;
+        npc.sprite.x = tile.sprite.x;
+        npc.sprite.y = tile.sprite.y;
+        console.log(npc.x + ":" + npc.y)
+        console.log(npc.sprite.x + ":" + npc.sprite.y);
+      }
+    }
   }
 
   handleAttack(){
