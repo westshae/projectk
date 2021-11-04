@@ -24,7 +24,7 @@ class Tile{
 
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
-    this.sprite.on("mousedown", this.handleClick);
+    this.sprite.on("mousedown", () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
   }
@@ -35,26 +35,6 @@ class Tile{
     }
     else{
       return Sprite.from(dirtTexture);
-    }
-  }
-
-  handleClick(){
-    if(game.world.current !== undefined){
-      let npc:NPC = game.world.current;//Gets currently selected NPC
-      if(npc !== undefined){
-        if(npc.movement == 0){return;}
-
-        //Sets npc's new coords
-        npc.sprite.x = this.x;
-        npc.sprite.y = this.y;
-  
-        //Limited movement
-        npc.movement = 0;
-        
-        this.npc = npc;
-        
-        game.world.current = undefined;//Resets selected npc;
-      }
     }
   }
 }

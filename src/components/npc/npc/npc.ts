@@ -2,6 +2,7 @@ import { Sprite } from "pixi.js";
 import { game } from "../../..";
 import { buffInterface, itemInterface, Items } from "../../items/items";
 import { missingTexture, villagerTexture } from "../../util/textures";
+import { Tile } from "../../world/tile";
 
 let recentID = 0;
 
@@ -99,10 +100,6 @@ class NPC {
     
     this.sprite.x = x + (this.sprite.width * 0.15);
     this.sprite.y = y;
-
-    //Make tile interactable
-    this.sprite.interactive = true;
-    this.sprite.on("pointerdown", () => game.world.setCurrent(this));
 
     game.world.container.addChild(this.sprite);//Adds to world container
   }
