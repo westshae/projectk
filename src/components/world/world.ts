@@ -16,6 +16,7 @@ class World {
   buildMap:Map<number,Building>;
   currentTile?:Tile;
   selector:Sprite;
+  currentInteraction?:number;
 
   constructor(size:number){
     this.container = new Container();
@@ -27,7 +28,6 @@ class World {
 
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
-
   }
 
   createSelector(){//Changes values for selector
@@ -72,14 +72,18 @@ class World {
   }
 
   setCurrent(x:number, y:number){//Sets selected tile
-    let tile:Tile | undefined = this.grid.at(x)?.at(y);
-    if(tile !== undefined){
-      this.currentTile = tile;
-      this.selector.x = tile.sprite.x;
-      this.selector.y = tile.sprite.y;
-      this.selector.visible = true;
+    if(this.currentInteraction == undefined){//If a interaction hasn't been selected
+      let tile:Tile | undefined = this.grid.at(x)?.at(y);
+      if(tile !== undefined){
+        this.currentTile = tile;
+        this.selector.x = tile.sprite.x;
+        this.selector.y = tile.sprite.y;
+        this.selector.visible = true;
+      }
+      this.handleAction();
+    }else{//If an interaction has been selected, do interaction
+      console.log(this.currentInteraction);
     }
-    this.handleAction();
   }
 
   handleAction(){

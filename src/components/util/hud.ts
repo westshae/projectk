@@ -89,10 +89,10 @@ class HUD {
   drawAction(height:number){
     this.action.visible = false;
     let arrayOfFunction = [];
-    arrayOfFunction.push(game.world.handleAttack);
-    arrayOfFunction.push(game.world.handleBuild);
-    arrayOfFunction.push(game.world.handleInteraction);
-    arrayOfFunction.push(game.world.handleMovement);
+    arrayOfFunction.push(() => game.world.currentInteraction = 0);
+    arrayOfFunction.push(() => game.world.currentInteraction = 1);
+    arrayOfFunction.push(() => game.world.currentInteraction = 2);
+    arrayOfFunction.push(() => game.world.currentInteraction = 3);
 
     //draws background rectangle
     let bar = new Graphics();
