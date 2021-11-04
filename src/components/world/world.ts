@@ -83,6 +83,23 @@ class World {
       this.handleAction();
     }else{//If an interaction has been selected, do interaction
       console.log(this.currentInteraction);
+      switch(this.currentInteraction){
+        case 0:
+          this.handleMovement();
+          break;
+        
+        case 1:
+          this.handleAttack();
+          break;
+
+        case 2:
+          this.handleBuild();
+          break;
+        
+        case 3:
+          this.handleInteraction();
+          break;
+      }
     }
   }
 
