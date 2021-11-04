@@ -5,6 +5,7 @@ import { Building, buildingInterface } from "./building/building";
 import { Node, nodeInterface } from "./node/node";
 import { Container, Sprite } from "pixi.js";
 import { selectorTexture, waterTexture } from "../util/textures";
+import { game } from "../..";
 
 class World {
   container:Container;
@@ -82,7 +83,7 @@ class World {
   }
 
   handleAction(){
-
+    game.hud.toggleActionVisible();
   }
 
   handleMovement(){

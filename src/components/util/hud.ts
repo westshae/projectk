@@ -87,6 +87,7 @@ class HUD {
   }
 
   drawAction(height:number){
+    this.action.visible = false;
     let arrayOfFunction = [];
     arrayOfFunction.push(game.world.handleAttack);
     arrayOfFunction.push(game.world.handleBuild);
@@ -94,8 +95,10 @@ class HUD {
     arrayOfFunction.push(game.world.handleMovement);
 
     //draws background rectangle
-    this.bar.beginFill(0x434343);
-    this.bar.drawRect(0,game.app.renderer.height - height,height * 4, height);
+    let bar = new Graphics();
+    bar.beginFill(0x434343);
+    bar.drawRect(0,game.app.renderer.height - height,height * 4, height);
+    this.action.addChild(bar);
 
 
     for(let i = 0; i < 4; i++){
@@ -114,6 +117,10 @@ class HUD {
 
       this.action.addChild(button);
     }
+  }
+
+  toggleActionVisible(){
+    this.action.visible = true;
   }
 }
 
