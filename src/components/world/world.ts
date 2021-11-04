@@ -113,25 +113,28 @@ class World {
     }
   }
 
+  resetAction(){
+    this.currentTile = undefined;
+    this.selector.visible = false;
+    game.hud.toggleActionVisible(false);
+    this.currentInteraction = undefined;
+  }
+
   handleMovement(tile:Tile){
-    console.log("movement")
-    let tileDestination:Tile | undefined = game.world.currentTile;
-    if(tileDestination !== undefined){
-      let npc:NPC | undefined= tileDestination.npc;
-      console.log(npc);
+    console.log("movement");
+    let tileInit:Tile | undefined = game.world.currentTile;
+    if(tileInit !== undefined){
+      let npc:NPC | undefined= tileInit.npc;
       if(npc !== undefined){
         npc.x = tile.x;
         npc.y = tile.y;
         npc.sprite.x = tile.sprite.x;
         npc.sprite.y = tile.sprite.y;
-        console.log(npc.x + ":" + npc.y)
-        console.log(npc.sprite.x + ":" + npc.sprite.y);
+        tile.npc = npc;
+        tileInit.npc = undefined;
       }
     }
-    this.currentTile = undefined;
-    this.selector.visible = false;
-    game.hud.toggleActionVisible(false);
-    this.currentInteraction = undefined;
+    this.resetAction();
   }
 
   handleAttack(){
