@@ -7,12 +7,14 @@ class HUD {
   bar:Graphics;
   button:Graphics;
   information:Text;
+  action:Container;
 
   constructor(){
     this.container = new Container();
     this.bar = new Graphics();
     this.button = new Graphics();
     this.information = new Text("");
+    this.action = new Container();
   }
 
   init(){//Added HUD to stage, added event for resizing, draws HUD
@@ -28,6 +30,7 @@ class HUD {
     this.container.addChild(this.bar);
     this.container.addChild(this.button);
     this.container.addChild(this.information);
+    this.container.addChild(this.action);
   }
 
   draw(){//Draws all HUD elements
@@ -39,6 +42,7 @@ class HUD {
     this.drawButton(height);
     this.drawBar(width, height);
     this.drawInformation();
+    this.drawAction(height);
   }
 
   drawInformation(){
@@ -80,6 +84,36 @@ class HUD {
     this.button.interactive = true;
     this.button.on("pointerdown", () => game.nextTurn());
 
+  }
+
+  drawAction(height:number){
+    let arrayOfFunction = [];
+    arrayOfFunction.push(game.world.handleAttack);
+    arrayOfFunction.push(game.world.handleBuild);
+    arrayOfFunction.push(game.world.handleInteraction);
+    arrayOfFunction.push(game.world.handleMovement);
+
+    //draws background rectangle
+    this.bar.beginFill(0x434343);
+    this.bar.drawRect(0,game.app.renderer.height - height,height * 4, height);
+
+
+    for(let i = 0; i < 4; i++){
+      let button = new Graphics();
+    
+      //Draws button
+      button.beginFill(0x900000);
+      button.drawStar((height/2) + (height * i),game.app.renderer.height - (height/2),5,height/2);
+
+      //Turns button into button
+      button.interactive = true;
+      let current = arrayOfFunction.at(i);
+      if(current !== undefined){
+        button.on("pointerdown", current);
+      }
+
+      this.action.addChild(button);
+    }
   }
 }
 

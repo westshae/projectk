@@ -78,7 +78,27 @@ class World {
       this.selector.y = tile.sprite.y;
       this.selector.visible = true;
     }
+    this.handleAction();
+  }
 
+  handleAction(){
+
+  }
+
+  handleMovement(){
+    console.log("movement")
+  }
+
+  handleAttack(){
+    console.log('attack')
+  }
+
+  handleInteraction(){
+    console.log("interaction")
+  }
+
+  handleBuild(){
+    console.log("build")
   }
 
   generateGrid(){
