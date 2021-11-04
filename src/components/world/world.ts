@@ -145,6 +145,9 @@ class World {
     if(tileInit?.npc !== undefined){
       let villager:NPC | undefined = tileInit.npc
       let enemy:NPC | undefined = tile.npc;
+      if(enemy !== undefined){
+        villager.doCombat(enemy);
+      }
     }
 
   }

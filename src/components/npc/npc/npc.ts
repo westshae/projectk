@@ -93,6 +93,27 @@ class NPC {
     }
   }
 
+  doCombat(enemy:NPC){
+    enemy.health -= this.attack;
+    if(enemy.health < 0){
+      enemy.remove();
+    }else{
+      this.health -= enemy.attack;
+      if(this.health < 0){
+        this.remove();
+      }
+    }
+  }
+
+  remove(){
+    this.sprite.destroy();
+    let tile:Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
+    if(tile !== undefined){
+      tile.npc = undefined;
+      game.world.npcMap.delete(this.id);
+    }
+  }
+
   render(x:number, y:number){//Renders NPC at x:y coordinate, only run once
     //Calculates height/width of sprite
     this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
