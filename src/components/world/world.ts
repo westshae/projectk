@@ -104,11 +104,28 @@ class World {
   }
 
   handleAction(){
-    game.hud.toggleActionVisible();
+    if(this.currentTile?.npc !== undefined){
+      game.hud.toggleActionVisible();
+    }
   }
 
   handleMovement(){
     console.log("movement")
+      // if(game.world.currentTile != undefined){//If there is currently a selected villager
+      //   let villager:Villager = world.current;//Gets villager from world.current
+  
+      //   //Changes villager x/y coords
+      //   villager.x = this.x;
+      //   villager.y = this.y;
+  
+      //   //Updates tile's villager
+      //   this.villager = villager;
+      //   this.hasVillager = true;
+  
+      //   //Resets currently selected villager
+      //   world.current = undefined;
+      // }
+    
   }
 
   handleAttack(){
