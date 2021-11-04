@@ -81,7 +81,9 @@ class World {
         this.selector.visible = true;
       }
       this.handleAction();
-    }else{//If an interaction has been selected, do interaction      
+    }
+    
+    else{//If an interaction has been selected, do interaction      
       switch(this.currentInteraction){
         case 0:
           let tile:Tile | undefined = this.grid.at(x)?.at(y);
@@ -121,9 +123,7 @@ class World {
   }
 
   handleMovement(tile:Tile){
-    console.log("movement");
     if(tile.npc !== undefined){return;}
-    
     let tileInit:Tile | undefined = game.world.currentTile;
     if(tileInit !== undefined){
       let npc:NPC | undefined= tileInit.npc;
@@ -139,15 +139,15 @@ class World {
   }
 
   handleAttack(){
-    console.log('attack')
+    console.log('attack');
   }
 
   handleInteraction(){
-    console.log("interaction")
+    console.log("interaction");
   }
 
   handleBuild(){
-    console.log("build")
+    console.log("build");
   }
 
   generateGrid(){
