@@ -147,6 +147,7 @@ class World {
         villager.doCombat(enemy);
       }
     }
+    this.resetAction();
   }
 
   handleInteraction(tile: Tile) {
