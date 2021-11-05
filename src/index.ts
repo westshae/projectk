@@ -1,5 +1,5 @@
 import { sword } from './components/items/itemTypes';
-import { villager } from './components/npc/npcTypes';
+import { villager } from './defaults/npc';
 import { Game } from './components/util/game';
 import { townCenter } from './components/world/building/buildingTypes';
 import { tree } from './components/world/node/nodeTypes';
@@ -14,6 +14,7 @@ const main = async () => {
   game.world.addNPC(4, 4, villager, 'Joe');
   game.world.addBuilding(5, 5, townCenter);
   game.world.npcMap.get(1)?.addItem(sword);
+  game.world.npcMap.get(1)?.removeItem(sword);
   game.world.addNode(6, 6, tree, 10);
   game.world.render();
 };

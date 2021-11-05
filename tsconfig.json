@@ -7,5 +7,6 @@
         "sourceMap": true,
         // Set your preferences here for TypeScript
         "strict": true,
+        "downlevelIteration": true
     }
 }

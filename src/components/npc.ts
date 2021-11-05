@@ -1,8 +1,8 @@
-import { Sprite } from 'pixi.js';
-import { game } from '../..';
-import { buffInterface, itemInterface, Items } from '../items/items';
-import { missingTexture, villagerTexture } from '../util/textures';
-import { Tile } from '../world/tile';
+import { Sprite } from "pixi.js";
+import { game } from "./..";
+import { buffInterface, itemInterface, Items } from "./items/items";
+import { missingTexture, villagerTexture } from "./util/textures";
+import { Tile } from "./world/tile";
 
 let recentID = 0;
 
@@ -36,8 +36,8 @@ class NPC {
 
   constructor(x: number, y: number, defaultValues: npcInterface, name: string) {
     //Sets NPC stats
-    this.attack = defaultValues.attack;
     this.health = defaultValues.health;
+    this.attack = defaultValues.attack;
     this.defense = defaultValues.defense;
     this.movement = defaultValues.movement;
 
@@ -59,45 +59,48 @@ class NPC {
     this.sprite = this.handleSprite(); //Sets sprite based on defaultValueID
   }
 
-  doBuff(buff: buffInterface, how: boolean) {
-    //how == true, add buff to stat, vice versa
+  //BUFF ID VALUES
+  //[0, health][1, attack][2, defense][3, movement]
+  doBuff(buff: buffInterface, increase: boolean) {
     switch (buff.statID) {
       case 0:
-        this.health += buff.amount * (how ? 1 : -1); //if how is true, * by 1, else * -21
+        this.health += buff.amount * (increase ? 1 : -1); //if how is true, * by 1, else * -21
+      case 1:
+        this.attack += buff.amount * (increase ? 1 : -1);
+      case 2:
+        this.defense += buff.amount * (increase ? 1 : -1);
+      case 3:
+        this.movement += buff.amount * (increase ? 1 : -1);
     }
+  }
+
+  move(currentTile:Tile, nextTile:Tile){
+    this.x = nextTile.x;
+    this.y = nextTile.y;
+    this.render(nextTile.sprite.x, nextTile.sprite.y);
+    nextTile.npc = this;
+    currentTile.npc = undefined;
   }
 
   addItem(item: itemInterface) {
-    //Adds item to NPC
-    if (this.itemList !== undefined) {
-      //If item list exists
-      if (!this.itemList.includes(item)) {
-        //If item isn't in list, continue
-        this.itemList.push(item); //Add item to list
-        item.buffList.forEach((value, index) => {
-          //For each buff in item, do buff
-          this.doBuff(value, true);
-        });
-      }
-    }
+    if (this.itemList.includes(item)) return;
+
+    this.itemList.push(item);
+    item.buffList.forEach((value) => {
+      this.doBuff(value, true);
+    });
   }
 
   removeItem(item: itemInterface) {
-    //Removes item from NPC
-    if (this.itemList !== undefined) {
-      //If itemlist exists
-      if (this.itemList.includes(item)) {
-        //If itemList contains item
-        this.itemList.forEach((value, index) => {
-          //For each item
-          if (value == item) {
-            //If currentItem == item, remove from itemList, undo each buff
-            this.itemList.splice(index, 1);
-            item.buffList.forEach((value, index) => {
-              this.doBuff(value, false);
-            });
-          }
-        });
+    if(this.itemList === undefined)return;
+    if(!this.itemList.includes(item))return;
+
+    for(let [index, value] of this.itemList.entries()){
+      if(value == item){
+        this.itemList.splice(index, 1);
+        for(let buff of item.buffList ){
+          this.doBuff(buff, false);
+        }
       }
     }
   }
@@ -124,24 +127,20 @@ class NPC {
   }
 
   render(x: number, y: number) {
-    //Renders NPC at x:y coordinate, only run once
-    //Calculates height/width of sprite
-    this.sprite.width = Math.sqrt(3) * 50 * 0.8;
-    this.sprite.height = 2 * 50 * 0.8;
+    this.sprite.width = game.world.spriteWidth *  0.8;
+    this.sprite.height = game.world.spriteHeight * 0.8;
 
-    this.sprite.x = x + this.sprite.width * 0.15;
+    this.sprite.x = x + this.sprite.width * 0.2;
     this.sprite.y = y;
 
-    game.world.container.addChild(this.sprite); //Adds to world container
+    game.world.container.addChild(this.sprite);
   }
 
   handleNextTurn() {
-    //does all requirements for nextturn
     this.movement = this.defaultValues.movement;
   }
 
   handleSprite() {
-    //Returns sprite from ID
     switch (this.defaultValuesID) {
       case 0:
         return Sprite.from(villagerTexture);

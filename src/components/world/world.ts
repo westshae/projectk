@@ -1,12 +1,12 @@
 import { Tile } from './tile';
 import SimplexNoise from '../../../node_modules/simplex-noise/dist/cjs/simplex-noise';
-import { NPC, npcInterface } from '../npc/npc';
+import { NPC, npcInterface } from '../npc';
 import { Building, buildingInterface } from './building/building';
 import { Node, nodeInterface } from './node/node';
 import { Container, Sprite } from 'pixi.js';
-import { selectorTexture, waterTexture } from '../util/textures';
+import { selectorTexture } from '../util/textures';
 import { game } from '../..';
-import { mine, townCenter } from './building/buildingTypes';
+import { townCenter } from './building/buildingTypes';
 
 class World {
   container: Container;
@@ -18,6 +18,8 @@ class World {
   currentTile?: Tile;
   selector: Sprite;
   currentInteraction?: number;
+  spriteWidth:number;
+  spriteHeight:number;
 
   constructor(size: number) {
     this.container = new Container();
@@ -29,6 +31,8 @@ class World {
 
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
+    this.spriteWidth = Math.sqrt(3) * 50;
+    this.spriteHeight = 2 * 50;
   }
 
   createSelector() {
@@ -121,21 +125,16 @@ class World {
     this.currentInteraction = undefined;
   }
 
-  handleMovement(tile: Tile) {
-    if (tile.npc !== undefined) {
-      return;
-    }
-    let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit !== undefined) {
-      let npc: NPC | undefined = tileInit.npc;
-      if (npc !== undefined) {
-        npc.x = tile.x;
-        npc.y = tile.y;
-        npc.render(tile.sprite.x, tile.sprite.y);
-        tile.npc = npc;
-        tileInit.npc = undefined;
-      }
-    }
+  handleMovement(nextTile: Tile) {
+    let currentTile: Tile | undefined = game.world.currentTile;
+
+    if (nextTile.npc !== undefined) return;
+    if(currentTile === undefined)return;
+    
+    let npc: NPC | undefined = currentTile.npc;
+    if(npc === undefined) return;
+
+    npc.move(currentTile, nextTile);
     this.resetAction();
   }
 
