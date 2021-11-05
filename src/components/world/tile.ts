@@ -1,6 +1,6 @@
 import { Container, Sprite } from 'pixi.js';
 import { game } from '../..';
-import { NPC } from '../npc';
+import { NPC, npcInterface } from '../npc';
 import { Building } from './building';
 import { dirtTexture, sandTexture } from '../util/textures';
 import { Node } from './node';
@@ -23,6 +23,11 @@ class Tile {
     this.sprite.on('mousedown', () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
+  }
+
+  addNPC(x: number, y: number, type: npcInterface, name: string){
+    this.npc = new NPC(x, y, type, name);
+    game.world.npcMap.set(this.npc.id, this.npc);
   }
 
   handleSprite(noise: number) {

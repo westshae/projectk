@@ -45,12 +45,9 @@ class World {
   }
 
   addNPC(x: number, y: number, type: npcInterface, name: string) {
-    let npc: NPC = new NPC(x, y, type, name);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.npc = npc;
-    }
-    this.npcMap.set(npc.id, npc);
+    if(tile === undefined) return;
+    tile.addNPC(x,y,type,name);
   }
 
   addBuilding(x: number, y: number, type: buildingInterface) {
