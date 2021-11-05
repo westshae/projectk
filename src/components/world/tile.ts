@@ -12,12 +12,10 @@ class Tile {
   npc?: NPC;
   building?: Building;
   node?: Node;
-  isHighlighted: boolean;
 
   constructor(x: number, y: number, noise: number, container: Container) {
     this.x = x;
     this.y = y;
-    this.isHighlighted = false;
     this.sprite = this.handleSprite(noise);
 
     //Makes clicking with mouse send to handler

@@ -22,31 +22,25 @@ class World {
   spriteHeight:number;
 
   constructor(size: number) {
-    this.container = new Container();
     this.size = size;
-    this.screenSize = Math.sqrt(3) * 50 * size * 5;
+    this.spriteWidth = Math.sqrt(3) * 50;
+    this.spriteHeight = 2 * 50;
+
+    this.container = new Container();
+    this.screenSize = this.spriteWidth * size * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
 
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
-    this.spriteWidth = Math.sqrt(3) * 50;
-    this.spriteHeight = 2 * 50;
   }
 
   createSelector() {
-    //Changes values for selector
-    let size = 50;
-    let width = Math.sqrt(3) * size;
-    let height = 2 * size;
-
-    //Changes size
-    this.selector.width = width;
-    this.selector.height = height;
+    this.selector.width = this.spriteWidth;
+    this.selector.height = this.spriteHeight;
 
     this.selector.visible = false; //Make invisible until selected tile
-
     this.container.addChild(this.selector); //Adds to world container
   }
 
