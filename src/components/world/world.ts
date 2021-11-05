@@ -136,22 +136,21 @@ class World {
 
     game.data.changeResource(tile.node.id, tile.node.amount, true);
     tile.node.delete();
-    
+
     this.resetAction();
   }
 
   handleBuild(tile: Tile) {
-    console.log("build");
     let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit !== undefined) {
-      //check distance
-      if (tile.building === undefined) {
-        game.world.addBuilding(tile.x, tile.y, townCenter);
-        game.world.render();
-      } else {
-        tile.building.delete();
-      }
+    if (tileInit === undefined) return;
+
+    if (tile.building === undefined) {
+      game.world.addBuilding(tile.x, tile.y, townCenter);
+      game.world.render();
+    } else {
+      tile.building.delete();
     }
+
     this.resetAction();
   }
 
