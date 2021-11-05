@@ -52,11 +52,11 @@ class Node {
   }
 
   delete() {
-    this.sprite.destroy();
     let tile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
-    if (tile !== undefined) {
-      tile.node = undefined;
-    }
+    if(tile === undefined)return;
+
+    tile.node = undefined;
+    this.sprite.destroy();
   }
 
   handleSprite() {
