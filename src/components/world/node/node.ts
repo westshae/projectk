@@ -1,11 +1,17 @@
-import { Sprite } from "pixi.js";
-import { game } from "../../..";
-import { missingTexture, treeTexture, oreTexture, fruitTexture } from "../../util/textures";
+import { Sprite } from 'pixi.js';
+import { game } from '../../..';
+import {
+  missingTexture,
+  treeTexture,
+  oreTexture,
+  fruitTexture,
+} from '../../util/textures';
+import { Tile } from '../tile';
 
 let recentID = 0;
 
 interface nodeInterface {
-  processingTime:number;
+  processingTime: number;
   defense: number;
   type: number;
   sprite: Sprite;
@@ -14,18 +20,18 @@ interface nodeInterface {
 class Node {
   id: number;
   type: number;
-  processingTime:number;
-  defense: number;
+  processingTime: number;
   sprite: Sprite;
+  amount:number;
   x: number;
   y: number;
 
-  constructor(x: number, y: number, type: nodeInterface) {
+  constructor(x: number, y: number, type: nodeInterface, amount:number) {
     this.processingTime = type.processingTime;
-    this.defense = type.defense;
     this.type = type.type;
     this.x = x;
     this.y = y;
+    this.amount = amount;
 
     //Increases ID number by 1, then sets
     recentID++;
@@ -36,21 +42,21 @@ class Node {
 
   render(x: number, y: number) {
     //Calculates height/width of sprite
-    this.sprite.width = (Math.sqrt(3) * 50) * 0.8;
-    this.sprite.height = (2 * 50) * 0.8;
+    this.sprite.width = Math.sqrt(3) * 50 * 0.8;
+    this.sprite.height = 2 * 50 * 0.8;
 
-    this.sprite.x = x + (this.sprite.width * 0.15);
+    this.sprite.x = x + this.sprite.width * 0.15;
     this.sprite.y = y;
 
-    //Make tile interactable
-    this.sprite.interactive = true;
-    //this.sprite.on("pointerdown", this.select);
-
-    game.world.container.addChild(this.sprite);//Adds to world container
+    game.world.container.addChild(this.sprite); //Adds to world container
   }
 
-  select() {
-    //Cannot select a building (yet)
+  delete() {
+    this.sprite.destroy();
+    let tile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
+    if (tile !== undefined) {
+      tile.node = undefined;
+    }
   }
 
   handleSprite() {
@@ -59,16 +65,12 @@ class Node {
         return Sprite.from(treeTexture);
       case 1:
         return Sprite.from(oreTexture);
-       case 2: 
+      case 2:
         return Sprite.from(fruitTexture);
       default:
         return Sprite.from(missingTexture);
     }
   }
-
 }
 
-export {
-  Node, 
-  nodeInterface,
-}
+export { Node, nodeInterface };

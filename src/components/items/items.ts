@@ -1,31 +1,26 @@
-import { Sprite } from "pixi.js";
+import { Sprite } from 'pixi.js';
 
-interface itemInterface{
-  id:number;
-  name:string;
-  sprite:Sprite;
-  buffList:Array<buffInterface>;
+interface itemInterface {
+  id: number;
+  name: string;
+  sprite: Sprite;
+  buffList: Array<buffInterface>;
 }
 
-interface buffInterface{
-  statID:number;
-  amount:number;
+interface buffInterface {
+  statID: number;
+  amount: number;
 }
 
 let recentID = 0;
 
+class Items {
+  id: number;
 
-class Items{
-  id:number;
-
-  constructor(){
+  constructor() {
     recentID++;
     this.id = recentID;
   }
 }
 
-export {
-  itemInterface,
-  buffInterface,
-  Items
-}
+export { itemInterface, buffInterface, Items };

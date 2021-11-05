@@ -1,22 +1,20 @@
-import { Container, Sprite } from "pixi.js";
-import { game } from "../..";
-import { NPC } from "../npc/npc/npc";
-import { Building } from "./building/building";
-import { dirtTexture, sandTexture } from "../util/textures";
-import { Node } from "./node/node";
+import { Container, Sprite } from 'pixi.js';
+import { game } from '../..';
+import { NPC } from '../npc/npc';
+import { Building } from './building/building';
+import { dirtTexture, sandTexture } from '../util/textures';
+import { Node } from './node/node';
 
+class Tile {
+  x: number;
+  y: number;
+  sprite: Sprite;
+  npc?: NPC;
+  building?: Building;
+  node?: Node;
+  isHighlighted: boolean;
 
-class Tile{
-  x:number;
-  y:number;
-  sprite:Sprite;
-  npc?:NPC;
-  building?:Building;
-  resource?:Node;
-  isHighlighted:boolean;
-
-
-  constructor(x:number, y:number, noise:number, container:Container){
+  constructor(x: number, y: number, noise: number, container: Container) {
     this.x = x;
     this.y = y;
     this.isHighlighted = false;
@@ -24,21 +22,19 @@ class Tile{
 
     //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
-    this.sprite.on("mousedown", () => game.world.setCurrent(this.x, this.y));
+    this.sprite.on('mousedown', () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
   }
 
-  handleSprite(noise:number){//Returns sprite based on noise value
-    if(noise < 0){
+  handleSprite(noise: number) {
+    //Returns sprite based on noise value
+    if (noise < 0) {
       return Sprite.from(sandTexture);
-    }
-    else{
+    } else {
       return Sprite.from(dirtTexture);
     }
   }
 }
 
-export{
-  Tile,
-}
+export { Tile };
