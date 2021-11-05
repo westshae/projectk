@@ -1,12 +1,12 @@
-import { Tile } from './tile';
-import SimplexNoise from '../../../node_modules/simplex-noise/dist/cjs/simplex-noise';
-import { NPC, npcInterface } from '../npc';
-import { Building, buildingInterface } from './building';
-import { Node, nodeInterface } from './node';
-import { Container, Sprite } from 'pixi.js';
-import { selectorTexture } from '../util/textures';
-import { game } from '../..';
-import { townCenter } from '../../defaults/builds';
+import { Tile } from "./tile";
+import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
+import { NPC, npcInterface } from "../npc";
+import { Building, buildingInterface } from "./building";
+import { Node, nodeInterface } from "./node";
+import { Container, Sprite } from "pixi.js";
+import { selectorTexture } from "../util/textures";
+import { game } from "../..";
+import { townCenter } from "../../defaults/builds";
 
 class World {
   container: Container;
@@ -18,8 +18,8 @@ class World {
   currentTile?: Tile;
   selector: Sprite;
   currentInteraction?: number;
-  spriteWidth:number;
-  spriteHeight:number;
+  spriteWidth: number;
+  spriteHeight: number;
 
   constructor(size: number) {
     this.size = size;
@@ -46,58 +46,52 @@ class World {
 
   addNPC(x: number, y: number, type: npcInterface, name: string) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if(tile === undefined) return;
-    tile.addNPC(x,y,type,name);
+    if (tile === undefined) return;
+    tile.addNPC(x, y, type, name);
   }
 
   addBuilding(x: number, y: number, type: buildingInterface) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if(tile === undefined) return;
-    tile.addBuilding(x,y,type);
+    if (tile === undefined) return;
+
+    tile.addBuilding(x, y, type);
   }
 
-  addNode(x: number, y: number, type: nodeInterface, amount:number) {
+  addNode(x: number, y: number, type: nodeInterface, amount: number) {
+    let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if(tile === undefined) return;
-    
-    this.addNode(x,y,type,amount);
+    if (tile !== undefined) {
+      tile.node = node;
+    }
   }
 
   setCurrent(x: number, y: number) {
-    //Sets selected tile
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      if (this.currentInteraction == undefined) {
-        //If a interaction hasn't been selected
-        this.currentTile = tile;
-        this.selector.x = tile.sprite.x;
-        this.selector.y = tile.sprite.y;
-        this.selector.visible = true;
-        this.handleAction();
-      } else {
-        //If an interaction has been selected, do interaction
-        switch (this.currentInteraction) {
-          case 0:
-            this.handleMovement(tile);
-            break;
+    if (tile === undefined) return;
 
-          case 1:
-            this.handleAttack(tile);
-            break;
-
-          case 2:
-            this.handleBuild(tile);
-            break;
-
-          case 3:
-            this.handleInteraction(tile);
-            break;
-        }
+    if (this.currentInteraction == undefined) {
+      this.setAction(tile);
+    } 
+    else {
+      switch (this.currentInteraction) {
+        case 0:
+          this.handleMovement(tile);
+        case 1:
+          this.handleAttack(tile);
+        case 2:
+          this.handleBuild(tile);
+        case 3:
+          this.handleInteraction(tile);
       }
     }
   }
 
-  handleAction() {
+  setAction(tile: Tile) {
+    this.currentTile = tile;
+    this.selector.x = tile.sprite.x;
+    this.selector.y = tile.sprite.y;
+    this.selector.visible = true;
+
     if (this.currentTile?.npc !== undefined) {
       game.hud.toggleActionVisible(true);
     } else {
@@ -116,10 +110,10 @@ class World {
     let currentTile: Tile | undefined = game.world.currentTile;
 
     if (nextTile.npc !== undefined) return;
-    if(currentTile === undefined)return;
-    
+    if (currentTile === undefined) return;
+
     let npc: NPC | undefined = currentTile.npc;
-    if(npc === undefined) return;
+    if (npc === undefined) return;
 
     npc.move(currentTile, nextTile);
     this.resetAction();
@@ -139,9 +133,9 @@ class World {
 
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
-    if(tileInit !== undefined){
+    if (tileInit !== undefined) {
       //Check distance
-      if(tile.node !== undefined){
+      if (tile.node !== undefined) {
         game.data.increaseResource(tile.node.id, tile.node.amount);
         tile.node.delete();
       }
@@ -150,14 +144,14 @@ class World {
   }
 
   handleBuild(tile: Tile) {
-    console.log('build');
+    console.log("build");
     let tileInit: Tile | undefined = game.world.currentTile;
-    if(tileInit !== undefined){
+    if (tileInit !== undefined) {
       //check distance
-      if(tile.building === undefined){
+      if (tile.building === undefined) {
         game.world.addBuilding(tile.x, tile.y, townCenter);
         game.world.render();
-      }else{
+      } else {
         tile.building.delete();
       }
     }
