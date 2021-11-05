@@ -1,12 +1,12 @@
 import { Tile } from './tile';
 import SimplexNoise from '../../../node_modules/simplex-noise/dist/cjs/simplex-noise';
 import { NPC, npcInterface } from '../npc';
-import { Building, buildingInterface } from './building/building';
-import { Node, nodeInterface } from './node/node';
+import { Building, buildingInterface } from './building';
+import { Node, nodeInterface } from './node';
 import { Container, Sprite } from 'pixi.js';
 import { selectorTexture } from '../util/textures';
 import { game } from '../..';
-import { townCenter } from './building/buildingTypes';
+import { townCenter } from '../../defaults/builds';
 
 class World {
   container: Container;

@@ -1,7 +1,7 @@
 import { Sprite } from 'pixi.js';
-import { game } from '../../..';
-import { missingTexture, houseTexture, mineTexture } from '../../util/textures';
-import { Tile } from '../tile';
+import { game } from '../../index';
+import { missingTexture, houseTexture, mineTexture } from '../util/textures';
+import { Tile } from './tile';
 
 let recentID = 0;
 

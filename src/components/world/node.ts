@@ -1,12 +1,12 @@
 import { Sprite } from 'pixi.js';
-import { game } from '../../..';
+import { game } from '../..';
 import {
   missingTexture,
   treeTexture,
   oreTexture,
   fruitTexture,
-} from '../../util/textures';
-import { Tile } from '../tile';
+} from '../util/textures';
+import { Tile } from './tile';
 
 let recentID = 0;
 

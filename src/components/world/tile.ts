@@ -1,9 +1,9 @@
 import { Container, Sprite } from 'pixi.js';
 import { game } from '../..';
 import { NPC } from '../npc';
-import { Building } from './building/building';
+import { Building } from './building';
 import { dirtTexture, sandTexture } from '../util/textures';
-import { Node } from './node/node';
+import { Node } from './node';
 
 class Tile {
   x: number;
