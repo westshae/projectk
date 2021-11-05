@@ -18,7 +18,6 @@ class Tile {
     this.y = y;
     this.sprite = this.handleSprite(noise);
 
-    //Makes clicking with mouse send to handler
     this.sprite.interactive = true;
     this.sprite.on('mousedown', () => game.world.setCurrent(this.x, this.y));
 
@@ -40,7 +39,6 @@ class Tile {
   }
 
   handleSprite(noise: number) {
-    //Returns sprite based on noise value
     if (noise < 0) {
       return Sprite.from(sandTexture);
     } else {

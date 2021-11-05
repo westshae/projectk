@@ -71,8 +71,7 @@ class World {
 
     if (this.currentInteraction == undefined) {
       this.setAction(tile);
-    } 
-    else {
+    } else {
       switch (this.currentInteraction) {
         case 0:
           this.handleMovement(tile);
@@ -121,13 +120,12 @@ class World {
 
   handleAttack(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit?.npc !== undefined) {
-      let villager: NPC | undefined = tileInit.npc;
-      let enemy: NPC | undefined = tile.npc;
-      if (enemy !== undefined) {
-        villager.doCombat(enemy);
-      }
-    }
+    if (tileInit?.npc === undefined) return;
+
+    let villager: NPC | undefined = tileInit.npc;
+    let enemy: NPC | undefined = tile.npc;
+    if (enemy === undefined) return;
+    villager.doCombat(enemy);
     this.resetAction();
   }
 
