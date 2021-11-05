@@ -156,10 +156,8 @@ class World {
 
   generateGrid() {
     let grid: Array<Array<Tile>> = [];
-    const noise = new SimplexNoise(Math.random()); //Generates noise map
-    //https://www.redblobgames.com/maps/terrain-from-noise/
+    const noise = new SimplexNoise(Math.random());
     for (let width: number = 0; width < this.size; width++) {
-      //For each required tile
       grid[width] = [];
       for (let height: number = 0; height < this.size; height++) {
         grid[width][height] = new Tile(
@@ -167,7 +165,7 @@ class World {
           height,
           noise.noise2D(width / 8, height / 8),
           this.container
-        ); //Set spot in grid to new tile, with noise for biome
+        );
       }
     }
     return grid;
@@ -177,33 +175,28 @@ class World {
     let useOffset = false; //Changes between true and false, every time a now row is made.
     let heightOffset = 0; //Total change to affect the drawn height
 
-    let size = 50;
-    let width = Math.sqrt(3) * size;
-    let height = 2 * size;
 
-    this.grid.map((value, xindex) => {
-      //For each tile
-      value.map((tile, yindex) => {
-        //Sets width/height of sprite from calculations
-        tile.sprite.width = width;
-        tile.sprite.height = height;
+    for(let value of this.grid){
+      for(let [index, tile] of value.entries()){
+        tile.sprite.width = this.spriteWidth;
+        tile.sprite.height = this.spriteHeight;
 
         if (useOffset) {
           //If even line
           //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * width + width / 2;
-          tile.sprite.y = tile.y * height - heightOffset;
+          tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
+          tile.sprite.y = tile.y * this.spriteHeight - heightOffset;
 
-          heightOffset += height / 2;
+          heightOffset += this.spriteHeight / 2;
 
-          if (yindex == this.size - 1) {
-            heightOffset -= (height / 4) * this.size;
+          if (index == this.size - 1) {
+            heightOffset -= (this.spriteHeight / 4) * this.size;
           }
         } else {
           //If odd line
           //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * width;
-          tile.sprite.y = tile.y * height + height / 4 - heightOffset;
+          tile.sprite.x = tile.x * this.spriteWidth;
+          tile.sprite.y = tile.y * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
         //If tile has npc, render it
@@ -228,8 +221,8 @@ class World {
         }
 
         useOffset = !useOffset;
-      });
-    });
+      };
+    };
   }
 }
 
