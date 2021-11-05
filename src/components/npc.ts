@@ -84,21 +84,15 @@ class NPC {
   }
 
   removeItem(item: itemInterface) {
-    //Removes item from NPC
-    if (this.itemList !== undefined) {
-      //If itemlist exists
-      if (this.itemList.includes(item)) {
-        //If itemList contains item
-        this.itemList.forEach((value, index) => {
-          //For each item
-          if (value == item) {
-            //If currentItem == item, remove from itemList, undo each buff
-            this.itemList.splice(index, 1);
-            item.buffList.forEach((value, index) => {
-              this.doBuff(value, false);
-            });
-          }
-        });
+    if(this.itemList === undefined)return;
+    if(!this.itemList.includes(item))return;
+
+    for(let [index, value] of this.itemList.entries()){
+      if(value == item){
+        this.itemList.splice(index, 1);
+        for(let buff of item.buffList ){
+          this.doBuff(buff, false);
+        }
       }
     }
   }
