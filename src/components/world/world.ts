@@ -131,13 +131,12 @@ class World {
 
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit !== undefined) {
-      //Check distance
-      if (tile.node !== undefined) {
-        game.data.changeResource(tile.node.id, tile.node.amount, true);
-        tile.node.delete();
-      }
-    }
+    if (tileInit === undefined) return;
+    if (tile.node === undefined) return;
+
+    game.data.changeResource(tile.node.id, tile.node.amount, true);
+    tile.node.delete();
+    
     this.resetAction();
   }
 
