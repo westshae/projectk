@@ -4,9 +4,9 @@ import { NPC, npcInterface } from '../npc';
 import { Building, buildingInterface } from './building/building';
 import { Node, nodeInterface } from './node/node';
 import { Container, Sprite } from 'pixi.js';
-import { selectorTexture, waterTexture } from '../util/textures';
+import { selectorTexture } from '../util/textures';
 import { game } from '../..';
-import { mine, townCenter } from './building/buildingTypes';
+import { townCenter } from './building/buildingTypes';
 
 class World {
   container: Container;
@@ -18,6 +18,8 @@ class World {
   currentTile?: Tile;
   selector: Sprite;
   currentInteraction?: number;
+  spriteWidth:number;
+  spriteHeight:number;
 
   constructor(size: number) {
     this.container = new Container();
@@ -29,6 +31,8 @@ class World {
 
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
+    this.spriteWidth = Math.sqrt(3) * 50;
+    this.spriteHeight = 2 * 50;
   }
 
   createSelector() {

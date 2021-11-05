@@ -119,24 +119,20 @@ class NPC {
   }
 
   render(x: number, y: number) {
-    //Renders NPC at x:y coordinate, only run once
-    //Calculates height/width of sprite
-    this.sprite.width = Math.sqrt(3) * 50 * 0.8;
-    this.sprite.height = 2 * 50 * 0.8;
+    this.sprite.width = game.world.spriteWidth *  0.8;
+    this.sprite.height = game.world.spriteHeight * 0.8;
 
-    this.sprite.x = x + this.sprite.width * 0.15;
+    this.sprite.x = x + this.sprite.width * 0.2;
     this.sprite.y = y;
 
-    game.world.container.addChild(this.sprite); //Adds to world container
+    game.world.container.addChild(this.sprite);
   }
 
   handleNextTurn() {
-    //does all requirements for nextturn
     this.movement = this.defaultValues.movement;
   }
 
   handleSprite() {
-    //Returns sprite from ID
     switch (this.defaultValuesID) {
       case 0:
         return Sprite.from(villagerTexture);
