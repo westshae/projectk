@@ -136,7 +136,7 @@ class World {
     if (tileInit !== undefined) {
       //Check distance
       if (tile.node !== undefined) {
-        game.data.increaseResource(tile.node.id, tile.node.amount);
+        game.data.changeResource(tile.node.id, tile.node.amount, true);
         tile.node.delete();
       }
     }
