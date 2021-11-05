@@ -125,21 +125,16 @@ class World {
     this.currentInteraction = undefined;
   }
 
-  handleMovement(tile: Tile) {
-    if (tile.npc !== undefined) {
-      return;
-    }
-    let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit !== undefined) {
-      let npc: NPC | undefined = tileInit.npc;
-      if (npc !== undefined) {
-        npc.x = tile.x;
-        npc.y = tile.y;
-        npc.render(tile.sprite.x, tile.sprite.y);
-        tile.npc = npc;
-        tileInit.npc = undefined;
-      }
-    }
+  handleMovement(nextTile: Tile) {
+    let currentTile: Tile | undefined = game.world.currentTile;
+
+    if (nextTile.npc !== undefined) return;
+    if(currentTile === undefined)return;
+    
+    let npc: NPC | undefined = currentTile.npc;
+    if(npc === undefined) return;
+
+    npc.move(currentTile, nextTile);
     this.resetAction();
   }
 

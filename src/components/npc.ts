@@ -74,6 +74,14 @@ class NPC {
     }
   }
 
+  move(currentTile:Tile, nextTile:Tile){
+    this.x = nextTile.x;
+    this.y = nextTile.y;
+    this.render(nextTile.sprite.x, nextTile.sprite.y);
+    nextTile.npc = this;
+    currentTile.npc = undefined;
+  }
+
   addItem(item: itemInterface) {
     if (this.itemList.includes(item)) return;
 
