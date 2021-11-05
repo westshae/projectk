@@ -172,55 +172,23 @@ class World {
   }
 
   render() {
-    let useOffset = false; //Changes between true and false, every time a now row is made.
-    let heightOffset = 0; //Total change to affect the drawn height
-
-
     for(let value of this.grid){
-      for(let [index, tile] of value.entries()){
+      for(let tile of value){
         tile.sprite.width = this.spriteWidth;
         tile.sprite.height = this.spriteHeight;
 
-        if (useOffset) {
-          //If even line
-          //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
-          tile.sprite.y = tile.y * this.spriteHeight - heightOffset;
+        let yindex = tile.y - 1;
+        let heightOffset = (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
 
-          heightOffset += this.spriteHeight / 2;
-
-          if (index == this.size - 1) {
-            heightOffset -= (this.spriteHeight / 4) * this.size;
-          }
-        } else {
-          //If odd line
-          //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * this.spriteWidth;
-          tile.sprite.y = tile.y * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
+        if (yindex % 2 == 0) {//If even lin
+          tile.sprite.x = (tile.x * this.spriteWidth) + (this.spriteWidth / 2);
+          tile.sprite.y = (yindex * this.spriteHeight) - heightOffset;
+        } else {//If odd line
+          tile.sprite.x = (tile.x * this.spriteWidth);
+          tile.sprite.y = (yindex * this.spriteHeight) + (this.spriteHeight / 4) - heightOffset;
         }
 
-        //If tile has npc, render it
-        if (tile.npc !== undefined) {
-          let npc: NPC | undefined = tile.npc;
-          if (npc !== undefined) {
-            npc.render(tile.sprite.x, tile.sprite.y);
-          }
-        }
-        //If tile has building, render it
-        if (tile.building !== undefined) {
-          let build: Building | undefined = tile.building;
-          if (build !== undefined) {
-            build.render(tile.sprite.x, tile.sprite.y);
-          }
-        }
-        if (tile.node !== undefined) {
-          let res: Node | undefined = tile.node;
-          if (res !== undefined) {
-            res.render(tile.sprite.x, tile.sprite.y);
-          }
-        }
-
-        useOffset = !useOffset;
+        tile.render();
       };
     };
   }

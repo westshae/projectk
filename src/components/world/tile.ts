@@ -38,6 +38,27 @@ class Tile {
     this.node = new Node(x, y, type, amount);
   }
 
+  render(){
+    if (this.npc !== undefined) {
+      let npc: NPC | undefined = this.npc;
+      if (npc !== undefined) {
+        npc.render(this.sprite.x, this.sprite.y);
+      }
+    }
+    if (this.building !== undefined) {
+      let build: Building | undefined = this.building;
+      if (build !== undefined) {
+        build.render(this.sprite.x, this.sprite.y);
+      }
+    }
+    if (this.node !== undefined) {
+      let node: Node | undefined = this.node;
+      if (node !== undefined) {
+        node.render(this.sprite.x, this.sprite.y);
+      }
+    }
+  }
+
   handleSprite(noise: number) {
     if (noise < 0) {
       return Sprite.from(sandTexture);
