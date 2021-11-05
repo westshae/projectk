@@ -1,6 +1,7 @@
 import { Sprite } from 'pixi.js';
-import { missingTexture } from '../util/textures';
-import { itemInterface } from './items';
+import { itemInterface } from '../components/npc/items';
+import { missingTexture } from '../components/util/textures';
+
 
 const sword: itemInterface = {
   id: 0,

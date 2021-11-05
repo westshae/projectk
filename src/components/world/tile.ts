@@ -1,6 +1,6 @@
 import { Container, Sprite } from 'pixi.js';
 import { game } from '../..';
-import { NPC, npcInterface } from '../npc';
+import { NPC, npcInterface } from '../npc/npc';
 import { Building, buildingInterface } from './building';
 import { dirtTexture, sandTexture } from '../util/textures';
 import { Node, nodeInterface } from './node';

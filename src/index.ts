@@ -1,4 +1,4 @@
-import { sword } from './components/items/itemTypes';
+import { sword } from './defaults/items';
 import { villager } from './defaults/npc';
 import { Game } from './components/util/game';
 import { townCenter } from './defaults/builds';

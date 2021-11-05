@@ -1,5 +1,5 @@
 import { Sprite } from 'pixi.js';
-import { npcInterface } from '../components/npc';
+import { npcInterface } from '../components/npc/npc';
 import { villagerTexture } from '../components/util/textures';
 
 

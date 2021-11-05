@@ -1,8 +1,8 @@
 import { Sprite } from "pixi.js";
-import { game } from "./..";
-import { buffInterface, itemInterface, Items } from "./items/items";
-import { missingTexture, villagerTexture } from "./util/textures";
-import { Tile } from "./world/tile";
+import { game } from "../..";
+import { buffInterface, itemInterface, Items } from "./items";
+import { missingTexture, villagerTexture } from "../util/textures";
+import { Tile } from "../world/tile";
 
 let recentID = 0;
 
