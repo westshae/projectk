@@ -6,7 +6,7 @@ import { Node, nodeInterface } from "./node";
 import { Container, Sprite } from "pixi.js";
 import { selectorTexture } from "../util/textures";
 import { game } from "../..";
-import { townCenter } from "../../defaults/builds";
+import { townCenter } from "../defaults/builds";
 
 class World {
   container: Container;

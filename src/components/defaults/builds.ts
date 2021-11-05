@@ -1,6 +1,6 @@
 import { Sprite } from 'pixi.js';
-import { houseTexture, mineTexture } from '../components/util/textures';
-import { buildingInterface } from '../components/world/building';
+import { houseTexture, mineTexture } from '../util/textures';
+import { buildingInterface } from '../world/building';
 
 let townCenter: buildingInterface = {
   health: 20,
