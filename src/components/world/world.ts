@@ -6,6 +6,7 @@ import { Node, nodeInterface } from './node/node';
 import { Container, Sprite } from 'pixi.js';
 import { selectorTexture, waterTexture } from '../util/textures';
 import { game } from '../..';
+import { mine, townCenter } from './building/buildingTypes';
 
 class World {
   container: Container;
@@ -164,6 +165,17 @@ class World {
 
   handleBuild(tile: Tile) {
     console.log('build');
+    let tileInit: Tile | undefined = game.world.currentTile;
+    if(tileInit !== undefined){
+      //check distance
+      if(tile.building === undefined){
+        game.world.addBuilding(tile.x, tile.y, townCenter);
+        game.world.render();
+      }else{
+        tile.building.delete();
+      }
+    }
+    this.resetAction();
   }
 
   generateGrid() {

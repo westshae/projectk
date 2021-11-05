@@ -1,6 +1,7 @@
 import { Sprite } from 'pixi.js';
 import { game } from '../../..';
 import { missingTexture, houseTexture, mineTexture } from '../../util/textures';
+import { Tile } from '../tile';
 
 let recentID = 0;
 
@@ -45,15 +46,16 @@ class Building {
     this.sprite.x = x + this.sprite.width * 0.15;
     this.sprite.y = y;
 
-    //Make tile interactable
-    this.sprite.interactive = true;
-    //this.sprite.on("pointerdown", this.select);
-
     game.world.container.addChild(this.sprite); //Adds to world container
   }
 
-  select() {
-    //Cannot select a building (yet)
+  delete() {
+    this.sprite.destroy();
+    let tile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
+    if (tile !== undefined) {
+      tile.building = undefined;
+      game.world.buildMap.delete(this.id);
+    }
   }
 
   handleSprite() {
