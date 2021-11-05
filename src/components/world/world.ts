@@ -51,12 +51,9 @@ class World {
   }
 
   addBuilding(x: number, y: number, type: buildingInterface) {
-    let build: Building = new Building(x, y, type);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.building = build;
-    }
-    this.buildMap.set(build.id, build);
+    if(tile === undefined) return;
+    tile.addBuilding(x,y,type);
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount:number) {

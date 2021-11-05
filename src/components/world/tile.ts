@@ -1,7 +1,7 @@
 import { Container, Sprite } from 'pixi.js';
 import { game } from '../..';
 import { NPC, npcInterface } from '../npc';
-import { Building } from './building';
+import { Building, buildingInterface } from './building';
 import { dirtTexture, sandTexture } from '../util/textures';
 import { Node } from './node';
 
@@ -28,6 +28,11 @@ class Tile {
   addNPC(x: number, y: number, type: npcInterface, name: string){
     this.npc = new NPC(x, y, type, name);
     game.world.npcMap.set(this.npc.id, this.npc);
+  }
+
+  addBuilding(x: number, y: number, type: buildingInterface){
+    this.building = new Building(x, y, type);
+    game.world.buildMap.set(this.building.id, this.building);
   }
 
   handleSprite(noise: number) {
