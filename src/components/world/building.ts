@@ -49,12 +49,12 @@ class Building {
   }
 
   delete() {
-    this.sprite.destroy();
     let tile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
-    if (tile !== undefined) {
-      tile.building = undefined;
-      game.world.buildMap.delete(this.id);
-    }
+    if(tile === undefined) return;
+
+    this.sprite.destroy();
+    tile.building = undefined;
+    game.world.buildMap.delete(this.id);
   }
 
   handleSprite() {
