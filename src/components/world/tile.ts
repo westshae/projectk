@@ -3,7 +3,7 @@ import { game } from '../..';
 import { NPC, npcInterface } from '../npc';
 import { Building, buildingInterface } from './building';
 import { dirtTexture, sandTexture } from '../util/textures';
-import { Node } from './node';
+import { Node, nodeInterface } from './node';
 
 class Tile {
   x: number;
@@ -33,6 +33,10 @@ class Tile {
   addBuilding(x: number, y: number, type: buildingInterface){
     this.building = new Building(x, y, type);
     game.world.buildMap.set(this.building.id, this.building);
+  }
+
+  addNode(x: number, y: number, type: nodeInterface, amount:number){
+    this.node = new Node(x, y, type, amount);
   }
 
   handleSprite(noise: number) {

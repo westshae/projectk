@@ -57,11 +57,10 @@ class World {
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount:number) {
-    let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.node = node;
-    }
+    if(tile === undefined) return;
+    
+    this.addNode(x,y,type,amount);
   }
 
   setCurrent(x: number, y: number) {
