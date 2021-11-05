@@ -75,7 +75,6 @@ class NPC {
   }
 
   addItem(item: itemInterface) {
-    if (this.itemList === undefined) return; //Test
     if (this.itemList.includes(item)) return;
 
     this.itemList.push(item);
