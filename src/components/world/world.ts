@@ -63,8 +63,8 @@ class World {
     this.buildMap.set(build.id, build);
   }
 
-  addNode(x: number, y: number, type: nodeInterface) {
-    let node: Node = new Node(x, y, type);
+  addNode(x: number, y: number, type: nodeInterface, amount:number) {
+    let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile !== undefined) {
       tile.node = node;
@@ -151,13 +151,15 @@ class World {
   }
 
   handleInteraction(tile: Tile) {
-    console.log('interaction');
     let tileInit: Tile | undefined = game.world.currentTile;
     if(tileInit !== undefined){
-      if(tileInit.node !== undefined){
-        // tileInit.node.sprite
+      //Check distance
+      if(tile.node !== undefined){
+        game.data.increaseResource(tile.node.id, tile.node.amount);
+        tile.node.delete();
       }
     }
+    this.resetAction();
   }
 
   handleBuild(tile: Tile) {

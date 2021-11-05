@@ -21,17 +21,17 @@ class Node {
   id: number;
   type: number;
   processingTime: number;
-  defense: number;
   sprite: Sprite;
+  amount:number;
   x: number;
   y: number;
 
-  constructor(x: number, y: number, type: nodeInterface) {
+  constructor(x: number, y: number, type: nodeInterface, amount:number) {
     this.processingTime = type.processingTime;
-    this.defense = type.defense;
     this.type = type.type;
     this.x = x;
     this.y = y;
+    this.amount = amount;
 
     //Increases ID number by 1, then sets
     recentID++;
