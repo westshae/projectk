@@ -61,33 +61,28 @@ class NPC {
 
   //BUFF ID VALUES
   //[0, health][1, attack][2, defense][3, movement]
-  doBuff(buff: buffInterface, how: boolean) {
-    //how == true, add buff to stat, vice versa
+  doBuff(buff: buffInterface, increase: boolean) {
     switch (buff.statID) {
       case 0:
-        this.health += buff.amount * (how ? 1 : -1); //if how is true, * by 1, else * -21
+        this.health += buff.amount * (increase ? 1 : -1); //if how is true, * by 1, else * -21
       case 1:
-        this.attack += buff.amount * (how ? 1 : -1);
+        this.attack += buff.amount * (increase ? 1 : -1);
       case 2:
-        this.defense += buff.amount * (how ? 1 : -1);
+        this.defense += buff.amount * (increase ? 1 : -1);
       case 3:
-        this.movement += buff.amount * (how ? 1 : -1);
+        this.movement += buff.amount * (increase ? 1 : -1);
     }
   }
 
+
   addItem(item: itemInterface) {
-    //Adds item to NPC
-    if (this.itemList !== undefined) {
-      //If item list exists
-      if (!this.itemList.includes(item)) {
-        //If item isn't in list, continue
-        this.itemList.push(item); //Add item to list
-        item.buffList.forEach((value, index) => {
-          //For each buff in item, do buff
-          this.doBuff(value, true);
-        });
-      }
-    }
+    if(this.itemList === undefined){return;}
+    if(this.itemList.includes(item)){return;}
+    
+    this.itemList.push(item);
+    item.buffList.forEach((value) => {
+      this.doBuff(value, true);
+    });
   }
 
   removeItem(item: itemInterface) {
