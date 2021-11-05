@@ -64,10 +64,10 @@ class World {
   }
 
   addNode(x: number, y: number, type: nodeInterface) {
-    let res: Node = new Node(x, y, type);
+    let node: Node = new Node(x, y, type);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile !== undefined) {
-      tile.resource = res;
+      tile.node = node;
     }
   }
 
@@ -152,6 +152,12 @@ class World {
 
   handleInteraction(tile: Tile) {
     console.log('interaction');
+    let tileInit: Tile | undefined = game.world.currentTile;
+    if(tileInit !== undefined){
+      if(tileInit.node !== undefined){
+        // tileInit.node.sprite
+      }
+    }
   }
 
   handleBuild(tile: Tile) {
@@ -224,8 +230,8 @@ class World {
             build.render(tile.sprite.x, tile.sprite.y);
           }
         }
-        if (tile.resource !== undefined) {
-          let res: Node | undefined = tile.resource;
+        if (tile.node !== undefined) {
+          let res: Node | undefined = tile.node;
           if (res !== undefined) {
             res.render(tile.sprite.x, tile.sprite.y);
           }

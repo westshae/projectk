@@ -11,7 +11,7 @@ class Tile {
   sprite: Sprite;
   npc?: NPC;
   building?: Building;
-  resource?: Node;
+  node?: Node;
   isHighlighted: boolean;
 
   constructor(x: number, y: number, noise: number, container: Container) {
