@@ -1,8 +1,8 @@
 import { Sprite } from 'pixi.js';
-import { game } from '../..';
-import { buffInterface, itemInterface, Items } from '../items/items';
-import { missingTexture, villagerTexture } from '../util/textures';
-import { Tile } from '../world/tile';
+import { game } from './..';
+import { buffInterface, itemInterface, Items } from './items/items';
+import { missingTexture, villagerTexture } from './util/textures';
+import { Tile } from './world/tile';
 
 let recentID = 0;
 
@@ -36,8 +36,8 @@ class NPC {
 
   constructor(x: number, y: number, defaultValues: npcInterface, name: string) {
     //Sets NPC stats
-    this.attack = defaultValues.attack;
     this.health = defaultValues.health;
+    this.attack = defaultValues.attack;
     this.defense = defaultValues.defense;
     this.movement = defaultValues.movement;
 
@@ -59,11 +59,19 @@ class NPC {
     this.sprite = this.handleSprite(); //Sets sprite based on defaultValueID
   }
 
+  //BUFF ID VALUES
+  //[0, health][1, attack][2, defense][3, movement]
   doBuff(buff: buffInterface, how: boolean) {
     //how == true, add buff to stat, vice versa
     switch (buff.statID) {
       case 0:
         this.health += buff.amount * (how ? 1 : -1); //if how is true, * by 1, else * -21
+      case 1:
+        this.attack += buff.amount * (how ? 1 : -1);
+      case 2:
+        this.defense += buff.amount * (how ? 1 : -1);
+      case 3:
+        this.movement += buff.amount * (how ? 1 : -1);
     }
   }
 

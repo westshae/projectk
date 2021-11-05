@@ -1,5 +1,5 @@
 import { sword } from './components/items/itemTypes';
-import { villager } from './components/npc/npcTypes';
+import { villager } from './defaults/npc';
 import { Game } from './components/util/game';
 import { townCenter } from './components/world/building/buildingTypes';
 import { tree } from './components/world/node/nodeTypes';

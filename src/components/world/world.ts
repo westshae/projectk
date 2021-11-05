@@ -1,6 +1,6 @@
 import { Tile } from './tile';
 import SimplexNoise from '../../../node_modules/simplex-noise/dist/cjs/simplex-noise';
-import { NPC, npcInterface } from '../npc/npc';
+import { NPC, npcInterface } from '../npc';
 import { Building, buildingInterface } from './building/building';
 import { Node, nodeInterface } from './node/node';
 import { Container, Sprite } from 'pixi.js';
