@@ -1,8 +1,8 @@
-import { Sprite } from 'pixi.js';
-import { game } from './..';
-import { buffInterface, itemInterface, Items } from './items/items';
-import { missingTexture, villagerTexture } from './util/textures';
-import { Tile } from './world/tile';
+import { Sprite } from "pixi.js";
+import { game } from "./..";
+import { buffInterface, itemInterface, Items } from "./items/items";
+import { missingTexture, villagerTexture } from "./util/textures";
+import { Tile } from "./world/tile";
 
 let recentID = 0;
 
@@ -74,11 +74,10 @@ class NPC {
     }
   }
 
-
   addItem(item: itemInterface) {
-    if(this.itemList === undefined){return;}
-    if(this.itemList.includes(item)){return;}
-    
+    if (this.itemList === undefined) return; //Test
+    if (this.itemList.includes(item)) return;
+
     this.itemList.push(item);
     item.buffList.forEach((value) => {
       this.doBuff(value, true);
