@@ -1,12 +1,12 @@
-import { Tile } from './tile';
-import SimplexNoise from '../../../node_modules/simplex-noise/dist/cjs/simplex-noise';
-import { NPC, npcInterface } from '../npc';
-import { Building, buildingInterface } from './building/building';
-import { Node, nodeInterface } from './node/node';
-import { Container, Sprite } from 'pixi.js';
-import { selectorTexture } from '../util/textures';
-import { game } from '../..';
-import { townCenter } from './building/buildingTypes';
+import { Tile } from "./tile";
+import SimplexNoise from "../../../node_modules/simplex-noise/dist/cjs/simplex-noise";
+import { NPC, npcInterface } from "../npc/npc";
+import { Building, buildingInterface } from "./building";
+import { Node, nodeInterface } from "./node";
+import { Container, Sprite } from "pixi.js";
+import { selectorTexture } from "../util/textures";
+import { game } from "../..";
+import { townCenter } from "../defaults/builds";
 
 class World {
   container: Container;
@@ -18,57 +18,46 @@ class World {
   currentTile?: Tile;
   selector: Sprite;
   currentInteraction?: number;
-  spriteWidth:number;
-  spriteHeight:number;
+  spriteWidth: number;
+  spriteHeight: number;
 
   constructor(size: number) {
-    this.container = new Container();
     this.size = size;
-    this.screenSize = Math.sqrt(3) * 50 * size * 5;
+    this.spriteWidth = Math.sqrt(3) * 50;
+    this.spriteHeight = 2 * 50;
+
+    this.container = new Container();
+    this.screenSize = this.spriteWidth * size * 5;
     this.grid = this.generateGrid();
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
 
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
-    this.spriteWidth = Math.sqrt(3) * 50;
-    this.spriteHeight = 2 * 50;
   }
 
   createSelector() {
-    //Changes values for selector
-    let size = 50;
-    let width = Math.sqrt(3) * size;
-    let height = 2 * size;
-
-    //Changes size
-    this.selector.width = width;
-    this.selector.height = height;
+    this.selector.width = this.spriteWidth;
+    this.selector.height = this.spriteHeight;
 
     this.selector.visible = false; //Make invisible until selected tile
-
     this.container.addChild(this.selector); //Adds to world container
   }
 
   addNPC(x: number, y: number, type: npcInterface, name: string) {
-    let npc: NPC = new NPC(x, y, type, name);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.npc = npc;
-    }
-    this.npcMap.set(npc.id, npc);
+    if (tile === undefined) return;
+    tile.addNPC(x, y, type, name);
   }
 
   addBuilding(x: number, y: number, type: buildingInterface) {
-    let build: Building = new Building(x, y, type);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.building = build;
-    }
-    this.buildMap.set(build.id, build);
+    if (tile === undefined) return;
+
+    tile.addBuilding(x, y, type);
   }
 
-  addNode(x: number, y: number, type: nodeInterface, amount:number) {
+  addNode(x: number, y: number, type: nodeInterface, amount: number) {
     let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile !== undefined) {
@@ -77,40 +66,31 @@ class World {
   }
 
   setCurrent(x: number, y: number) {
-    //Sets selected tile
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      if (this.currentInteraction == undefined) {
-        //If a interaction hasn't been selected
-        this.currentTile = tile;
-        this.selector.x = tile.sprite.x;
-        this.selector.y = tile.sprite.y;
-        this.selector.visible = true;
-        this.handleAction();
-      } else {
-        //If an interaction has been selected, do interaction
-        switch (this.currentInteraction) {
-          case 0:
-            this.handleMovement(tile);
-            break;
+    if (tile === undefined) return;
 
-          case 1:
-            this.handleAttack(tile);
-            break;
-
-          case 2:
-            this.handleBuild(tile);
-            break;
-
-          case 3:
-            this.handleInteraction(tile);
-            break;
-        }
+    if (this.currentInteraction == undefined) {
+      this.setAction(tile);
+    } else {
+      switch (this.currentInteraction) {
+        case 0:
+          this.handleMovement(tile);
+        case 1:
+          this.handleAttack(tile);
+        case 2:
+          this.handleBuild(tile);
+        case 3:
+          this.handleInteraction(tile);
       }
     }
   }
 
-  handleAction() {
+  setAction(tile: Tile) {
+    this.currentTile = tile;
+    this.selector.x = tile.sprite.x;
+    this.selector.y = tile.sprite.y;
+    this.selector.visible = true;
+
     if (this.currentTile?.npc !== undefined) {
       game.hud.toggleActionVisible(true);
     } else {
@@ -129,10 +109,10 @@ class World {
     let currentTile: Tile | undefined = game.world.currentTile;
 
     if (nextTile.npc !== undefined) return;
-    if(currentTile === undefined)return;
-    
+    if (currentTile === undefined) return;
+
     let npc: NPC | undefined = currentTile.npc;
-    if(npc === undefined) return;
+    if (npc === undefined) return;
 
     npc.move(currentTile, nextTile);
     this.resetAction();
@@ -140,49 +120,44 @@ class World {
 
   handleAttack(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit?.npc !== undefined) {
-      let villager: NPC | undefined = tileInit.npc;
-      let enemy: NPC | undefined = tile.npc;
-      if (enemy !== undefined) {
-        villager.doCombat(enemy);
-      }
-    }
+    if (tileInit?.npc === undefined) return;
+
+    let villager: NPC | undefined = tileInit.npc;
+    let enemy: NPC | undefined = tile.npc;
+    if (enemy === undefined) return;
+    villager.doCombat(enemy);
     this.resetAction();
   }
 
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
-    if(tileInit !== undefined){
-      //Check distance
-      if(tile.node !== undefined){
-        game.data.increaseResource(tile.node.id, tile.node.amount);
-        tile.node.delete();
-      }
-    }
+    if (tileInit === undefined) return;
+    if (tile.node === undefined) return;
+
+    game.data.changeResource(tile.node.id, tile.node.amount, true);
+    tile.node.delete();
+
     this.resetAction();
   }
 
   handleBuild(tile: Tile) {
-    console.log('build');
     let tileInit: Tile | undefined = game.world.currentTile;
-    if(tileInit !== undefined){
-      //check distance
-      if(tile.building === undefined){
-        game.world.addBuilding(tile.x, tile.y, townCenter);
-        game.world.render();
-      }else{
-        tile.building.delete();
-      }
+    if (tileInit === undefined) return;
+
+    if (tile.building === undefined) {
+      game.world.addBuilding(tile.x, tile.y, townCenter);
+      game.world.render();
+    } else {
+      tile.building.delete();
     }
+
     this.resetAction();
   }
 
   generateGrid() {
     let grid: Array<Array<Tile>> = [];
-    const noise = new SimplexNoise(Math.random()); //Generates noise map
-    //https://www.redblobgames.com/maps/terrain-from-noise/
+    const noise = new SimplexNoise(Math.random());
     for (let width: number = 0; width < this.size; width++) {
-      //For each required tile
       grid[width] = [];
       for (let height: number = 0; height < this.size; height++) {
         grid[width][height] = new Tile(
@@ -190,7 +165,7 @@ class World {
           height,
           noise.noise2D(width / 8, height / 8),
           this.container
-        ); //Set spot in grid to new tile, with noise for biome
+        );
       }
     }
     return grid;
@@ -200,33 +175,28 @@ class World {
     let useOffset = false; //Changes between true and false, every time a now row is made.
     let heightOffset = 0; //Total change to affect the drawn height
 
-    let size = 50;
-    let width = Math.sqrt(3) * size;
-    let height = 2 * size;
 
-    this.grid.map((value, xindex) => {
-      //For each tile
-      value.map((tile, yindex) => {
-        //Sets width/height of sprite from calculations
-        tile.sprite.width = width;
-        tile.sprite.height = height;
+    for(let value of this.grid){
+      for(let [index, tile] of value.entries()){
+        tile.sprite.width = this.spriteWidth;
+        tile.sprite.height = this.spriteHeight;
 
         if (useOffset) {
           //If even line
           //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * width + width / 2;
-          tile.sprite.y = tile.y * height - heightOffset;
+          tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
+          tile.sprite.y = tile.y * this.spriteHeight - heightOffset;
 
-          heightOffset += height / 2;
+          heightOffset += this.spriteHeight / 2;
 
-          if (yindex == this.size - 1) {
-            heightOffset -= (height / 4) * this.size;
+          if (index == this.size - 1) {
+            heightOffset -= (this.spriteHeight / 4) * this.size;
           }
         } else {
           //If odd line
           //Math to get hexagons correct placement
-          tile.sprite.x = tile.x * width;
-          tile.sprite.y = tile.y * height + height / 4 - heightOffset;
+          tile.sprite.x = tile.x * this.spriteWidth;
+          tile.sprite.y = tile.y * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
         //If tile has npc, render it
@@ -251,8 +221,8 @@ class World {
         }
 
         useOffset = !useOffset;
-      });
-    });
+      };
+    };
   }
 }
 

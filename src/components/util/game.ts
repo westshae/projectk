@@ -23,19 +23,12 @@ class Game {
   }
 
   nextTurn() {
-    this.data.increaseResource(5, 1); //Increases turn count by 1
+    this.data.changeResource(5, 1, true); //Increases turn count by 1
 
-    this.world.npcMap.forEach((npc, key) => {
-      if (key !== undefined) {
-        npc.handleNextTurn();
-        this.world.npcMap.set(npc.id, npc);
-
-        let tile = this.world.grid.at(npc.x)?.at(npc.y);
-        if (tile !== undefined) {
-          tile.npc = npc;
-        }
-      }
-    });
+    for(let [key, npc] of this.world.npcMap.entries()){
+      if(key === undefined) return;
+      npc.handleNextTurn();
+    }
   }
 }
 

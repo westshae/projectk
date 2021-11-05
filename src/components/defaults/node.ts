@@ -1,7 +1,6 @@
 import { Sprite } from 'pixi.js';
-import { houseTexture } from '../../util/textures';
-import { mineTexture } from '../../util/textures';
-import { nodeInterface } from './node';
+import { houseTexture, mineTexture } from '../util/textures';
+import { nodeInterface } from '../world/node';
 
 const tree: nodeInterface = {
   processingTime: 2,

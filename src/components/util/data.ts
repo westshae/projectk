@@ -1,4 +1,4 @@
-import { game } from '../..';
+import { game } from "../..";
 
 class Data {
   lumber: number;
@@ -17,47 +17,20 @@ class Data {
     this.turn = 0;
   }
 
-  increaseResource(resourceID: number, amount: number) {
+  changeResource(resourceID: number, amount: number, increase: boolean) {
     switch (resourceID) {
       case 0:
-        this.lumber += amount;
-        break;
+        this.lumber += amount * (increase ? 1 : -1);
       case 1:
-        this.stone += amount;
-        break;
+        this.stone += amount * (increase ? 1 : -1);
       case 2:
-        this.metal += amount;
-        break;
+        this.metal += amount * (increase ? 1 : -1);
       case 3:
-        this.experience += amount;
-        break;
+        this.experience += amount * (increase ? 1 : -1);
       case 4:
-        this.level += amount;
-        break;
+        this.level += amount * (increase ? 1 : -1);
       case 5:
-        this.turn += amount;
-        break;
-    }
-    game.hud.drawInformation();
-  }
-
-  decreaseResource(resourceID: number, amount: number) {
-    switch (resourceID) {
-      case 0:
-        this.lumber -= amount;
-        break;
-      case 1:
-        this.stone -= amount;
-        break;
-      case 2:
-        this.metal -= amount;
-        break;
-      case 3:
-        this.experience -= amount;
-        break;
-      case 4:
-        this.level -= amount;
-        break;
+        this.turn += amount * (increase ? 1 : -1);
     }
     game.hud.drawInformation();
   }

@@ -1,8 +1,8 @@
-import { sword } from './components/items/itemTypes';
-import { villager } from './defaults/npc';
+import { sword } from './components/defaults/items';
+import { villager } from './components/defaults/npc';
 import { Game } from './components/util/game';
-import { townCenter } from './components/world/building/buildingTypes';
-import { tree } from './components/world/node/nodeTypes';
+import { townCenter } from './components/defaults/builds';
+import { tree } from './components/defaults/node';
 
 const game = new Game(64);
 

@@ -1,7 +1,7 @@
 import { Sprite } from 'pixi.js';
-import { game } from '../../..';
-import { missingTexture, houseTexture, mineTexture } from '../../util/textures';
-import { Tile } from '../tile';
+import { game } from '../../index';
+import { missingTexture, houseTexture, mineTexture } from '../util/textures';
+import { Tile } from './tile';
 
 let recentID = 0;
 
@@ -39,23 +39,22 @@ class Building {
   }
 
   render(x: number, y: number) {
-    //Calculates height/width of sprite
-    this.sprite.width = Math.sqrt(3) * 50 * 0.8;
-    this.sprite.height = 2 * 50 * 0.8;
+    this.sprite.width = game.world.spriteWidth * 0.8;
+    this.sprite.height = game.world.spriteHeight * 0.8;
 
-    this.sprite.x = x + this.sprite.width * 0.15;
+    this.sprite.x = x + this.sprite.width * 0.2;
     this.sprite.y = y;
 
-    game.world.container.addChild(this.sprite); //Adds to world container
+    game.world.container.addChild(this.sprite);
   }
 
   delete() {
-    this.sprite.destroy();
     let tile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
-    if (tile !== undefined) {
-      tile.building = undefined;
-      game.world.buildMap.delete(this.id);
-    }
+    if(tile === undefined) return;
+
+    this.sprite.destroy();
+    tile.building = undefined;
+    game.world.buildMap.delete(this.id);
   }
 
   handleSprite() {
