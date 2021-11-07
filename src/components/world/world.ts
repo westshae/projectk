@@ -140,7 +140,9 @@ class World {
     if (tileInit === undefined) return;
     if (tile.node === undefined) return;
 
-    game.data.changeResource(tile.node.id, tile.node.amount, true);
+    console.log(tile);
+
+    game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
 
     this.resetAction();
