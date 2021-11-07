@@ -12,6 +12,7 @@ class Tile {
   npc?: NPC;
   building?: Building;
   node?: Node;
+  isEmpty: boolean;
 
   constructor(x: number, y: number, noise: number, container: Container) {
     this.x = x;
@@ -22,6 +23,15 @@ class Tile {
     this.sprite.on('mousedown', () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
+    this.isEmpty = true;
+  }
+
+  emptyCheck(){
+    if(this.npc === undefined && this.building === undefined && this.node === undefined){
+      this.isEmpty = false;
+    }else{
+      this.isEmpty = true;
+    }
   }
 
   addNPC(x: number, y: number, type: npcInterface, name: string){

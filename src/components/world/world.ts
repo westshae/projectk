@@ -17,6 +17,7 @@ class World {
   buildMap: Map<number, Building>;
   currentTile?: Tile;
   selector: Sprite;
+  buildMode:boolean;
   currentInteraction?: number;
   spriteWidth: number;
   spriteHeight: number;
@@ -32,6 +33,7 @@ class World {
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
 
+    this.buildMode = false;
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
   }
