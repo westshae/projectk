@@ -1,18 +1,19 @@
-import { Container, Graphics, Text } from 'pixi.js';
-import { game } from '../..';
+import { Container, Graphics, Text } from "pixi.js";
+import { game } from "../..";
+import { Data } from "./data";
 
 class HUD {
   container: Container;
   bar: Graphics;
   button: Graphics;
-  information: Text;
+  information: Container;
   action: Container;
 
   constructor() {
     this.container = new Container();
     this.bar = new Graphics();
     this.button = new Graphics();
-    this.information = new Text('');
+    this.information = new Container();
     this.action = new Container();
   }
 
@@ -22,7 +23,7 @@ class HUD {
 
     //Draws, then adds event for detecting resize
     this.draw();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.draw();
     });
 
@@ -41,35 +42,33 @@ class HUD {
 
     //Draws elements
     this.drawButton(height);
-    this.drawBar(width, height);
     this.drawInformation();
   }
 
   drawInformation() {
-    let text =
-      this.makeText('level', game.data.level) +
-      this.makeText('exp', game.data.experience) +
-      this.makeText('turn', game.data.turn) +
-      this.makeText('lumber', game.data.lumber) +
-      this.makeText('stone', game.data.stone) +
-      this.makeText('metal', game.data.metal);
+    this.information.removeChildren();
+    let values = [
+     { name: "level", amount: game.data.level },
+     { name: "exp", amount: game.data.experience}, 
+     {name:"turn", amount:game.data.turn}, 
+     {name:"lumber", amount:game.data.lumber}, 
+     {name:"stone", amount:game.data.stone}, 
+     {name:"metal", amount:game.data.metal},
+    ];
 
-    this.information.text = text;
-    this.information.x = 100;
-    this.information.y = 10;
+    if(this.information.children.length < 5){
+      for (let i = 0; i < 6; i ++) {
+        let current = values.at(i);
+        if(current === undefined) return;
+        this.makeInformationBox(current?.name, current?.amount, i*25);
+      }
+    }
   }
 
-  makeText(text: string, data: number) {
-    let value = text + ':' + data + '         ';
-    return value;
-  }
-
-  drawBar(width: number, height: number) {
-    //Draws bar of HUD
-    this.bar = new Graphics();
-
-    this.bar.beginFill(0x434343);
-    this.bar.drawRect(0, 0, width, height);
+  makeInformationBox(text: string, data: number, height: number) {
+    let obj: Text = new Text(text + ":" + data);
+    obj.y = height + 50;
+    this.information.addChild(obj)
   }
 
   drawButton(height: number) {
@@ -82,7 +81,7 @@ class HUD {
 
     //Turns button into button
     this.button.interactive = true;
-    this.button.on('pointerdown', () => game.nextTurn());
+    this.button.on("pointerdown", () => game.nextTurn());
   }
 
   toggleActionVisible(visibility: boolean) {
