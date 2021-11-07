@@ -5,16 +5,22 @@ import { Data } from "./data";
 class HUD {
   container: Container;
   bar: Graphics;
-  button: Graphics;
+  nextButton: Graphics;
+  buildButton: Graphics;
   information: Container;
   action: Container;
+  // height:number;
+  // screenWidth:number;
 
   constructor() {
     this.container = new Container();
     this.bar = new Graphics();
-    this.button = new Graphics();
+    this.nextButton = new Graphics();
+    this.buildButton = new Graphics();
     this.information = new Container();
     this.action = new Container();
+    // this.height = g;
+    // this.screenWidth = game.app.renderer.width;
   }
 
   init() {
@@ -29,7 +35,8 @@ class HUD {
 
     //Adds HUD element to container
     this.container.addChild(this.bar);
-    this.container.addChild(this.button);
+    this.container.addChild(this.nextButton);
+    this.container.addChild(this.buildButton);
     this.container.addChild(this.information);
     this.container.addChild(this.action);
   }
@@ -37,11 +44,10 @@ class HUD {
   draw() {
     //Draws all HUD elements
     //Sets width and height of HUD
-    let width = game.app.renderer.width;
-    let height = game.app.renderer.height / 16;
 
     //Draws elements
-    this.drawButton(height);
+    this.drawNextButton();
+    this.drawBuildToggle();
     this.drawInformation();
   }
 
@@ -71,17 +77,31 @@ class HUD {
     this.information.addChild(obj)
   }
 
-  drawButton(height: number) {
+  drawNextButton() {
+    let height = game.app.renderer.height / 16
     //Draws next turn button of HUD
-    this.button = new Graphics();
+    this.nextButton = new Graphics();
 
     //Draws button
-    this.button.beginFill(0x900000);
-    this.button.drawStar(height / 2, height / 2, 5, height / 2);
+    this.nextButton.beginFill(0x900000);
+    this.nextButton.drawStar(height / 2, height / 2, 5, height / 2);
 
     //Turns button into button
-    this.button.interactive = true;
-    this.button.on("pointerdown", () => game.nextTurn());
+    this.nextButton.interactive = true;
+    this.nextButton.on("pointerdown", () => game.nextTurn());
+  }
+
+  drawBuildToggle(){
+    let height = game.app.renderer.height / 16
+
+    this.buildButton = new Graphics();
+
+    this.buildButton.beginFill(0x900000);
+    this.buildButton.drawStar(game.app.renderer.width - height / 2, height / 2, 5, height / 2);
+
+    //Turns button into button
+    this.buildButton.interactive = true;
+    this.buildButton.on("pointerdown", () => game.world.toggleBuildMode());
   }
 
   toggleActionVisible(visibility: boolean) {

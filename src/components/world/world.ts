@@ -38,6 +38,10 @@ class World {
     this.createSelector();
   }
 
+  toggleBuildMode(){
+    this.buildMode = !this.buildMode;
+  }
+
   createSelector() {
     this.selector.width = this.spriteWidth;
     this.selector.height = this.spriteHeight;
