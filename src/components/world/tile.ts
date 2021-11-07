@@ -1,9 +1,9 @@
-import { Container, Sprite } from 'pixi.js';
-import { game } from '../..';
-import { NPC, npcInterface } from '../npc/npc';
-import { Building, buildingInterface } from './building';
-import { dirtTexture, sandTexture } from '../util/textures';
-import { Node, nodeInterface } from './node';
+import { Container, Sprite } from "pixi.js";
+import { game } from "../..";
+import { NPC, npcInterface } from "../npc/npc";
+import { Building, buildingInterface } from "./building";
+import { dirtTexture, sandTexture } from "../util/textures";
+import { Node, nodeInterface } from "./node";
 
 class Tile {
   x: number;
@@ -20,48 +20,53 @@ class Tile {
     this.sprite = this.handleSprite(noise);
 
     this.sprite.interactive = true;
-    this.sprite.on('mousedown', () => game.world.setCurrent(this.x, this.y));
+    this.sprite.on("mousedown", () => game.world.setCurrent(this.x, this.y));
 
     container.addChild(this.sprite);
     this.isEmpty = true;
   }
 
-  emptyCheck(){
-    if(this.npc === undefined && this.building === undefined && this.node === undefined){
-      this.isEmpty = false;
-    }else{
+  emptyCheck() {
+    if (
+      this.npc === undefined &&
+      this.building === undefined &&
+      this.node === undefined
+    ) {
       this.isEmpty = true;
-    }
+    } else this.isEmpty = false;
   }
 
-  addNPC(x: number, y: number, type: npcInterface, name: string){
+  addNPC(x: number, y: number, type: npcInterface, name: string) {
     this.emptyCheck();
     if(!this.isEmpty)return;
 
     this.npc = new NPC(x, y, type, name);
     game.world.npcMap.set(this.npc.id, this.npc);
-    this.isEmpty = false;
+
+    this.emptyCheck();
   }
 
-  addBuilding(x: number, y: number, type: buildingInterface){
+  addBuilding(x: number, y: number, type: buildingInterface) {
     this.emptyCheck();
     if(!this.isEmpty)return;
 
     this.building = new Building(x, y, type);
     game.world.buildMap.set(this.building.id, this.building);
-    this.isEmpty = false;
+
+    this.emptyCheck();
   }
 
-  addNode(x: number, y: number, type: nodeInterface, amount:number){
+  addNode(x: number, y: number, type: nodeInterface, amount: number) {
     this.emptyCheck();
     if(!this.isEmpty)return;
 
     this.node = new Node(x, y, type, amount);
-    this.isEmpty = false;
+    
+    this.emptyCheck();
   }
 
-  render(){
-    if(this.isEmpty)return;
+  render() {
+    if (this.isEmpty) return;
     if (this.npc !== undefined) {
       let npc: NPC | undefined = this.npc;
       if (npc !== undefined) {

@@ -17,7 +17,7 @@ class World {
   buildMap: Map<number, Building>;
   currentTile?: Tile;
   selector: Sprite;
-  buildMode:boolean;
+  buildMode: boolean;
   currentInteraction?: number;
   spriteWidth: number;
   spriteHeight: number;
@@ -60,43 +60,108 @@ class World {
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
-    let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.node = node;
-    }
+
+    if (tile === undefined) return;
+    tile.addNode(x, y, type, amount);
   }
 
   setCurrent(x: number, y: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
 
-    // tile.emptyCheck();
-    // if(tile.isEmpty)this.handleMovement(tile);
-
-    // if(this.buildMode){
-    //   if(tile.building === undefined)return;
-    //   this.handleBuild(tile);
-    // }
-    // else{
-    //   if(tile.npc === undefined)return;
-
-    // }
-
-    if (this.currentInteraction == undefined) {
+    if(this.currentTile === undefined){
+      if(tile.isEmpty)return;
       this.setAction(tile);
-    } else {
-      switch (this.currentInteraction) {
-        case 0:
-          this.handleMovement(tile);
-        case 1:
-          this.handleAttack(tile);
-        case 2:
+    }else{
+      tile.emptyCheck();
+      if (tile.isEmpty) this.handleMovement(tile);
+
+      if (this.buildMode) {
+        if (tile.building !== undefined) {
+          //Interact with building
+        } else {
+          //Create building
           this.handleBuild(tile);
-        case 3:
-          this.handleInteraction(tile);
+        }
+      } else {
+        if (tile.npc !== undefined) this.handleAttack(tile);
+        if (tile.node !== undefined) this.handleInteraction(tile);
       }
+      switch (this.currentInteraction) {
+            case 0:
+              this.handleMovement(tile);
+            case 1:
+              this.handleAttack(tile);
+            case 2:
+              this.handleBuild(tile);
+            case 3:
+              this.handleInteraction(tile);
+          }
     }
+
+    // if(this.currentInteraction === undefined){
+    //   this.setAction(tile);
+    // }else{
+    //   console.log(this.currentTile)
+    //   console.log(tile);
+    //   switch (this.currentInteraction) {
+    //     case 0:
+    //       this.handleMovement(tile);
+    //     case 1:
+    //       this.handleAttack(tile);
+    //     case 2:
+    //       this.handleBuild(tile);
+    //     case 3:
+    //       this.handleInteraction(tile);
+    //   }
+    // }
+
+    // if (this.currentInteraction === undefined) {
+      // this.setAction(tile);
+
+      // tile.emptyCheck();
+      // if (tile.isEmpty) this.currentInteraction = 0;
+
+      // if (this.buildMode) {
+      //   if (tile.building !== undefined) {
+      //     //Interact with building
+      //   } else {
+      //     //Create building
+      //     this.currentInteraction = 2;
+      //   }
+      // } else {
+      //   if (tile.npc !== undefined) this.currentInteraction = 1;
+      //   if (tile.node !== undefined) this.currentInteraction = 3;
+      // }
+    // } else {
+      // console.log(this.currentInteraction)
+      // switch (this.currentInteraction) {
+      //   case 0:
+      //     this.handleMovement(tile);
+      //   case 1:
+      //     this.handleAttack(tile);
+      //   case 2:
+      //     this.handleBuild(tile);
+      //   case 3:
+      //     this.handleInteraction(tile);
+      // }
+    // }
+
+    // if (this.currentInteraction == undefined) {
+    //   this.setAction(tile);
+    // } else {
+    //   switch (this.currentInteraction) {
+    //     case 0:
+    //       this.handleMovement(tile);
+    //     case 1:
+    //       this.handleAttack(tile);
+    //     case 2:
+    //       this.handleBuild(tile);
+    //     case 3:
+    //       this.handleInteraction(tile);
+    //   }
+    // }
   }
 
   setAction(tile: Tile) {
@@ -186,25 +251,29 @@ class World {
   }
 
   render() {
-    for(let value of this.grid){
-      for(let tile of value){
+    for (let value of this.grid) {
+      for (let tile of value) {
         tile.sprite.width = this.spriteWidth;
         tile.sprite.height = this.spriteHeight;
 
         let yindex = tile.y - 1;
-        let heightOffset = (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
+        let heightOffset =
+          (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
 
-        if (yindex % 2 == 0) {//If even lin
-          tile.sprite.x = (tile.x * this.spriteWidth) + (this.spriteWidth / 2);
-          tile.sprite.y = (yindex * this.spriteHeight) - heightOffset;
-        } else {//If odd line
-          tile.sprite.x = (tile.x * this.spriteWidth);
-          tile.sprite.y = (yindex * this.spriteHeight) + (this.spriteHeight / 4) - heightOffset;
+        if (yindex % 2 == 0) {
+          //If even lin
+          tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
+          tile.sprite.y = yindex * this.spriteHeight - heightOffset;
+        } else {
+          //If odd line
+          tile.sprite.x = tile.x * this.spriteWidth;
+          tile.sprite.y =
+            yindex * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
         tile.render();
-      };
-    };
+      }
+    }
   }
 }
 
