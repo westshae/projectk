@@ -75,23 +75,16 @@ class World {
     if (tile === undefined) return;
 
     if(this.currentTile === undefined){
-      if(tile.isEmpty)return;
+      if(tile.isEmpty && !this.buildMode)return;
       this.setAction(tile);
+      
+      if(!this.buildMode)return;
+      this.handleBuild(tile);
     }else{
       tile.emptyCheck();
-      if (tile.isEmpty) this.handleMovement(tile);
-
-      if (this.buildMode) {
-        if (tile.building !== undefined) {
-          //Interact with building
-        } else {
-          //Create building
-          this.handleBuild(tile);
-        }
-      } else {
+        if (tile.isEmpty) this.handleMovement(tile);
         if (tile.npc !== undefined) this.handleAttack(tile);
         if (tile.node !== undefined) this.handleInteraction(tile);
-      }
     }
   }
 
