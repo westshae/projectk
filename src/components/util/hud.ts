@@ -43,7 +43,6 @@ class HUD {
     this.drawButton(height);
     this.drawBar(width, height);
     this.drawInformation();
-    this.drawAction(height);
   }
 
   drawInformation() {
@@ -84,43 +83,6 @@ class HUD {
     //Turns button into button
     this.button.interactive = true;
     this.button.on('pointerdown', () => game.nextTurn());
-  }
-
-  drawAction(height: number) {
-    this.action.visible = false;
-    let arrayOfFunction = [];
-    arrayOfFunction.push(() => (game.world.currentInteraction = 0));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 1));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 2));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 3));
-
-    //draws background rectangle
-    let bar = new Graphics();
-    bar.beginFill(0x434343);
-    bar.drawRect(0, game.app.renderer.height - height, height * 4, height);
-    this.action.addChild(bar);
-
-    for (let i = 0; i < 4; i++) {
-      let button = new Graphics();
-
-      //Draws button
-      button.beginFill(0x900000);
-      button.drawStar(
-        height / 2 + height * i,
-        game.app.renderer.height - height / 2,
-        5,
-        height / 2
-      );
-
-      //Turns button into button
-      button.interactive = true;
-      let current = arrayOfFunction.at(i);
-      if (current !== undefined) {
-        button.on('pointerdown', current);
-      }
-
-      this.action.addChild(button);
-    }
   }
 
   toggleActionVisible(visibility: boolean) {
