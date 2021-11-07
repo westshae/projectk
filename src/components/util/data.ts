@@ -18,38 +18,29 @@ class Data {
   }
 
   changeResource(resourceID: number, amount: number, increase: boolean) {
-    console.log(resourceID + ":" + amount + ":" + increase)
     switch (resourceID) {
-      
       case 0:
         this.lumber += amount * (increase ? 1 : -1);
-        console.log("0")
         break;
       case 1:
         this.stone += amount * (increase ? 1 : -1);
-        console.log("1")
         break;
 
       case 2:
         this.metal += amount * (increase ? 1 : -1);
-        console.log("2")
         break;
 
       case 3:
         this.experience += amount * (increase ? 1 : -1);
-        console.log("3")
         break;
 
       case 4:
         this.level += amount * (increase ? 1 : -1);
-        console.log("4")
         break;
 
       case 5:
         this.turn += amount * (increase ? 1 : -1);
-        console.log("5")
         break;
-
     }
     game.hud.drawInformation();
   }
