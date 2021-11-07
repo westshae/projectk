@@ -71,6 +71,18 @@ class World {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
 
+    // tile.emptyCheck();
+    // if(tile.isEmpty)this.handleMovement(tile);
+
+    // if(this.buildMode){
+    //   if(tile.building === undefined)return;
+    //   this.handleBuild(tile);
+    // }
+    // else{
+    //   if(tile.npc === undefined)return;
+
+    // }
+
     if (this.currentInteraction == undefined) {
       this.setAction(tile);
     } else {

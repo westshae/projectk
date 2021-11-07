@@ -35,20 +35,33 @@ class Tile {
   }
 
   addNPC(x: number, y: number, type: npcInterface, name: string){
+    this.emptyCheck();
+    if(!this.isEmpty)return;
+
     this.npc = new NPC(x, y, type, name);
     game.world.npcMap.set(this.npc.id, this.npc);
+    this.isEmpty = false;
   }
 
   addBuilding(x: number, y: number, type: buildingInterface){
+    this.emptyCheck();
+    if(!this.isEmpty)return;
+
     this.building = new Building(x, y, type);
     game.world.buildMap.set(this.building.id, this.building);
+    this.isEmpty = false;
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount:number){
+    this.emptyCheck();
+    if(!this.isEmpty)return;
+
     this.node = new Node(x, y, type, amount);
+    this.isEmpty = false;
   }
 
   render(){
+    if(this.isEmpty)return;
     if (this.npc !== undefined) {
       let npc: NPC | undefined = this.npc;
       if (npc !== undefined) {
