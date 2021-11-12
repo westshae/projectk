@@ -146,6 +146,7 @@ class World {
     let enemy: NPC | undefined = tile.npc;
     if (enemy === undefined) return;
     villager.doCombat(enemy);
+    if(tile.npc === undefined) this.handleMovement(tile);
     this.resetAction();
   }
 
@@ -159,6 +160,8 @@ class World {
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
+
+    if(tile.node === undefined) this.handleMovement(tile);
 
     this.resetAction();
   }
