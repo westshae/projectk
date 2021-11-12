@@ -53,17 +53,16 @@ class World {
   }
   
 
-  highlightRange(middleTile:Tile, currentTile:Tile, range:number){//recursive
-    if(!currentTile.sprite.visible)return;
+  highlightRange(middleTile:Tile, currentTile:Tile, range:number, highlight:boolean){//recursive
+    if(currentTile.isHighlighted == highlight)return;
     
     if(this.distanceCheck(middleTile, currentTile, range)){
       for(let i = -1; i <= 1; i++){
         for(let j = -1; j <= 1; j++){
           let tile = this.grid.at(currentTile.x + i)?.at(currentTile.y + j);
           if(tile !== undefined){
-            this.highlightRange(middleTile, tile, range);
-            currentTile.sprite.visible = false;
-
+            this.highlightRange(middleTile, tile, range, highlight);
+            currentTile.toggleHighlight(highlight);
           }
         }
       }
@@ -113,7 +112,7 @@ class World {
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
         else if (tile.node !== undefined) this.handleInteraction(tile);
-        else{this.resetAction()}
+        else{this.resetAction(tile)}
     }
   }
 
@@ -129,10 +128,14 @@ class World {
       game.hud.toggleActionVisible(false);
     }
 
-    this.highlightRange(tile, tile, 3);
+    this.highlightRange(tile, tile, 3, true);
   }
 
-  resetAction() {
+  resetAction(nextTile:Tile) {
+    console.log(this.currentTile);
+    if(this.currentTile !== undefined && nextTile.npc?.range !== undefined){
+      this.highlightRange(this.currentTile, this.currentTile, nextTile.npc.range, false)
+    }
     this.currentTile = undefined;
     this.selector.visible = false;
     game.hud.toggleActionVisible(false);
@@ -152,7 +155,8 @@ class World {
     if (npc === undefined) return;
 
     npc.move(currentTile, nextTile);
-    this.resetAction();
+    if(currentTile === undefined)return;
+    this.resetAction(nextTile);
   }
 
   handleAttack(tile: Tile) {
@@ -167,7 +171,8 @@ class World {
     if (enemy === undefined) return;
     villager.doCombat(enemy);
     if(tile.npc === undefined) this.handleMovement(tile);
-    this.resetAction();
+
+    this.resetAction(tile);
   }
 
   handleInteraction(tile: Tile) {
@@ -183,7 +188,7 @@ class World {
 
     if(tile.node === undefined) this.handleMovement(tile);
 
-    this.resetAction();
+    this.resetAction(tile);
   }
 
   handleBuild(tile: Tile) {
@@ -197,7 +202,7 @@ class World {
       tile.building.delete();
     }
 
-    this.resetAction();
+    this.resetAction(tile);
   }
 
   generateGrid() {
@@ -238,7 +243,15 @@ class World {
             yindex * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
+        tile.highlightSprite.x = tile.sprite.x;
+        tile.highlightSprite.y = tile.sprite.y;
+
         tile.render();
+
+        tile.highlightSprite.width = this.spriteWidth;
+        tile.highlightSprite.height = this.spriteHeight;
+        this.container.addChild(tile.highlightSprite); //Adds to world container
+
       }
     }
   }

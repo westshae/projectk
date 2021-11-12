@@ -2,7 +2,7 @@ import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
 import { NPC, npcInterface } from "../npc/npc";
 import { Building, buildingInterface } from "./building";
-import { dirtTexture, sandTexture } from "../util/textures";
+import { dirtTexture, rangeHighlight, sandTexture } from "../util/textures";
 import { Node, nodeInterface } from "./node";
 
 class Tile {
@@ -11,6 +11,8 @@ class Tile {
   q: number;
   r: number;
   sprite: Sprite;
+  highlightSprite: Sprite;
+  isHighlighted:boolean;
   npc?: NPC;
   building?: Building;
   node?: Node;
@@ -22,6 +24,12 @@ class Tile {
     this.q = x - (y - (y&1)) / 2;
     this.r = y;
     this.sprite = this.handleSprite(noise);
+
+    this.highlightSprite = Sprite.from(rangeHighlight);
+    this.isHighlighted = false;
+
+    this.highlightSprite.visible = false; //Make invisible until selected tile
+    
 
     this.sprite.interactive = true;
     this.sprite.on("mousedown", () => game.world.setCurrent(this.x, this.y));
@@ -38,6 +46,11 @@ class Tile {
     ) {
       this.isEmpty = true;
     } else this.isEmpty = false;
+  }
+
+  toggleHighlight(bool:boolean){
+    this.isHighlighted = bool;
+    this.highlightSprite.visible = bool;
   }
 
   addNPC(x: number, y: number, type: npcInterface, name: string) {

@@ -14,6 +14,7 @@ const houseTexture = Texture.from('../assets/buildings/house.png');
 const mineTexture = Texture.from('../assets/buildings/mine.png');
 const missingTexture = Texture.from('../assets/util/missing.png');
 const selectorTexture = Texture.from('../assets/util/selector.png');
+const rangeHighlight = Texture.from("../assets/util/rangeHighlight.png");
 
 export {
   villagerTexture,
@@ -30,4 +31,5 @@ export {
   mineTexture,
   missingTexture,
   selectorTexture,
+  rangeHighlight,
 };
