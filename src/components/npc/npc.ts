@@ -80,6 +80,8 @@ class NPC {
     this.render(nextTile.sprite.x, nextTile.sprite.y);
     nextTile.npc = this;
     currentTile.npc = undefined;
+    currentTile.emptyCheck();
+    nextTile.emptyCheck();
   }
 
   addItem(item: itemInterface) {

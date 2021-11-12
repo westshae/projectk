@@ -1,19 +1,26 @@
-import { Container, Graphics, Text } from 'pixi.js';
-import { game } from '../..';
+import { Container, Graphics, Text } from "pixi.js";
+import { game } from "../..";
+import { Data } from "./data";
 
 class HUD {
   container: Container;
   bar: Graphics;
-  button: Graphics;
-  information: Text;
+  nextButton: Graphics;
+  buildButton: Graphics;
+  information: Container;
   action: Container;
+  // height:number;
+  // screenWidth:number;
 
   constructor() {
     this.container = new Container();
     this.bar = new Graphics();
-    this.button = new Graphics();
-    this.information = new Text('');
+    this.nextButton = new Graphics();
+    this.buildButton = new Graphics();
+    this.information = new Container();
     this.action = new Container();
+    // this.height = g;
+    // this.screenWidth = game.app.renderer.width;
   }
 
   init() {
@@ -22,13 +29,14 @@ class HUD {
 
     //Draws, then adds event for detecting resize
     this.draw();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.draw();
     });
 
     //Adds HUD element to container
     this.container.addChild(this.bar);
-    this.container.addChild(this.button);
+    this.container.addChild(this.nextButton);
+    this.container.addChild(this.buildButton);
     this.container.addChild(this.information);
     this.container.addChild(this.action);
   }
@@ -36,91 +44,64 @@ class HUD {
   draw() {
     //Draws all HUD elements
     //Sets width and height of HUD
-    let width = game.app.renderer.width;
-    let height = game.app.renderer.height / 16;
 
     //Draws elements
-    this.drawButton(height);
-    this.drawBar(width, height);
+    this.drawNextButton();
+    this.drawBuildToggle();
     this.drawInformation();
-    this.drawAction(height);
   }
 
   drawInformation() {
-    let text =
-      this.makeText('level', game.data.level) +
-      this.makeText('exp', game.data.experience) +
-      this.makeText('turn', game.data.turn) +
-      this.makeText('lumber', game.data.lumber) +
-      this.makeText('stone', game.data.stone) +
-      this.makeText('metal', game.data.metal);
+    this.information.removeChildren();
+    let values = [
+     { name: "level", amount: game.data.level },
+     { name: "exp", amount: game.data.experience}, 
+     {name:"turn", amount:game.data.turn}, 
+     {name:"lumber", amount:game.data.lumber}, 
+     {name:"stone", amount:game.data.stone}, 
+     {name:"metal", amount:game.data.metal},
+    ];
 
-    this.information.text = text;
-    this.information.x = 100;
-    this.information.y = 10;
+    if(this.information.children.length < 5){
+      for (let i = 0; i < 6; i ++) {
+        let current = values.at(i);
+        if(current === undefined) return;
+        this.makeInformationBox(current?.name, current?.amount, i*25);
+      }
+    }
   }
 
-  makeText(text: string, data: number) {
-    let value = text + ':' + data + '         ';
-    return value;
+  makeInformationBox(text: string, data: number, height: number) {
+    let obj: Text = new Text(text + ":" + data);
+    obj.y = height + 50;
+    this.information.addChild(obj)
   }
 
-  drawBar(width: number, height: number) {
-    //Draws bar of HUD
-    this.bar = new Graphics();
-
-    this.bar.beginFill(0x434343);
-    this.bar.drawRect(0, 0, width, height);
-  }
-
-  drawButton(height: number) {
+  drawNextButton() {
+    let height = game.app.renderer.height / 16
     //Draws next turn button of HUD
-    this.button = new Graphics();
+    this.nextButton = new Graphics();
 
     //Draws button
-    this.button.beginFill(0x900000);
-    this.button.drawStar(height / 2, height / 2, 5, height / 2);
+    this.nextButton.beginFill(0x900000);
+    this.nextButton.drawStar(height / 2, height / 2, 5, height / 2);
 
     //Turns button into button
-    this.button.interactive = true;
-    this.button.on('pointerdown', () => game.nextTurn());
+    this.nextButton.interactive = true;
+    this.nextButton.on("pointerdown", () => game.nextTurn());
   }
 
-  drawAction(height: number) {
-    this.action.visible = false;
-    let arrayOfFunction = [];
-    arrayOfFunction.push(() => (game.world.currentInteraction = 0));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 1));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 2));
-    arrayOfFunction.push(() => (game.world.currentInteraction = 3));
+  drawBuildToggle(){
+    let height = game.app.renderer.height / 16
 
-    //draws background rectangle
-    let bar = new Graphics();
-    bar.beginFill(0x434343);
-    bar.drawRect(0, game.app.renderer.height - height, height * 4, height);
-    this.action.addChild(bar);
+    this.buildButton = new Graphics();
 
-    for (let i = 0; i < 4; i++) {
-      let button = new Graphics();
+    this.buildButton.beginFill(0x900000);
+    this.buildButton.drawStar(game.app.renderer.width - height / 2, height / 2, 5, height / 2);
 
-      //Draws button
-      button.beginFill(0x900000);
-      button.drawStar(
-        height / 2 + height * i,
-        game.app.renderer.height - height / 2,
-        5,
-        height / 2
-      );
-
-      //Turns button into button
-      button.interactive = true;
-      let current = arrayOfFunction.at(i);
-      if (current !== undefined) {
-        button.on('pointerdown', current);
-      }
-
-      this.action.addChild(button);
-    }
+    //Turns button into button
+    this.buildButton.interactive = true;
+    this.buildButton.on("pointerdown", () => game.world.toggleBuildMode());
   }
 
   toggleActionVisible(visibility: boolean) {

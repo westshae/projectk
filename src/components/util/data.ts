@@ -21,16 +21,26 @@ class Data {
     switch (resourceID) {
       case 0:
         this.lumber += amount * (increase ? 1 : -1);
+        break;
       case 1:
         this.stone += amount * (increase ? 1 : -1);
+        break;
+
       case 2:
         this.metal += amount * (increase ? 1 : -1);
+        break;
+
       case 3:
         this.experience += amount * (increase ? 1 : -1);
+        break;
+
       case 4:
         this.level += amount * (increase ? 1 : -1);
+        break;
+
       case 5:
         this.turn += amount * (increase ? 1 : -1);
+        break;
     }
     game.hud.drawInformation();
   }

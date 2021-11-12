@@ -17,6 +17,7 @@ class World {
   buildMap: Map<number, Building>;
   currentTile?: Tile;
   selector: Sprite;
+  buildMode: boolean;
   currentInteraction?: number;
   spriteWidth: number;
   spriteHeight: number;
@@ -32,8 +33,13 @@ class World {
     this.npcMap = new Map<number, NPC>();
     this.buildMap = new Map<number, Building>();
 
+    this.buildMode = false;
     this.selector = Sprite.from(selectorTexture);
     this.createSelector();
+  }
+
+  toggleBuildMode(){
+    this.buildMode = !this.buildMode;
   }
 
   createSelector() {
@@ -58,30 +64,28 @@ class World {
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
-    let node: Node = new Node(x, y, type, amount);
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-    if (tile !== undefined) {
-      tile.node = node;
-    }
+
+    if (tile === undefined) return;
+    tile.addNode(x, y, type, amount);
   }
 
   setCurrent(x: number, y: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
 
-    if (this.currentInteraction == undefined) {
+    if(this.currentTile === undefined){
+      if(tile.isEmpty && !this.buildMode)return;
       this.setAction(tile);
-    } else {
-      switch (this.currentInteraction) {
-        case 0:
-          this.handleMovement(tile);
-        case 1:
-          this.handleAttack(tile);
-        case 2:
-          this.handleBuild(tile);
-        case 3:
-          this.handleInteraction(tile);
-      }
+      
+      if(!this.buildMode)return;
+      this.handleBuild(tile);
+    }else{
+      tile.emptyCheck();
+        if (tile.isEmpty) this.handleMovement(tile);
+        else if (tile.npc !== undefined) this.handleAttack(tile);
+        else if (tile.node !== undefined) this.handleInteraction(tile);
+        else{this.resetAction()}
     }
   }
 
@@ -134,7 +138,7 @@ class World {
     if (tileInit === undefined) return;
     if (tile.node === undefined) return;
 
-    game.data.changeResource(tile.node.id, tile.node.amount, true);
+    game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
 
     this.resetAction();
@@ -172,25 +176,29 @@ class World {
   }
 
   render() {
-    for(let value of this.grid){
-      for(let tile of value){
+    for (let value of this.grid) {
+      for (let tile of value) {
         tile.sprite.width = this.spriteWidth;
         tile.sprite.height = this.spriteHeight;
 
         let yindex = tile.y - 1;
-        let heightOffset = (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
+        let heightOffset =
+          (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
 
-        if (yindex % 2 == 0) {//If even lin
-          tile.sprite.x = (tile.x * this.spriteWidth) + (this.spriteWidth / 2);
-          tile.sprite.y = (yindex * this.spriteHeight) - heightOffset;
-        } else {//If odd line
-          tile.sprite.x = (tile.x * this.spriteWidth);
-          tile.sprite.y = (yindex * this.spriteHeight) + (this.spriteHeight / 4) - heightOffset;
+        if (yindex % 2 == 0) {
+          //If even lin
+          tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
+          tile.sprite.y = yindex * this.spriteHeight - heightOffset;
+        } else {
+          //If odd line
+          tile.sprite.x = tile.x * this.spriteWidth;
+          tile.sprite.y =
+            yindex * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
         tile.render();
-      };
-    };
+      }
+    }
   }
 }
 
