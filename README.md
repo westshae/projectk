@@ -1,5 +1,5 @@
 # Project K
-Web-based singleplayer strategy game. Led by Shae West, contributed by Jared and David
+Web-based singleplayer strategy game. Led by Shae West, contributed by David
 
 ## Setup
 1. Run the command "yarn install" to install modules
