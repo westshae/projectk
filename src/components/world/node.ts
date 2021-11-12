@@ -6,6 +6,7 @@ import {
   treeTexture,
   oreTexture,
   fruitTexture,
+  chestTexture,
 } from '../util/textures';
 import { Tile } from './tile';
 
@@ -70,6 +71,8 @@ class Node {
         return Sprite.from(oreTexture);
       case 2:
         return Sprite.from(fruitTexture);
+      case 6:
+        return Sprite.from(chestTexture);
       default:
         return Sprite.from(missingTexture);
     }

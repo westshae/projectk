@@ -1,14 +1,14 @@
 import { Sprite } from 'pixi.js';
-import { fruitTexture, houseTexture, mineTexture, oreTexture, treeTexture } from '../util/textures';
+import { fruitTexture, houseTexture, oreTexture, treeTexture, chestTexture } from '../util/textures';
 import { nodeInterface } from '../world/node';
-import { wood } from '../defaults/items';
+import { sword, bearTrap } from '../defaults/items';
+import { itemInterface } from '../npc/items';
 
 const tree: nodeInterface = {
   processingTime: 2,
   defense: 0,
   type: 0,
   sprite: Sprite.from(treeTexture),
-  item: wood,
 };
 
 const ore: nodeInterface = {
@@ -28,7 +28,7 @@ const fruit: nodeInterface = {
 const chest: nodeInterface = {
   processingTime: 1,
   defense: 0,
-  type: 3,
+  type: 6,
   sprite: Sprite.from(chestTexture),
 };
 

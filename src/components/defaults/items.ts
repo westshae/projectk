@@ -18,11 +18,37 @@ const bearTrap: itemInterface = {
   buffList: [{statID: 0, amount: 2 }],
 };
 
-const wood: itemInterface = {
+const pigHelmet: itemInterface = {
   id: 2,
-  name: 'Wood',
+  name: 'pigHelmet',
   sprite: Sprite.from(missingTexture),
-  buffList: [],
+  buffList: [{statID: 0, amount: 2 }],
 };
 
-export { sword, bearTrap, wood };
+const polkaPants: itemInterface = {
+  id: 3,
+  name: 'polkaPants',
+  sprite: Sprite.from(missingTexture),
+  buffList: [{statID: 0, amount: 2 }],
+};
+
+const greatAxe: itemInterface = {
+  id: 2,
+  name: 'greatAxe',
+  sprite: Sprite.from(missingTexture),
+  buffList: [{statID: 0, amount: 2 }],
+};
+
+const longBow: itemInterface = {
+  id: 2,
+  name: 'longBow',
+  sprite: Sprite.from(missingTexture),
+  buffList: [{statID: 0, amount: 2 }],
+};
+
+
+const allItemsMap = new Map();
+allItemsMap.set(sword.id, sword);
+allItemsMap.set(bearTrap.id, bearTrap);
+
+export { sword, bearTrap, allItemsMap};
