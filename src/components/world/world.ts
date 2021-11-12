@@ -83,8 +83,9 @@ class World {
     }else{
       tile.emptyCheck();
         if (tile.isEmpty) this.handleMovement(tile);
-        if (tile.npc !== undefined) this.handleAttack(tile);
-        if (tile.node !== undefined) this.handleInteraction(tile);
+        else if (tile.npc !== undefined) this.handleAttack(tile);
+        else if (tile.node !== undefined) this.handleInteraction(tile);
+        else{this.resetAction()}
     }
   }
 
