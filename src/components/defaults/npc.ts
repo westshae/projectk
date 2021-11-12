@@ -10,6 +10,7 @@ let villager: npcInterface = {
   id: 0,
   sprite: Sprite.from(villagerTexture),
   movement: 5,
+  range: 5,
 };
 
 export { villager };

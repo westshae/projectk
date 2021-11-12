@@ -10,6 +10,7 @@ interface npcInterface {
   health: number;
   attack: number;
   defense: number;
+  range:number;
   id: number;
   sprite: Sprite;
   movement: number;
@@ -27,6 +28,7 @@ class NPC {
   attack: number;
   defense: number;
   movement: number;
+  range:number;
 
   //Map coordinate
   x: number;
@@ -40,6 +42,7 @@ class NPC {
     this.attack = defaultValues.attack;
     this.defense = defaultValues.defense;
     this.movement = defaultValues.movement;
+    this.range = defaultValues.range;
 
     //Default value sets
     this.defaultValuesID = defaultValues.id;
