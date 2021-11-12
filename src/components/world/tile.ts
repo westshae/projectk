@@ -8,6 +8,8 @@ import { Node, nodeInterface } from "./node";
 class Tile {
   x: number;
   y: number;
+  q: number;
+  r: number;
   sprite: Sprite;
   npc?: NPC;
   building?: Building;
@@ -17,6 +19,8 @@ class Tile {
   constructor(x: number, y: number, noise: number, container: Container) {
     this.x = x;
     this.y = y;
+    this.q = y - (x - (x&1)) / 2;
+    this.r = x;
     this.sprite = this.handleSprite(noise);
 
     this.sprite.interactive = true;
@@ -38,7 +42,7 @@ class Tile {
 
   addNPC(x: number, y: number, type: npcInterface, name: string) {
     this.emptyCheck();
-    if(!this.isEmpty)return;
+    if (!this.isEmpty) return;
 
     this.npc = new NPC(x, y, type, name);
     game.world.npcMap.set(this.npc.id, this.npc);
@@ -48,7 +52,7 @@ class Tile {
 
   addBuilding(x: number, y: number, type: buildingInterface) {
     this.emptyCheck();
-    if(!this.isEmpty)return;
+    if (!this.isEmpty) return;
 
     this.building = new Building(x, y, type);
     game.world.buildMap.set(this.building.id, this.building);
@@ -58,10 +62,10 @@ class Tile {
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
     this.emptyCheck();
-    if(!this.isEmpty)return;
+    if (!this.isEmpty) return;
 
     this.node = new Node(x, y, type, amount);
-    
+
     this.emptyCheck();
   }
 

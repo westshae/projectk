@@ -42,6 +42,16 @@ class World {
     this.buildMode = !this.buildMode;
   }
 
+  distanceCheck(currentTile:Tile, nextTile:Tile, npc:NPC){
+    let range = npc.range;
+    let subtractQ = currentTile.q - nextTile.q;
+    let subtractR = currentTile.r - nextTile.r;
+    let moved = (Math.abs(subtractQ) + Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) + Math.abs(subtractR)) / 2
+    
+    if(moved <= range) return true;
+    else return false;
+  }
+
   createSelector() {
     this.selector.width = this.spriteWidth;
     this.selector.height = this.spriteHeight;
@@ -112,8 +122,11 @@ class World {
   handleMovement(nextTile: Tile) {
     let currentTile: Tile | undefined = game.world.currentTile;
 
-    if (nextTile.npc !== undefined) return;
     if (currentTile === undefined) return;
+    if (nextTile.npc !== undefined) return;
+    if(currentTile.npc === undefined) return;
+
+    if( !this.distanceCheck(currentTile, nextTile, currentTile.npc)) return;
 
     let npc: NPC | undefined = currentTile.npc;
     if (npc === undefined) return;
@@ -126,6 +139,9 @@ class World {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit?.npc === undefined) return;
 
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc)) return;
+
+
     let villager: NPC | undefined = tileInit.npc;
     let enemy: NPC | undefined = tile.npc;
     if (enemy === undefined) return;
@@ -136,7 +152,10 @@ class World {
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit === undefined) return;
+    if(tileInit.npc === undefined) return;
     if (tile.node === undefined) return;
+
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
