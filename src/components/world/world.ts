@@ -53,15 +53,15 @@ class World {
   }
   
 
-  highlightRange(middleTile:Tile, currentTile:Tile, range:number, highlight:boolean){//recursive
+  highlightRange(middleTile:Tile, currentTile:Tile, npc:NPC, highlight:boolean){//recursive
     if(currentTile.isHighlighted == highlight)return;
     
-    if(this.distanceCheck(middleTile, currentTile, range)){
+    if(this.distanceCheck(middleTile, currentTile, npc.range)){
       for(let i = -1; i <= 1; i++){
         for(let j = -1; j <= 1; j++){
           let tile = this.grid.at(currentTile.x + i)?.at(currentTile.y + j);
           if(tile !== undefined){
-            this.highlightRange(middleTile, tile, range, highlight);
+            this.highlightRange(middleTile, tile, npc, highlight);
             currentTile.toggleHighlight(highlight);
           }
         }
@@ -128,14 +128,15 @@ class World {
       game.hud.toggleActionVisible(false);
     }
 
-    this.highlightRange(tile, tile, 3, true);
+    if(this.currentTile.npc === undefined) return;
+    this.highlightRange(tile, tile, this.currentTile.npc, true);
   }
 
   resetAction(nextTile:Tile) {
-    console.log(this.currentTile);
     if(this.currentTile !== undefined && nextTile.npc?.range !== undefined){
-      this.highlightRange(this.currentTile, this.currentTile, nextTile.npc.range, false)
+      this.highlightRange(this.currentTile, this.currentTile, nextTile.npc, false)
     }
+
     this.currentTile = undefined;
     this.selector.visible = false;
     game.hud.toggleActionVisible(false);
