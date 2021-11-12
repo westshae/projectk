@@ -42,6 +42,33 @@ class World {
     this.buildMode = !this.buildMode;
   }
 
+  distanceCheck(currentTile:Tile, nextTile:Tile, range:number){
+    let moved = 
+      (Math.abs(currentTile.q - nextTile.q) + 
+      Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) + 
+      Math.abs(currentTile.r - nextTile.r)) / 2;
+    
+    if(moved <= range) return true;
+    else return false;
+  }
+  
+
+  highlightRange(middleTile:Tile, currentTile:Tile, npc:NPC, highlight:boolean){//recursive
+    if(currentTile.isHighlighted == highlight)return;
+    
+    if(this.distanceCheck(middleTile, currentTile, npc.range)){
+      for(let i = -1; i <= 1; i++){
+        for(let j = -1; j <= 1; j++){
+          let tile = this.grid.at(currentTile.x + i)?.at(currentTile.y + j);
+          if(tile !== undefined){
+            this.highlightRange(middleTile, tile, npc, highlight);
+            currentTile.toggleHighlight(highlight);
+          }
+        }
+      }
+    }
+  }
+
   createSelector() {
     this.selector.width = this.spriteWidth;
     this.selector.height = this.spriteHeight;
@@ -85,7 +112,7 @@ class World {
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
         else if (tile.node !== undefined) this.handleInteraction(tile);
-        else{this.resetAction()}
+        else{this.resetAction(tile)}
     }
   }
 
@@ -100,9 +127,16 @@ class World {
     } else {
       game.hud.toggleActionVisible(false);
     }
+
+    if(this.currentTile.npc === undefined) return;
+    this.highlightRange(tile, tile, this.currentTile.npc, true);
   }
 
-  resetAction() {
+  resetAction(nextTile:Tile) {
+    if(this.currentTile !== undefined && nextTile.npc?.range !== undefined){
+      this.highlightRange(this.currentTile, this.currentTile, nextTile.npc, false)
+    }
+
     this.currentTile = undefined;
     this.selector.visible = false;
     game.hud.toggleActionVisible(false);
@@ -112,36 +146,50 @@ class World {
   handleMovement(nextTile: Tile) {
     let currentTile: Tile | undefined = game.world.currentTile;
 
-    if (nextTile.npc !== undefined) return;
     if (currentTile === undefined) return;
+    if (nextTile.npc !== undefined) return;
+    if(currentTile.npc === undefined) return;
+
+    if( !this.distanceCheck(currentTile, nextTile, currentTile.npc.range)) return;
 
     let npc: NPC | undefined = currentTile.npc;
     if (npc === undefined) return;
 
     npc.move(currentTile, nextTile);
-    this.resetAction();
+    if(currentTile === undefined)return;
+    this.resetAction(nextTile);
   }
 
   handleAttack(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit?.npc === undefined) return;
 
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
+
+
     let villager: NPC | undefined = tileInit.npc;
     let enemy: NPC | undefined = tile.npc;
     if (enemy === undefined) return;
     villager.doCombat(enemy);
-    this.resetAction();
+    if(tile.npc === undefined) this.handleMovement(tile);
+
+    this.resetAction(tile);
   }
 
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit === undefined) return;
+    if(tileInit.npc === undefined) return;
     if (tile.node === undefined) return;
+
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
 
-    this.resetAction();
+    if(tile.node === undefined) this.handleMovement(tile);
+
+    this.resetAction(tile);
   }
 
   handleBuild(tile: Tile) {
@@ -155,7 +203,7 @@ class World {
       tile.building.delete();
     }
 
-    this.resetAction();
+    this.resetAction(tile);
   }
 
   generateGrid() {
@@ -196,7 +244,15 @@ class World {
             yindex * this.spriteHeight + this.spriteHeight / 4 - heightOffset;
         }
 
+        tile.highlightSprite.x = tile.sprite.x;
+        tile.highlightSprite.y = tile.sprite.y;
+
         tile.render();
+
+        tile.highlightSprite.width = this.spriteWidth;
+        tile.highlightSprite.height = this.spriteHeight;
+        this.container.addChild(tile.highlightSprite); //Adds to world container
+
       }
     }
   }
