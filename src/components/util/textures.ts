@@ -14,6 +14,7 @@ const houseTexture = Texture.from('../assets/buildings/house.png');
 const mineTexture = Texture.from('../assets/buildings/mine.png');
 const missingTexture = Texture.from('../assets/util/missing.png');
 const selectorTexture = Texture.from('../assets/util/selector.png');
+const chestTexture = Texture.from('../assets/resources/chest.png');
 const rangeHighlight = Texture.from("../assets/util/rangeHighlight.png");
 
 export {
@@ -31,5 +32,6 @@ export {
   mineTexture,
   missingTexture,
   selectorTexture,
+  chestTexture,
   rangeHighlight,
 };

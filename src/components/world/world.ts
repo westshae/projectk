@@ -7,6 +7,7 @@ import { Container, Sprite } from "pixi.js";
 import { selectorTexture } from "../util/textures";
 import { game } from "../..";
 import { townCenter } from "../defaults/builds";
+import { allItemsMap } from '../defaults/items';
 
 class World {
   container: Container;
@@ -185,7 +186,15 @@ class World {
     if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
-    tile.node.delete();
+    if(this.currentTile !== undefined && this.currentTile.npc !== undefined){ 
+      if(tile.node.type == 6){  //If its a chest
+        let X:Number = Math.floor(Math.random() * (allItemsMap.size));
+        this.currentTile.npc.addItem(allItemsMap.get(X)); 
+      }else if(tile.node.item !== undefined){
+        this.currentTile.npc.addItem(tile.node.item);
+      }
+     }
+     tile.node.delete();
 
     if(tile.node === undefined) this.handleMovement(tile);
 
