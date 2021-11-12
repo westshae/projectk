@@ -169,6 +169,7 @@ class World {
 
     let villager: NPC | undefined = tileInit.npc;
     let enemy: NPC | undefined = tile.npc;
+    if(villager == enemy) return;
     if (enemy === undefined) return;
     villager.doCombat(enemy);
     if(tile.npc === undefined) this.handleMovement(tile);
