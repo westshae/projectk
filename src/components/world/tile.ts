@@ -19,8 +19,8 @@ class Tile {
   constructor(x: number, y: number, noise: number, container: Container) {
     this.x = x;
     this.y = y;
-    this.q = y - (x - (x&1)) / 2;
-    this.r = x;
+    this.q = x - (y - (y&1)) / 2;
+    this.r = y;
     this.sprite = this.handleSprite(noise);
 
     this.sprite.interactive = true;

@@ -42,14 +42,32 @@ class World {
     this.buildMode = !this.buildMode;
   }
 
-  distanceCheck(currentTile:Tile, nextTile:Tile, npc:NPC){
-    let range = npc.range;
-    let subtractQ = currentTile.q - nextTile.q;
-    let subtractR = currentTile.r - nextTile.r;
-    let moved = (Math.abs(subtractQ) + Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) + Math.abs(subtractR)) / 2
+  distanceCheck(currentTile:Tile, nextTile:Tile, range:number){
+    let moved = 
+      (Math.abs(currentTile.q - nextTile.q) + 
+      Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) + 
+      Math.abs(currentTile.r - nextTile.r)) / 2;
     
     if(moved <= range) return true;
     else return false;
+  }
+  
+
+  highlightRange(middleTile:Tile, currentTile:Tile, range:number){//recursive
+    if(!currentTile.sprite.visible)return;
+    
+    if(this.distanceCheck(middleTile, currentTile, range)){
+      for(let i = -1; i <= 1; i++){
+        for(let j = -1; j <= 1; j++){
+          let tile = this.grid.at(currentTile.x + i)?.at(currentTile.y + j);
+          if(tile !== undefined){
+            this.highlightRange(middleTile, tile, range);
+            currentTile.sprite.visible = false;
+
+          }
+        }
+      }
+    }
   }
 
   createSelector() {
@@ -110,6 +128,8 @@ class World {
     } else {
       game.hud.toggleActionVisible(false);
     }
+
+    this.highlightRange(tile, tile, 3);
   }
 
   resetAction() {
@@ -126,7 +146,7 @@ class World {
     if (nextTile.npc !== undefined) return;
     if(currentTile.npc === undefined) return;
 
-    if( !this.distanceCheck(currentTile, nextTile, currentTile.npc)) return;
+    if( !this.distanceCheck(currentTile, nextTile, currentTile.npc.range)) return;
 
     let npc: NPC | undefined = currentTile.npc;
     if (npc === undefined) return;
@@ -139,7 +159,7 @@ class World {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit?.npc === undefined) return;
 
-    if( !this.distanceCheck(tileInit, tile, tileInit.npc)) return;
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
 
     let villager: NPC | undefined = tileInit.npc;
@@ -156,7 +176,7 @@ class World {
     if(tileInit.npc === undefined) return;
     if (tile.node === undefined) return;
 
-    if( !this.distanceCheck(tileInit, tile, tileInit.npc)) return;
+    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
