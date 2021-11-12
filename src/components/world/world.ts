@@ -139,7 +139,10 @@ class World {
     if (tile.node === undefined) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
-    tile.node.delete();
+    if(this.currentTile !== undefined && this.currentTile.npc !== undefined && tile.node.item !== undefined){ 
+      this.currentTile.npc.addItem(tile.node.item);
+      tile.node.delete();
+     }
 
     this.resetAction();
   }

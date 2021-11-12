@@ -1,5 +1,6 @@
 import { Sprite } from 'pixi.js';
 import { game } from '../..';
+import { itemInterface } from '../npc/items';
 import {
   missingTexture,
   treeTexture,
@@ -15,6 +16,7 @@ interface nodeInterface {
   defense: number;
   type: number;
   sprite: Sprite;
+  item?: itemInterface;
 }
 
 class Node {
@@ -25,6 +27,7 @@ class Node {
   amount:number;
   x: number;
   y: number;
+  item?:itemInterface;
 
   constructor(x: number, y: number, type: nodeInterface, amount:number) {
     this.processingTime = type.processingTime;
@@ -32,10 +35,10 @@ class Node {
     this.amount = amount;
     this.x = x;
     this.y = y;
-
     //Increases ID number by 1, then sets
     recentID++;
     this.id = recentID;
+    this.item = type.item;
 
     this.sprite = this.handleSprite();
   }
