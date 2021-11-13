@@ -38,29 +38,35 @@ class World {
     this.createSelector();
   }
 
-  toggleBuildMode(){
+  toggleBuildMode() {
     this.buildMode = !this.buildMode;
   }
 
-  distanceCheck(currentTile:Tile, nextTile:Tile, range:number){
-    let moved = 
-      (Math.abs(currentTile.q - nextTile.q) + 
-      Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) + 
-      Math.abs(currentTile.r - nextTile.r)) / 2;
-    
-    if(moved <= range) return true;
+  distanceCheck(currentTile: Tile, nextTile: Tile, range: number) {
+    let moved =
+      (Math.abs(currentTile.q - nextTile.q) +
+        Math.abs(currentTile.q + currentTile.r - nextTile.q - nextTile.r) +
+        Math.abs(currentTile.r - nextTile.r)) /
+      2;
+
+    if (moved <= range) return true;
     else return false;
   }
-  
 
-  highlightRange(middleTile:Tile, currentTile:Tile, npc:NPC, highlight:boolean){//recursive
-    if(currentTile.isHighlighted == highlight)return;
-    
-    if(this.distanceCheck(middleTile, currentTile, npc.range)){
-      for(let i = -1; i <= 1; i++){
-        for(let j = -1; j <= 1; j++){
+  highlightRange(
+    middleTile: Tile,
+    currentTile: Tile,
+    npc: NPC,
+    highlight: boolean
+  ) {
+    //recursive
+    if (currentTile.isHighlighted == highlight) return;
+
+    if (this.distanceCheck(middleTile, currentTile, npc.range)) {
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
           let tile = this.grid.at(currentTile.x + i)?.at(currentTile.y + j);
-          if(tile !== undefined){
+          if (tile !== undefined) {
             this.highlightRange(middleTile, tile, npc, highlight);
             currentTile.toggleHighlight(highlight);
           }
@@ -101,28 +107,28 @@ class World {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
 
-    if(tile !== undefined && this.currentTile !== undefined && this.currentTile == tile ){
-      this.resetAction(this.currentTile);
-      return;
-    }
-
-    if(this.currentTile === undefined){
-      if(tile.isEmpty && !this.buildMode)return;
+    if (this.currentTile === undefined) {
+      if (tile.isEmpty && !this.buildMode) return;
       this.setAction(tile);
-      
-      if(!this.buildMode)return;
+
+      if (!this.buildMode) return;
       this.handleBuild(tile);
-    }else{
-      tile.emptyCheck();
+    } else {
+      if (tile !== undefined && this.currentTile == tile) {
+        this.resetAction(this.currentTile);
+      } else {
+        tile.emptyCheck();
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
         else if (tile.node !== undefined) this.handleInteraction(tile);
-        else{this.resetAction(tile)}
+        else {
+          this.resetAction(tile);
+        }
+      }
     }
   }
 
   setAction(tile: Tile) {
-    
     this.currentTile = tile;
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
@@ -134,13 +140,18 @@ class World {
       game.hud.toggleActionVisible(false);
     }
 
-    if(this.currentTile.npc === undefined) return;
+    if (this.currentTile.npc === undefined) return;
     this.highlightRange(tile, tile, this.currentTile.npc, true);
   }
 
-  resetAction(nextTile:Tile) {
-    if(this.currentTile !== undefined && nextTile.npc?.range !== undefined){
-      this.highlightRange(this.currentTile, this.currentTile, nextTile.npc, false)
+  resetAction(nextTile: Tile) {
+    if (this.currentTile !== undefined && nextTile.npc?.range !== undefined) {
+      this.highlightRange(
+        this.currentTile,
+        this.currentTile,
+        nextTile.npc,
+        false
+      );
     }
 
     this.currentTile = undefined;
@@ -154,15 +165,16 @@ class World {
 
     if (currentTile === undefined) return;
     if (nextTile.npc !== undefined) return;
-    if(currentTile.npc === undefined) return;
+    if (currentTile.npc === undefined) return;
 
-    if( !this.distanceCheck(currentTile, nextTile, currentTile.npc.range)) return;
+    if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))
+      return;
 
     let npc: NPC | undefined = currentTile.npc;
     if (npc === undefined) return;
 
     npc.move(currentTile, nextTile);
-    if(currentTile === undefined)return;
+    if (currentTile === undefined) return;
     this.resetAction(nextTile);
   }
 
@@ -170,15 +182,14 @@ class World {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit?.npc === undefined) return;
 
-    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
-
+    if (!this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     let villager: NPC | undefined = tileInit.npc;
     let enemy: NPC | undefined = tile.npc;
-    if(villager.defaultValuesID == enemy?.defaultValuesID) return;
+    if (villager.defaultValuesID == enemy?.defaultValuesID) return;
     if (enemy === undefined) return;
     villager.doCombat(enemy);
-    if(tile.npc === undefined) this.handleMovement(tile);
+    if (tile.npc === undefined) this.handleMovement(tile);
 
     this.resetAction(tile);
   }
@@ -186,15 +197,15 @@ class World {
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit === undefined) return;
-    if(tileInit.npc === undefined) return;
+    if (tileInit.npc === undefined) return;
     if (tile.node === undefined) return;
 
-    if( !this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
+    if (!this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     tile.node.delete();
 
-    if(tile.node === undefined) this.handleMovement(tile);
+    if (tile.node === undefined) this.handleMovement(tile);
 
     this.resetAction(tile);
   }
@@ -259,7 +270,6 @@ class World {
         tile.highlightSprite.width = this.spriteWidth;
         tile.highlightSprite.height = this.spriteHeight;
         this.container.addChild(tile.highlightSprite); //Adds to world container
-
       }
     }
   }
