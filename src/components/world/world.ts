@@ -107,7 +107,6 @@ class World {
   setCurrent(x: number, y: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
-    game.hud.displayTile(tile);
 
     if (this.currentTile === undefined) {
       if (tile.isEmpty && !this.buildMode) return;
@@ -139,6 +138,10 @@ class World {
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
     this.selector.visible = true;
+
+    game.hud.displayTile(tile);
+
+
 
     if (this.currentTile?.npc !== undefined) {
       game.hud.toggleActionVisible(true);

@@ -54,8 +54,9 @@ class HUD {
   }
 
   displayTile(tile:Tile){
+    this.tileInfo.visible = true;
     this.tileInfo.removeChildren();
-    let values = [];
+    let values;
     if(tile.isEmpty)return;
     else if(tile.npc !== undefined){
       values = [
@@ -71,6 +72,15 @@ class HUD {
 
     }else if(tile.node !== undefined){
 
+    }
+
+    if(values !== undefined){
+      for (let i = 0; i < values?.length; i ++) {
+        let current = values.at(i);
+        if(current === undefined) return;
+        console.log(current);
+        this.makeInformationBox(current.title, current.value, i*25, false, this.tileInfo);
+      }
     }
   }
 
@@ -93,15 +103,21 @@ class HUD {
       for (let i = 0; i < 6; i ++) {
         let current = values.at(i);
         if(current === undefined) return;
-        this.makeInformationBox(current?.name, current?.amount, i*25);
+        this.makeInformationBox(current?.name, current?.amount, i*25, true, this.information);
       }
     }
   }
 
-  makeInformationBox(text: string, data: number, height: number) {
+  makeInformationBox(text: string, data: any, height: number, left: boolean, container:Container) {
     let obj: Text = new Text(text + ":" + data);
     obj.y = height + 50;
-    this.information.addChild(obj)
+    if(left){
+      obj.x = 0;
+
+    }else{
+      obj.x = game.app.screen.right -200;
+    }
+    container.addChild(obj)
   }
 
   drawNextButton() {
