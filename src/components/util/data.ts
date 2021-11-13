@@ -41,10 +41,6 @@ class Data {
       case 5:
         this.turn += amount * (increase ? 1 : -1);
         break;
-      case 6:
-        //Chest. Gives items, not other stuff. Do nothing
-        break;
-
     }
     game.hud.drawInformation();
   }
