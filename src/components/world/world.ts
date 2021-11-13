@@ -106,6 +106,7 @@ class World {
   setCurrent(x: number, y: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
+    game.hud.displayTile(tile);
 
     if (this.currentTile === undefined) {
       if (tile.isEmpty && !this.buildMode) return;

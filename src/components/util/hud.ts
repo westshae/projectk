@@ -1,5 +1,6 @@
 import { Container, Graphics, Text } from "pixi.js";
 import { game } from "../..";
+import { Tile } from "../world/tile";
 import { Data } from "./data";
 
 class HUD {
@@ -9,6 +10,7 @@ class HUD {
   buildButton: Graphics;
   information: Container;
   action: Container;
+  tileInfo : Container;
   // height:number;
   // screenWidth:number;
 
@@ -19,8 +21,7 @@ class HUD {
     this.buildButton = new Graphics();
     this.information = new Container();
     this.action = new Container();
-    // this.height = g;
-    // this.screenWidth = game.app.renderer.width;
+    this.tileInfo = new Container();
   }
 
   init() {
@@ -39,6 +40,7 @@ class HUD {
     this.container.addChild(this.buildButton);
     this.container.addChild(this.information);
     this.container.addChild(this.action);
+    this.container.addChild(this.tileInfo);
   }
 
   draw() {
@@ -49,6 +51,31 @@ class HUD {
     this.drawNextButton();
     this.drawBuildToggle();
     this.drawInformation();
+  }
+
+  displayTile(tile:Tile){
+    this.tileInfo.removeChildren();
+    let values = [];
+    if(tile.isEmpty)return;
+    else if(tile.npc !== undefined){
+      values = [
+        {title:"Name" , value:tile.npc.name},
+        {title:"Health", value:tile.npc.health},
+        {title:"Defense", value:tile.npc.defense},
+        {title:"Attack", value:tile.npc.attack},
+        {title:"Range", value:tile.npc.range},
+        {title:"Item 1", value:tile.npc.itemList.at(0)},
+        {title:"Item 2", value:tile.npc.itemList.at(1)}
+      ]
+    }else if (tile.building !== undefined){
+
+    }else if(tile.node !== undefined){
+
+    }
+  }
+
+  showDisplayTile(bool:boolean){
+    this.tileInfo.visible = bool;
   }
 
   drawInformation() {
