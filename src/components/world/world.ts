@@ -101,6 +101,11 @@ class World {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
 
+    if(tile !== undefined && this.currentTile !== undefined && this.currentTile == tile ){
+      this.resetAction(this.currentTile);
+      return;
+    }
+
     if(this.currentTile === undefined){
       if(tile.isEmpty && !this.buildMode)return;
       this.setAction(tile);
@@ -117,6 +122,7 @@ class World {
   }
 
   setAction(tile: Tile) {
+    
     this.currentTile = tile;
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
