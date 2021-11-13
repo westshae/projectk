@@ -13,7 +13,7 @@ let townCenter: buildingInterface = {
 let mine: buildingInterface = {
   health: 10,
   defense: 0,
-  type: 2,
+  type: 1,
   buildTurns: 5,
   sprite: Sprite.from(mineTexture),
 };

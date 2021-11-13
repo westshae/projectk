@@ -69,16 +69,21 @@ class HUD {
         {title:"Item 2", value:tile.npc.itemList.at(1)}
       ]
     }else if (tile.building !== undefined){
-
+      values = [
+        {title:"id", value:tile.building.id}
+      ]
     }else if(tile.node !== undefined){
-
+      values = [
+        {title:"Amount", value:tile.node.amount}
+      ]
     }
 
     if(values !== undefined){
       for (let i = 0; i < values?.length; i ++) {
         let current = values.at(i);
         if(current === undefined) return;
-        console.log(current);
+        if(current.value === undefined) continue;
+        if(current.title === undefined) continue;
         this.makeInformationBox(current.title, current.value, i*25, false, this.tileInfo);
       }
     }
