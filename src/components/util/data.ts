@@ -41,6 +41,9 @@ class Data {
       case 5:
         this.turn += amount * (increase ? 1 : -1);
         break;
+      case 6:
+        //giveItem, nothing else
+        break;
     }
     game.hud.drawInformation();
   }

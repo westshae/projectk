@@ -1,10 +1,12 @@
 import { Sprite } from 'pixi.js';
 import { game } from '../..';
+import { itemInterface } from '../npc/items';
 import {
   missingTexture,
   treeTexture,
   oreTexture,
   fruitTexture,
+  chestTexture,
 } from '../util/textures';
 import { Tile } from './tile';
 
@@ -25,6 +27,7 @@ class Node {
   amount:number;
   x: number;
   y: number;
+  item?:itemInterface;
 
   constructor(x: number, y: number, type: nodeInterface, amount:number) {
     this.processingTime = type.processingTime;
@@ -67,6 +70,8 @@ class Node {
         return Sprite.from(oreTexture);
       case 2:
         return Sprite.from(fruitTexture);
+        case 6:
+        return Sprite.from(chestTexture);
       default:
         return Sprite.from(missingTexture);
     }

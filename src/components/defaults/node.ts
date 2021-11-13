@@ -1,5 +1,5 @@
 import { Sprite } from 'pixi.js';
-import { fruitTexture, houseTexture, mineTexture, oreTexture, treeTexture } from '../util/textures';
+import { chestTexture, fruitTexture, houseTexture, mineTexture, oreTexture, treeTexture } from '../util/textures';
 import { nodeInterface } from '../world/node';
 
 const tree: nodeInterface = {
@@ -23,4 +23,11 @@ const fruit: nodeInterface = {
   sprite: Sprite.from(fruitTexture),
 };
 
-export { tree, ore, fruit };
+const chest: nodeInterface = {
+  processingTime: 1,
+  defense: 0,
+  type: 6,
+  sprite: Sprite.from(chestTexture),
+};
+
+export { tree, ore, fruit, chest };

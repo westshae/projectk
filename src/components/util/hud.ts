@@ -1,5 +1,6 @@
 import { Container, Graphics, Text } from "pixi.js";
 import { game } from "../..";
+import { Tile } from "../world/tile";
 import { Data } from "./data";
 
 class HUD {
@@ -9,6 +10,7 @@ class HUD {
   buildButton: Graphics;
   information: Container;
   action: Container;
+  tileInfo : Container;
   // height:number;
   // screenWidth:number;
 
@@ -19,8 +21,7 @@ class HUD {
     this.buildButton = new Graphics();
     this.information = new Container();
     this.action = new Container();
-    // this.height = g;
-    // this.screenWidth = game.app.renderer.width;
+    this.tileInfo = new Container();
   }
 
   init() {
@@ -39,6 +40,7 @@ class HUD {
     this.container.addChild(this.buildButton);
     this.container.addChild(this.information);
     this.container.addChild(this.action);
+    this.container.addChild(this.tileInfo);
   }
 
   draw() {
@@ -49,6 +51,46 @@ class HUD {
     this.drawNextButton();
     this.drawBuildToggle();
     this.drawInformation();
+  }
+
+  displayTile(tile:Tile){
+    this.tileInfo.visible = true;
+    this.tileInfo.removeChildren();
+    let values;
+    if(tile.isEmpty)return;
+    else if(tile.npc !== undefined){
+      values = [
+        {title:"Name" , value:tile.npc.name},
+        {title:"Health", value:tile.npc.health},
+        {title:"Defense", value:tile.npc.defense},
+        {title:"Attack", value:tile.npc.attack},
+        {title:"Range", value:tile.npc.range},
+        {title:"Item 1", value:tile.npc.itemList.at(0)},
+        {title:"Item 2", value:tile.npc.itemList.at(1)}
+      ]
+    }else if (tile.building !== undefined){
+      values = [
+        {title:"id", value:tile.building.id}
+      ]
+    }else if(tile.node !== undefined){
+      values = [
+        {title:"Amount", value:tile.node.amount}
+      ]
+    }
+
+    if(values !== undefined){
+      for (let i = 0; i < values?.length; i ++) {
+        let current = values.at(i);
+        if(current === undefined) return;
+        if(current.value === undefined) continue;
+        if(current.title === undefined) continue;
+        this.makeInformationBox(current.title, current.value, i*25, false, this.tileInfo);
+      }
+    }
+  }
+
+  showDisplayTile(bool:boolean){
+    this.tileInfo.visible = bool;
   }
 
   drawInformation() {
@@ -66,15 +108,21 @@ class HUD {
       for (let i = 0; i < 6; i ++) {
         let current = values.at(i);
         if(current === undefined) return;
-        this.makeInformationBox(current?.name, current?.amount, i*25);
+        this.makeInformationBox(current?.name, current?.amount, i*25, true, this.information);
       }
     }
   }
 
-  makeInformationBox(text: string, data: number, height: number) {
+  makeInformationBox(text: string, data: any, height: number, left: boolean, container:Container) {
     let obj: Text = new Text(text + ":" + data);
     obj.y = height + 50;
-    this.information.addChild(obj)
+    if(left){
+      obj.x = 0;
+
+    }else{
+      obj.x = game.app.screen.right -200;
+    }
+    container.addChild(obj)
   }
 
   drawNextButton() {
