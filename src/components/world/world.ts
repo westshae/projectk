@@ -171,6 +171,7 @@ class World {
     this.selector.visible = false;
     game.hud.toggleActionVisible(false);
     this.currentInteraction = undefined;
+    game.hud.showDisplayTile(false);
   }
 
   handleMovement(nextTile: Tile) {
