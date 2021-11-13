@@ -94,6 +94,8 @@ class World {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
     tile.addBuilding(x, y, type);
+    tile.render();
+
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
@@ -234,12 +236,9 @@ class World {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit === undefined) return;
 
-    if (tile.building === undefined) {
-      game.world.addBuilding(tile.x, tile.y, townCenter);
-      tile.render();
-    } else {
-      tile.building.delete();
-    }
+    if (tile.building === undefined) this.addBuilding(tile.x, tile.y, townCenter);
+     else tile.building.delete();
+    
 
     this.resetAction(tile);
   }
@@ -272,7 +271,7 @@ class World {
           (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
 
         if (yindex % 2 == 0) {
-          //If even lin
+          //If even line
           tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
           tile.sprite.y = yindex * this.spriteHeight - heightOffset;
         } else {
