@@ -111,6 +111,7 @@ class World {
 
     if (this.currentTile === undefined) {
       if (tile.isEmpty && !this.buildMode) return;
+     
       this.setAction(tile);
 
       if (!this.buildMode) return;
@@ -119,6 +120,8 @@ class World {
       if (tile !== undefined && this.currentTile == tile) {
         this.resetAction(this.currentTile);
       } else {
+        
+
         tile.emptyCheck();
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
@@ -126,11 +129,12 @@ class World {
         else {
           this.resetAction(tile);
         }
+
       }
     }
   }
 
-  setAction(tile: Tile) {
+  setAction(tile: Tile) {    
     this.currentTile = tile;
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
@@ -156,6 +160,10 @@ class World {
       );
     }
 
+    if(this.currentTile !== undefined && this.currentTile.npc !== undefined){
+      this.highlightRange(this.currentTile, this.currentTile, this.currentTile.npc, false);
+    }
+
     this.currentTile = undefined;
     this.selector.visible = false;
     game.hud.toggleActionVisible(false);
@@ -165,9 +173,15 @@ class World {
   handleMovement(nextTile: Tile) {
     let currentTile: Tile | undefined = game.world.currentTile;
 
+
+
     if (currentTile === undefined) return;
+    
     if (nextTile.npc !== undefined) return;
-    if (currentTile.npc === undefined) return;
+    if (currentTile.npc === undefined) {
+      this.resetAction(currentTile);
+      return
+    }; 
 
     if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))
       return;
