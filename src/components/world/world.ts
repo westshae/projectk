@@ -173,15 +173,13 @@ class World {
     let currentTile: Tile | undefined = game.world.currentTile;
 
     if (currentTile === undefined) return;
-
     if (nextTile.npc !== undefined) return;
     if (currentTile.npc === undefined) {
       this.resetAction(currentTile);
       return;
     }
 
-    if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))
-      return;
+    if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))return;
 
     let npc: NPC | undefined = currentTile.npc;
     if (npc === undefined) return;
@@ -217,11 +215,11 @@ class World {
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
     if (this.currentTile !== undefined && this.currentTile.npc !== undefined) {
-      if (tile.node.type == 6) {
-        //If its a chest
-        let X: Number = Math.floor(Math.random() * allItemsMap.size);
-        this.currentTile.npc.addItem(allItemsMap.get(X));
-      } else if (tile.node.item !== undefined) {
+      if (tile.node.type == 6) {//if chest
+        let x = Math.floor(Math.random() * allItemsMap.size);
+        this.currentTile.npc.addItem(allItemsMap.get(x));
+      } else {
+        if(tile.node.item === undefined) return;
         this.currentTile.npc.addItem(tile.node.item);
       }
     }
@@ -238,7 +236,7 @@ class World {
 
     if (tile.building === undefined) {
       game.world.addBuilding(tile.x, tile.y, townCenter);
-      game.world.render();
+      tile.render();
     } else {
       tile.building.delete();
     }
