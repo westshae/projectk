@@ -93,13 +93,11 @@ class World {
   addBuilding(x: number, y: number, type: buildingInterface) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
-
     tile.addBuilding(x, y, type);
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-
     if (tile === undefined) return;
     tile.addNode(x, y, type, amount);
   }
@@ -110,38 +108,30 @@ class World {
 
     if (this.currentTile === undefined) {
       if (tile.isEmpty && !this.buildMode) return;
-     
+
       this.setAction(tile);
 
       if (!this.buildMode) return;
       this.handleBuild(tile);
     } else {
-      if (tile !== undefined && this.currentTile == tile) {
-        this.resetAction(this.currentTile);
-      } else {
-        
-
+      if (this.currentTile === tile) this.resetAction(this.currentTile);
+      else {
         tile.emptyCheck();
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
         else if (tile.node !== undefined) this.handleInteraction(tile);
-        else {
-          this.resetAction(tile);
-        }
-
+        else this.resetAction(tile);
       }
     }
   }
 
-  setAction(tile: Tile) {    
+  setAction(tile: Tile) {
     this.currentTile = tile;
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
     this.selector.visible = true;
 
     game.hud.displayTile(tile);
-
-
 
     if (this.currentTile?.npc !== undefined) {
       game.hud.toggleActionVisible(true);
@@ -163,8 +153,13 @@ class World {
       );
     }
 
-    if(this.currentTile !== undefined && this.currentTile.npc !== undefined){
-      this.highlightRange(this.currentTile, this.currentTile, this.currentTile.npc, false);
+    if (this.currentTile !== undefined && this.currentTile.npc !== undefined) {
+      this.highlightRange(
+        this.currentTile,
+        this.currentTile,
+        this.currentTile.npc,
+        false
+      );
     }
 
     this.currentTile = undefined;
@@ -177,15 +172,13 @@ class World {
   handleMovement(nextTile: Tile) {
     let currentTile: Tile | undefined = game.world.currentTile;
 
-
-
     if (currentTile === undefined) return;
-    
+
     if (nextTile.npc !== undefined) return;
     if (currentTile.npc === undefined) {
       this.resetAction(currentTile);
-      return
-    }; 
+      return;
+    }
 
     if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))
       return;
@@ -223,15 +216,16 @@ class World {
     if (!this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
 
     game.data.changeResource(tile.node.type, tile.node.amount, true);
-    if(this.currentTile !== undefined && this.currentTile.npc !== undefined){ 
-      if(tile.node.type == 6){  //If its a chest
-        let X:Number = Math.floor(Math.random() * (allItemsMap.size));
-        this.currentTile.npc.addItem(allItemsMap.get(X)); 
-      }else if(tile.node.item !== undefined){
+    if (this.currentTile !== undefined && this.currentTile.npc !== undefined) {
+      if (tile.node.type == 6) {
+        //If its a chest
+        let X: Number = Math.floor(Math.random() * allItemsMap.size);
+        this.currentTile.npc.addItem(allItemsMap.get(X));
+      } else if (tile.node.item !== undefined) {
         this.currentTile.npc.addItem(tile.node.item);
       }
-     }
-     tile.node.delete();
+    }
+    tile.node.delete();
 
     if (tile.node === undefined) this.handleMovement(tile);
 
