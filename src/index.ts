@@ -15,6 +15,8 @@ const main = async () => {
   game.world.addBuilding(5, 5, townCenter);
   game.world.npcMap.get(1)?.addItem(sword);
   game.world.npcMap.get(1)?.removeItem(sword);
+  game.world.npcMap.get(1)?.randomMovement();
+
   game.world.addNode(6, 6, tree, 10);
   game.world.addNode(2, 2, chest, 1);
   game.world.render();

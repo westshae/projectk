@@ -131,6 +131,18 @@ class NPC {
     }
   }
 
+  randomMovement(){
+    let min = this.range * -1;
+    let max = this.range
+    let x = Math.floor(Math.random() * (max - min + 1) ) + min;
+    let y = Math.floor(Math.random() * (max - min + 1) ) + min;
+    let currentTile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
+    let newTile: Tile | undefined = game.world.grid.at(x)?.at(y);
+    if(currentTile === undefined || newTile === undefined) return;
+    console.log(newTile);
+    this.move(currentTile, newTile);
+  }
+
   render(x: number, y: number) {
     this.sprite.width = game.world.spriteWidth *  0.8;
     this.sprite.height = game.world.spriteHeight * 0.8;
