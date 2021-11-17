@@ -93,13 +93,12 @@ class World {
   addBuilding(x: number, y: number, type: buildingInterface) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
     if (tile === undefined) return;
-
     tile.addBuilding(x, y, type);
+    tile.render();
   }
 
   addNode(x: number, y: number, type: nodeInterface, amount: number) {
     let tile: Tile | undefined = this.grid.at(x)?.at(y);
-
     if (tile === undefined) return;
     tile.addNode(x, y, type, amount);
   }
@@ -110,38 +109,31 @@ class World {
 
     if (this.currentTile === undefined) {
       if (tile.isEmpty && !this.buildMode) return;
-     
+
       this.setAction(tile);
 
       if (!this.buildMode) return;
       this.handleBuild(tile);
-    } else {
-      if (tile !== undefined && this.currentTile == tile) {
-        this.resetAction(this.currentTile);
-      } else {
-        
-
+    } else if (this.currentTile === tile) {
+       this.resetAction(this.currentTile);
+    }
+      else {
         tile.emptyCheck();
         if (tile.isEmpty) this.handleMovement(tile);
         else if (tile.npc !== undefined) this.handleAttack(tile);
         else if (tile.node !== undefined) this.handleInteraction(tile);
-        else {
-          this.resetAction(tile);
-        }
-
+        else this.resetAction(tile);
       }
     }
-  }
+  
 
-  setAction(tile: Tile) {    
+  setAction(tile: Tile) {
     this.currentTile = tile;
     this.selector.x = tile.sprite.x;
     this.selector.y = tile.sprite.y;
     this.selector.visible = true;
 
     game.hud.displayTile(tile);
-
-
 
     if (this.currentTile?.npc !== undefined) {
       game.hud.toggleActionVisible(true);
@@ -163,8 +155,13 @@ class World {
       );
     }
 
-    if(this.currentTile !== undefined && this.currentTile.npc !== undefined){
-      this.highlightRange(this.currentTile, this.currentTile, this.currentTile.npc, false);
+    if (this.currentTile !== undefined && this.currentTile.npc !== undefined) {
+      this.highlightRange(
+        this.currentTile,
+        this.currentTile,
+        this.currentTile.npc,
+        false
+      );
     }
 
     this.currentTile = undefined;
@@ -175,17 +172,14 @@ class World {
   }
 
   handleMovement(nextTile: Tile) {
-    let currentTile: Tile | undefined = game.world.currentTile;
-
-
+    let currentTile: Tile | undefined = this.currentTile;
 
     if (currentTile === undefined) return;
-    
     if (nextTile.npc !== undefined) return;
     if (currentTile.npc === undefined) {
       this.resetAction(currentTile);
-      return
-    }; 
+      return;
+    }
 
     if (!this.distanceCheck(currentTile, nextTile, currentTile.npc.range))
       return;
@@ -199,12 +193,12 @@ class World {
   }
 
   handleAttack(tile: Tile) {
-    let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit?.npc === undefined) return;
+    let currentTile: Tile | undefined = this.currentTile;
+    if (currentTile?.npc === undefined) return;
 
-    if (!this.distanceCheck(tileInit, tile, tileInit.npc.range)) return;
+    if (!this.distanceCheck(currentTile, tile, currentTile.npc.range)) return;
 
-    let villager: NPC | undefined = tileInit.npc;
+    let villager: NPC | undefined = currentTile.npc;
     let enemy: NPC | undefined = tile.npc;
     if (villager.defaultValuesID == enemy?.defaultValuesID) return;
     if (enemy === undefined) return;
@@ -213,7 +207,6 @@ class World {
 
     this.resetAction(tile);
   }
-
   handleInteraction(tile: Tile) {
     let tileInit: Tile | undefined = game.world.currentTile;
     if (tileInit === undefined) return;
@@ -239,15 +232,9 @@ class World {
   }
 
   handleBuild(tile: Tile) {
-    let tileInit: Tile | undefined = game.world.currentTile;
-    if (tileInit === undefined) return;
-
-    if (tile.building === undefined) {
-      game.world.addBuilding(tile.x, tile.y, townCenter);
-      game.world.render();
-    } else {
-      tile.building.delete();
-    }
+    if (tile.building === undefined)
+      this.addBuilding(tile.x, tile.y, townCenter);
+    else tile.building.delete();
 
     this.resetAction(tile);
   }
@@ -280,7 +267,7 @@ class World {
           (this.spriteHeight / 2) * (Math.round(yindex / 2) - 2);
 
         if (yindex % 2 == 0) {
-          //If even lin
+          //If even line
           tile.sprite.x = tile.x * this.spriteWidth + this.spriteWidth / 2;
           tile.sprite.y = yindex * this.spriteHeight - heightOffset;
         } else {
