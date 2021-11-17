@@ -133,14 +133,28 @@ class NPC {
 
   randomMovement(){
     let min = this.range * -1;
-    let max = this.range
+    let max = this.range;
     let x = Math.floor(Math.random() * (max - min + 1) ) + min;
     let y = Math.floor(Math.random() * (max - min + 1) ) + min;
     let currentTile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
     let newTile: Tile | undefined = game.world.grid.at(x)?.at(y);
     if(currentTile === undefined || newTile === undefined) return;
-    console.log(newTile);
     this.move(currentTile, newTile);
+  }
+
+  combatCheck(){
+    let currentTile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
+    if(currentTile === undefined) return;
+    if(this.defaultValuesID === 0) return;
+
+    for(let [key, npc] of game.world.npcMap.entries()){
+      if(key === undefined) return;
+      if(npc.defaultValuesID !== 0) return;
+      let npcTile: Tile | undefined = game.world.grid.at(npc.x)?.at(npc.y);
+      if(npcTile === undefined) return;
+      if(!game.world.distanceCheck(currentTile, npcTile, this.range))return;
+      this.doCombat(npc);
+    }
   }
 
   render(x: number, y: number) {
