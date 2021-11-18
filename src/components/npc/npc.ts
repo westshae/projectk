@@ -12,7 +12,6 @@ interface npcInterface {
   defense: number;
   range:number;
   id: number;
-  movement: number;
   items?: Array<Items>;
 }
 class NPC {
@@ -27,7 +26,6 @@ class NPC {
   health: number;
   attack: number;
   defense: number;
-  movement: number;
   range:number;
 
   //Map coordinate
@@ -41,7 +39,6 @@ class NPC {
     this.health = defaultValues.health;
     this.attack = defaultValues.attack;
     this.defense = defaultValues.defense;
-    this.movement = defaultValues.movement;
     this.range = defaultValues.range;
 
     //Default value sets
@@ -74,8 +71,6 @@ class NPC {
         this.attack += buff.amount * (increase ? 1 : -1);
       case 2:
         this.defense += buff.amount * (increase ? 1 : -1);
-      case 3:
-        this.movement += buff.amount * (increase ? 1 : -1);
     }
   }
 
@@ -191,7 +186,6 @@ class NPC {
   }
 
   handleNextTurn() {
-    this.movement = this.defaultValues.movement;
     this.hasTurn = true;
   }
 
