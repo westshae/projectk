@@ -16,9 +16,11 @@ const missingTexture = Texture.from('../assets/util/missing.png');
 const selectorTexture = Texture.from('../assets/util/selector.png');
 const rangeHighlight = Texture.from("../assets/util/rangeHighlight.png");
 const chestTexture = Texture.from('../assets/resources/chest.png');
+const stoneTexture = Texture.from("../assets/tile/stone.png");
 
 export {
   villagerTexture,
+  stoneTexture,
   dirtTexture,
   animalsTexture,
   fruitTexture,

@@ -242,14 +242,16 @@ class World {
 
   generateGrid() {
     let grid: Array<Array<Tile>> = [];
-    const noise = new SimplexNoise(Math.random());
+    const biome = new SimplexNoise(Math.random());
+    const elevation = new SimplexNoise(Math.random());
     for (let width: number = 0; width < this.size; width++) {
       grid[width] = [];
       for (let height: number = 0; height < this.size; height++) {
         grid[width][height] = new Tile(
           width,
           height,
-          noise.noise2D(width / 8, height / 8),
+          biome.noise2D(width / 16, height / 16),
+          elevation.noise2D(width, height),
           this.container
         );
       }

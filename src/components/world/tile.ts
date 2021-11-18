@@ -2,7 +2,7 @@ import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
 import { NPC, npcInterface } from "../npc/npc";
 import { Building, buildingInterface } from "./building";
-import { dirtTexture, rangeHighlight, sandTexture } from "../util/textures";
+import { dirtTexture, grassTexture, mountainTexture, rangeHighlight, sandTexture, stoneTexture, waterTexture } from "../util/textures";
 import { Node, nodeInterface } from "./node";
 
 class Tile {
@@ -18,12 +18,12 @@ class Tile {
   node?: Node;
   isEmpty: boolean;
 
-  constructor(x: number, y: number, noise: number, container: Container) {
+  constructor(x: number, y: number, biome: number, elevation:number, container: Container) {
     this.x = x;
     this.y = y;
     this.q = x - (y - (y&1)) / 2;
     this.r = y;
-    this.sprite = this.handleSprite(noise);
+    this.sprite = this.handleSprite(biome);
 
     this.highlightSprite = Sprite.from(rangeHighlight);
     this.isHighlighted = false;
@@ -104,11 +104,19 @@ class Tile {
     }
   }
 
-  handleSprite(noise: number) {
-    if (noise < 0) {
+  handleSprite(biome: number) {
+    if (biome < -0.2) {
+      return Sprite.from(waterTexture);
+    } else if(biome < 0.1) {
       return Sprite.from(sandTexture);
-    } else {
-      return Sprite.from(dirtTexture);
+    } else if(biome < 0.6){
+      return Sprite.from(grassTexture)
+    } else if (biome < 0.7){
+      return Sprite.from(stoneTexture)
+    }
+    
+    else{
+      return Sprite.from(mountainTexture)
     }
   }
 }
