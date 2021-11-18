@@ -16,7 +16,6 @@ interface nodeInterface {
   processingTime: number;
   defense: number;
   type: number;
-  sprite: Sprite;
 }
 
 class Node {

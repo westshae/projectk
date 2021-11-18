@@ -142,6 +142,7 @@ class World {
     }
 
     if (this.currentTile.npc === undefined) return;
+    if(this.currentTile.npc.defaultValuesID !== 0) return;
     this.highlightRange(tile, tile, this.currentTile.npc, true);
   }
 
