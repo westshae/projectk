@@ -14,6 +14,7 @@ interface npcInterface {
   regen:number;
   id: number;
   items?: Array<Items>;
+  isPassive:boolean;
 }
 class NPC {
   id: number; //ID for NPC, same as npcMap key
@@ -22,6 +23,7 @@ class NPC {
   defaultValues: npcInterface; //Values that NPC is initated from
   sprite: Sprite; //Sprite variable
   hasTurn: boolean;
+  isPassive:boolean;
 
   //NPC Stats
   health: number;
@@ -49,6 +51,7 @@ class NPC {
     this.defaultValues = defaultValues;
 
     this.hasTurn = true;
+    this.isPassive = defaultValues.isPassive;
 
     //Map coord sets
     this.x = x;
@@ -79,6 +82,7 @@ class NPC {
 
   move(currentTile:Tile, nextTile:Tile){
     if(!this.hasTurn)return;
+    if(!nextTile.isEmpty)return;
     this.x = nextTile.x;
     this.y = nextTile.y;
     this.render(nextTile.sprite.x, nextTile.sprite.y);

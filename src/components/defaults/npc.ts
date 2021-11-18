@@ -7,6 +7,7 @@ let villager: npcInterface = {
   id: 0,
   range: 5,
   regen: 3,
+  isPassive: false,
 };
 
 let chicken:npcInterface = {
@@ -16,6 +17,7 @@ let chicken:npcInterface = {
   id: 1,
   range: 5,
   regen: 0,
+  isPassive: true,
 }
 
 export { villager, chicken };
