@@ -26,7 +26,16 @@ class Game {
     this.data.changeResource(5, 1, true); //Increases turn count by 1
 
     for(let [key, npc] of this.world.npcMap.entries()){
-      if(key === undefined) return;
+      if(key === undefined) continue;
+      if(npc === undefined) continue;
+
+      if(npc.defaultValuesID !== 0 && npc.hasTurn){
+        npc.combatCheck();
+        if(this.world.npcMap.get(key) !== undefined && npc.hasTurn) {  
+          npc.randomMovement();
+        }
+      }
+      
       npc.handleNextTurn();
     }
   }
