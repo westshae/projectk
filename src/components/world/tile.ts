@@ -109,12 +109,8 @@ class Tile {
       return Sprite.from(waterTexture);
     } else if(biome < 0.1) {
       return Sprite.from(sandTexture);
-    } else if(biome < 0.6){
-      return Sprite.from(grassTexture)
-    } else if (biome < 0.75){
-      return Sprite.from(stoneTexture)
     }else{
-      return Sprite.from(mountainTexture)
+      return Sprite.from(grassTexture)
     }
   }
 }
