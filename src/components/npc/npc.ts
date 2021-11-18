@@ -137,16 +137,26 @@ class NPC {
 
   randomMovement(){
     if(!this.hasTurn)return;
+
     let min = this.range * -1;
     let max = this.range;
-    let x = Math.floor(Math.random() * (max - min + 1) ) + min;
-    let y = Math.floor(Math.random() * (max - min + 1) ) + min;
-    if(this.x - x < 0 || this.x + x > game.world.size) return;
-    if(this.y - y < 0 || this.y + y > game.world.size) return;
+    if(this.x + min < 0) min = min + this.x;
+    if(this.y + min < 0) min = min + this.y;
+    if(this.x + max > game.world.size) max = this.x - max;
+    if(this.y + max > game.world.size) max = this.y - max;
+    
+    let x = Math.floor(Math.random() * (max - min) ) + min;
+    let y = Math.floor(Math.random() * (max - min) ) + min;
+
+    if(x === undefined || y === undefined) return;
 
     let currentTile: Tile | undefined = game.world.grid.at(this.x)?.at(this.y);
-    let newTile: Tile | undefined = game.world.grid.at(x)?.at(y);
+    let newTile: Tile | undefined = game.world.grid.at(this.x + x)?.at(this.y + y);
     if(currentTile === undefined || newTile === undefined) return;
+
+    if(Math.abs(currentTile.x - newTile.x) > this.range) return;
+    if(Math.abs(currentTile.y - newTile.y) > this.range) return;
+
     this.move(currentTile, newTile);
     this.hasTurn = false;
   }

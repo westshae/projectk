@@ -3,7 +3,6 @@ import { chicken, villager } from './components/defaults/npc';
 import { Game } from './components/util/game';
 import { townCenter } from './components/defaults/builds';
 import { chest, tree } from './components/defaults/node';
-import { animalsTexture } from './components/util/textures';
 
 const game = new Game(64);
 
