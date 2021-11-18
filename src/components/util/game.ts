@@ -29,12 +29,8 @@ class Game {
       if(key === undefined || npc === undefined) continue;
 
       if(npc.defaultValuesID !== 0 && npc.hasTurn){
-        if(!npc.isPassive){
-          npc.combatCheck();
-        }
-        if(this.world.npcMap.get(key) !== undefined && npc.hasTurn) {  
-          npc.randomMovement();
-        }
+        if(!npc.isPassive)npc.combatCheck();
+        if(this.world.npcMap.get(key) !== undefined && npc.hasTurn) npc.randomMovement();
       }
       
       npc.handleNextTurn();
