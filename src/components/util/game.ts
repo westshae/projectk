@@ -29,7 +29,7 @@ class Game {
       if(key === undefined || npc === undefined) continue;
 
       if(npc.defaultValuesID !== 0 && npc.hasTurn){
-        // npc.combatCheck();
+        npc.combatCheck();
         if(this.world.npcMap.get(key) !== undefined && npc.hasTurn) {  
           npc.randomMovement();
         }
