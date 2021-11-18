@@ -190,6 +190,8 @@ class NPC {
 
   handleNextTurn() {
     this.hasTurn = true;
+    this.health += this.regen;
+    if(this.health > this.defaultValues.health) this.health = this.defaultValues.health;
   }
 
   handleSprite() {
