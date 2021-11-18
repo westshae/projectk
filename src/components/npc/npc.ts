@@ -11,6 +11,7 @@ interface npcInterface {
   attack: number;
   defense: number;
   range:number;
+  regen:number;
   id: number;
   items?: Array<Items>;
 }
@@ -27,6 +28,7 @@ class NPC {
   attack: number;
   defense: number;
   range:number;
+  regen:number;
 
   //Map coordinate
   x: number;
@@ -40,6 +42,7 @@ class NPC {
     this.attack = defaultValues.attack;
     this.defense = defaultValues.defense;
     this.range = defaultValues.range;
+    this.regen = defaultValues.regen;
 
     //Default value sets
     this.defaultValuesID = defaultValues.id;
