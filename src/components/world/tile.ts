@@ -47,15 +47,21 @@ class Tile {
   addRandom(){
     if(this.biome < 0.1) return;
 
-    let choice = Math.random();
-    if(choice < 0.1){
+    let node = Math.random() * 100;
+    if(node < 10){
       this.addNode(this.x, this.y, tree, 10);
-    }else if(choice < 0.15){
+    }else if(node < 15){
       this.addNode(this.x, this.y, ore, 10);
-    }else if(choice < 0.155){
+    }else if(node < 15.5){
       this.addNode(this.x, this.y, chest, 1);
     }else{
       //nothing
+    }
+
+    let npc = Math.random() * 100;
+    if(npc < 2.5){
+      this.addNPC(this.x, this.y, chicken, "Chicken");
+    }else if(npc < 5){
     }
   }
 
