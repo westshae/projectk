@@ -4,6 +4,9 @@ import { NPC, npcInterface } from "../npc/npc";
 import { Building, buildingInterface } from "./building";
 import { dirtTexture, grassTexture, mountainTexture, rangeHighlight, sandTexture, stoneTexture, waterTexture } from "../util/textures";
 import { Node, nodeInterface } from "./node";
+import { mine } from "../defaults/builds";
+import { chicken } from "../defaults/npc";
+import { chest, ore, tree } from "../defaults/node";
 
 class Tile {
   x: number;
@@ -17,8 +20,9 @@ class Tile {
   building?: Building;
   node?: Node;
   isEmpty: boolean;
+  biome: number;
 
-  constructor(x: number, y: number, biome: number, elevation:number, container: Container) {
+  constructor(x: number, y: number, biome: number, container: Container) {
     this.x = x;
     this.y = y;
     this.q = x - (y - (y&1)) / 2;
@@ -29,6 +33,8 @@ class Tile {
     this.isHighlighted = false;
 
     this.highlightSprite.visible = false; //Make invisible until selected tile
+
+    this.biome = biome;
     
 
     this.sprite.interactive = true;
@@ -36,6 +42,21 @@ class Tile {
 
     container.addChild(this.sprite);
     this.isEmpty = true;
+  }
+
+  addRandom(){
+    if(this.biome < 0.1) return;
+
+    let choice = Math.random();
+    if(choice < 0.1){
+      this.addNode(this.x, this.y, tree, 10);
+    }else if(choice < 0.15){
+      this.addNode(this.x, this.y, ore, 10);
+    }else if(choice < 0.155){
+      this.addNode(this.x, this.y, chest, 1);
+    }else{
+      //nothing
+    }
   }
 
   emptyCheck() {

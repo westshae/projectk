@@ -243,7 +243,6 @@ class World {
   generateGrid() {
     let grid: Array<Array<Tile>> = [];
     const biome = new SimplexNoise(Math.random());
-    const elevation = new SimplexNoise(Math.random());
     for (let width: number = 0; width < this.size; width++) {
       grid[width] = [];
       for (let height: number = 0; height < this.size; height++) {
@@ -251,12 +250,22 @@ class World {
           width,
           height,
           biome.noise2D(width / 16, height / 16),
-          elevation.noise2D(width, height),
           this.container
         );
       }
     }
     return grid;
+  }
+
+  generateRandom(){
+    const random = new SimplexNoise(Math.random());
+    for(let width: number = 0; width < this.size; width++){
+      for(let height: number = 0; height < this.size; height++){
+        let tile: Tile | undefined = this.grid.at(width)?.at(height);
+        if(tile === undefined) continue;
+        tile.addRandom();
+      }
+    }
   }
 
   render() {
