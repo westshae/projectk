@@ -8,6 +8,7 @@ const game = new Game(64);
 
 const main = async () => {
   game.init();
+  game.world.generateRandom();
 
   //Adds villagers, names bob/joe, at coords 4:4 and 3:3 then rendersthe world
   game.world.addNPC(10, 10, villager, 'Bob');

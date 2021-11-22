@@ -2,8 +2,11 @@ import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
 import { NPC, npcInterface } from "../npc/npc";
 import { Building, buildingInterface } from "./building";
-import { dirtTexture, rangeHighlight, sandTexture } from "../util/textures";
+import { dirtTexture, grassTexture, mountainTexture, rangeHighlight, sandTexture, stoneTexture, waterTexture } from "../util/textures";
 import { Node, nodeInterface } from "./node";
+import { mine } from "../defaults/builds";
+import { chicken } from "../defaults/npc";
+import { chest, ore, tree } from "../defaults/node";
 
 class Tile {
   x: number;
@@ -17,18 +20,21 @@ class Tile {
   building?: Building;
   node?: Node;
   isEmpty: boolean;
+  biome: number;
 
-  constructor(x: number, y: number, noise: number, container: Container) {
+  constructor(x: number, y: number, biome: number, container: Container) {
     this.x = x;
     this.y = y;
     this.q = x - (y - (y&1)) / 2;
     this.r = y;
-    this.sprite = this.handleSprite(noise);
+    this.sprite = this.handleSprite(biome);
 
     this.highlightSprite = Sprite.from(rangeHighlight);
     this.isHighlighted = false;
 
     this.highlightSprite.visible = false; //Make invisible until selected tile
+
+    this.biome = biome;
     
 
     this.sprite.interactive = true;
@@ -36,6 +42,27 @@ class Tile {
 
     container.addChild(this.sprite);
     this.isEmpty = true;
+  }
+
+  addRandom(){
+    if(this.biome < 0.1) return;
+
+    let node = Math.random() * 100;
+    if(node < 10){
+      this.addNode(this.x, this.y, tree, 10);
+    }else if(node < 15){
+      this.addNode(this.x, this.y, ore, 10);
+    }else if(node < 15.5){
+      this.addNode(this.x, this.y, chest, 1);
+    }else{
+      //nothing
+    }
+
+    let npc = Math.random() * 100;
+    if(npc < 2.5){
+      this.addNPC(this.x, this.y, chicken, "Chicken");
+    }else if(npc < 5){
+    }
   }
 
   emptyCheck() {
@@ -104,11 +131,13 @@ class Tile {
     }
   }
 
-  handleSprite(noise: number) {
-    if (noise < 0) {
+  handleSprite(biome: number) {
+    if (biome < -0.2) {
+      return Sprite.from(waterTexture);
+    } else if(biome < 0.1) {
       return Sprite.from(sandTexture);
-    } else {
-      return Sprite.from(dirtTexture);
+    }else{
+      return Sprite.from(grassTexture)
     }
   }
 }
