@@ -65,8 +65,8 @@ class HUD {
         {title:"Defense", value:tile.npc.defense},
         {title:"Attack", value:tile.npc.attack},
         {title:"Range", value:tile.npc.range},
-        {title:"Item 1", value:tile.npc.itemList.at(0)},
-        {title:"Item 2", value:tile.npc.itemList.at(1)}
+        {title:"Item 1", value:tile.npc.itemList.at(0)?.name},
+        {title:"Item 2", value:tile.npc.itemList.at(1)?.name}
       ]
     }else if (tile.building !== undefined){
       values = [
