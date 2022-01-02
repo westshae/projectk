@@ -8,6 +8,7 @@ import { selectorTexture } from "../util/textures";
 import { game } from "../..";
 import { townCenter } from "../defaults/builds";
 import { allItemsMap } from "../defaults/items";
+import { villager } from "../defaults/npc";
 
 class World {
   container: Container;
@@ -297,6 +298,18 @@ class World {
         tile.highlightSprite.width = this.spriteWidth;
         tile.highlightSprite.height = this.spriteHeight;
         this.container.addChild(tile.highlightSprite); //Adds to world container
+      }
+    }
+  }
+
+  spawnPlayer(){
+    for(let i = Math.floor(this.size/4); i < Math.floor((this.size/4)*3); i++){
+      for(let j = Math.floor(this.size/4); j < Math.floor((this.size/4)*3); j++){
+        let tile = this.grid.at(i)?.at(j);
+        if(tile?.spawnCheck()){
+          this.addNPC(i, j, villager, 'Bob');
+          return
+        }
       }
     }
   }

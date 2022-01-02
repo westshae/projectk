@@ -140,6 +140,16 @@ class Tile {
       return Sprite.from(grassTexture)
     }
   }
+
+  spawnCheck(){
+    this.emptyCheck();
+    if (this.isEmpty){
+      if(this.biome > 0.1){
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export { Tile };
