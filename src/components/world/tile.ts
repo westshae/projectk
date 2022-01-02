@@ -2,7 +2,7 @@ import { Container, Sprite } from "pixi.js";
 import { game } from "../..";
 import { NPC, npcInterface } from "../npc/npc";
 import { Building, buildingInterface } from "./building";
-import { dirtTexture, grassTexture, mountainTexture, rangeHighlight, sandTexture, stoneTexture, waterTexture } from "../util/textures";
+import { dirtTexture, grassTexture, mountainTexture, sandTexture, selectorTexture, stoneTexture, waterTexture } from "../util/textures";
 import { Node, nodeInterface } from "./node";
 import { mine } from "../defaults/builds";
 import { chicken } from "../defaults/npc";
@@ -29,7 +29,7 @@ class Tile {
     this.r = y;
     this.sprite = this.handleSprite(biome);
 
-    this.highlightSprite = Sprite.from(rangeHighlight);
+    this.highlightSprite = Sprite.from(selectorTexture);
     this.isHighlighted = false;
 
     this.highlightSprite.visible = false; //Make invisible until selected tile

@@ -13,8 +13,7 @@ const waterTexture = Texture.from('../assets/tile/water.png');
 const houseTexture = Texture.from('../assets/buildings/house.png');
 const mineTexture = Texture.from('../assets/buildings/mine.png');
 const missingTexture = Texture.from('../assets/util/missing.png');
-const selectorTexture = Texture.from('../assets/util/selector.png');
-const rangeHighlight = Texture.from("../assets/util/rangeHighlight.png");
+const selectorTexture = Texture.from('../assets/tile/outline.png');
 const chestTexture = Texture.from('../assets/resources/chest.png');
 const stoneTexture = Texture.from("../assets/tile/stone.png");
 
@@ -34,6 +33,5 @@ export {
   mineTexture,
   missingTexture,
   selectorTexture,
-  rangeHighlight,
   chestTexture,
 };
